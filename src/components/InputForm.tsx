@@ -14,6 +14,10 @@ interface Props {
   securetextentry?: boolean;
   keyboard?: KeyboardTypeOptions;
   maxLength?: number;
+  multiline?: boolean;
+  colorBase?: string;
+  ancho?: number;
+  minLength?: number;
 }
 
 export const InputForm = ({
@@ -24,20 +28,26 @@ export const InputForm = ({
   isEditable = true,
   keyboard = 'default',
   maxLength = 100,
+  minLength = 0,
   securetextentry = false,
+  multiline = false,
+  colorBase = colores.blanco,
+  ancho = 0.85,
 }: Props) => {
-  const {height, width} = useWindowDimensions();
+  const {width} = useWindowDimensions();
   const [isPasswordSecure, setisPasswordSecure] = useState(securetextentry);
 
   return (
     <TextInput
       mode={'flat'}
+      multiline={multiline}
       style={{
-        width: width - 100,
+        verticalAlign: 'top',
+        width: width * ancho,
         //height: 50,
         fontSize: 18,
-        backgroundColor: colores.blanco,
-        marginVertical: 5,
+        backgroundColor: colorBase,
+        marginVertical: 2,
         maxWidth: 400,
       }}
       right={
@@ -58,7 +68,7 @@ export const InputForm = ({
       activeUnderlineColor={color}
       outlineColor={color}
       underlineColor={color}
-      selectionColor={color}
+      selectionColor={colores.primarioclaro}
       activeOutlineColor={color}
       label={placeholder}
       autoCapitalize={

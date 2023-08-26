@@ -2,8 +2,8 @@ import {StyleSheet} from 'react-native';
 
 export const colores = {
   blanco: '#ffffff',
-  primario: '#62ddff',
-  primarioclaro: '#e5f5ff',
+  primario: '#00553c',
+  primarioclaro: '#a6dbd6',
   secundario: '#f7aa21',
   darkTransparent: 'rgba(0,0,0,0.5)',
   darkLoader: 'rgba(0,0,0,0.75)',
@@ -13,6 +13,10 @@ export const colores = {
   rojo: '#eb4034',
   azul: '#20397a',
   verde: '#16c40c',
+  negroClaro: '#0d0a0b',
+  gris: '#f3eff5',
+  verdeLima: '#72b01d',
+  verdePasto: '#79b473'
 };
 
 export const iconos = {

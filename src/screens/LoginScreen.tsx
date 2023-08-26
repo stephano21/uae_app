@@ -14,8 +14,8 @@ let user = '';
 let pass = '';
 
 if (__DEV__) {
-  user = 'acuenca';
-  pass = 'Coyote2022';
+  user = 'jpalma@apptelink.com';
+  pass = 'Prueba2023*+';
 }
 
 export const LoginScreen = () => {
@@ -35,7 +35,7 @@ export const LoginScreen = () => {
   return (
     <BaseScreen>
       <Image
-        source={require('../assets/logo.gif')}
+        source={require('../assets/logoUAE.png')}
         style={{
           height: '30%',
           width: '80%',
@@ -49,7 +49,7 @@ export const LoginScreen = () => {
           fontSize: 30,
           textAlign: 'center',
         }}>
-        Proyecto Base React Native
+        Texto Random
       </Text>
       <InputForm
         placeholder={'Usuario'}
@@ -64,7 +64,7 @@ export const LoginScreen = () => {
       <ButtonWithText
         anyfunction={() => Login()}
         title={'INICIAR SESIÓN'}></ButtonWithText>
-      <View
+      {/* <View
         style={{
           alignSelf: 'flex-end',
           alignItems: 'flex-end',
@@ -81,7 +81,7 @@ export const LoginScreen = () => {
               CommonActions.navigate('RecoveryPasswordScreen'),
             )
           }></TextButton>
-      </View>
+      </View> */}
       <View
         style={{
           position: 'absolute',

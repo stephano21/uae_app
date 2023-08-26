@@ -96,7 +96,7 @@ const MenuInterno = ({navigation, state}: DrawerContentComponentProps) => {
               backgroundColor: colores.blanco,
               resizeMode: 'contain',
             }}
-            source={require('../assets/logo.gif')}></Image>
+            source={require('../assets/logoUAE.png')}></Image>
           <View
             style={{
               flexDirection: 'row',
