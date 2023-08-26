@@ -16,6 +16,7 @@ import {Location} from '../../interfaces/UserInterface';
 import {ButtonWithText} from '../../components/ButtonWithText';
 import {useGoogleSearch} from './useGoogleSearch';
 import {SearchInputApi} from '../../components/SearchInputApi';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 interface Props {
   location?: Location;
@@ -57,7 +58,7 @@ export const Map = ({
     return <LoadingModal></LoadingModal>;
   }
   return (
-    <View
+    <GestureHandlerRootView
       style={{flex: 1, overflow: 'hidden', ...styles.sombra, borderRadius: 25}}
       onLayout={({
         nativeEvent: {
@@ -175,6 +176,6 @@ export const Map = ({
             title={'Cerrar'}></ButtonWithText>
         </View>
       </View>
-    </View>
+    </GestureHandlerRootView>
   );
 };

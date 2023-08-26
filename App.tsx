@@ -9,26 +9,25 @@ import {AlertProvider} from './src/context/AlertContext';
 import {MapProvider} from './src/context/MapContext';
 import Toast from 'react-native-toast-message';
 import {CheckInternetProvider} from './src/context/CheckInternetContext';
-
+import {DocumentViewProvider} from './src/context/DocumentViewContext';
+import {SocketProvider} from './src/context/SocketContext';
 
 //#region AppState
 
 const AppState = ({children}: {children: JSX.Element | JSX.Element[]}) => {
   return (
     <CheckInternetProvider>
-      {/* This is a provider that checks if the internet is available. */}
       <LoaderProvider>
-        {/* This is a provider that displays a animated loading. */}
         <AlertProvider>
-          {/* This is a provider that displays a modal popup alert with message, promt or image. */}
-          <PermissionsProvider>
-            {/* This is a provider that checks if the user has the required permissions. */}
-            <MapProvider>
-                {/* This is a provider that show a popup with documents as pdf or images. */}
-                <AuthProvider>{children}</AuthProvider>
-                {/* This is a provider that checks if the user is logged in. */}
-            </MapProvider>
-          </PermissionsProvider>
+          <SocketProvider>
+            <PermissionsProvider>
+              <MapProvider>
+                <DocumentViewProvider>
+                  <AuthProvider>{children}</AuthProvider>
+                </DocumentViewProvider>
+              </MapProvider>
+            </PermissionsProvider>
+          </SocketProvider>
         </AlertProvider>
       </LoaderProvider>
     </CheckInternetProvider>

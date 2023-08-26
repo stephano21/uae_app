@@ -3,7 +3,6 @@ import {Text} from 'react-native';
 import {FlatList, RefreshControl} from 'react-native-gesture-handler';
 import {colores, styles} from '../theme/appTheme';
 import {LoaderContext} from '../context/LoaderContext';
-import {ListRenderItemInfo} from 'react-native';
 
 interface FlatListProps<T extends unknown> {
   data: T[];
@@ -28,7 +27,7 @@ export const List = <T extends unknown>({
   return (
     <FlatList
       data={data}
-      renderItem={({item}: ListRenderItemInfo<T>) => renderItem(item)}
+      renderItem={({item}) => renderItem(item)}
       numColumns={numColumns}
       horizontal={isHorizontal}
       refreshControl={

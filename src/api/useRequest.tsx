@@ -8,7 +8,7 @@ import {ApiErrorResponse} from '../interfaces/BaseApiInterface';
 
 export const useRequest = () => {
   const {ShowAlertApiError} = useContext(AlertContext);
-  const {ApiTokenRequest, ApiRequest} = useApiConfig();
+  const {ApiTokenRequest, ApiRequest, ApiPostFileRequest} = useApiConfig();
   const {setIsFetching} = useContext(LoaderContext);
 
   const getRequest = async <T extends unknown>(
@@ -63,5 +63,23 @@ export const useRequest = () => {
       });
   };
 
-  return {getRequest, postRequestToken, postRequest};
+  const postFileRequest = async <T extends unknown>(
+    endpoint: string,
+    data?: object,
+    params?: object,
+  ): Promise<T> => {
+    setIsFetching(true);
+    return await ApiPostFileRequest.post(endpoint, data, {params})
+      .then(({data}: AxiosResponse<T>) => data)
+      .catch((error: AxiosError<ApiErrorResponse>) => {
+        console.error(JSON.stringify(error, null, 3));
+        ShowAlertApiError(error);
+        throw error;
+      })
+      .finally(() => {
+        setIsFetching(false);
+      });
+  };
+
+  return {getRequest, postRequestToken, postRequest, postFileRequest};
 };

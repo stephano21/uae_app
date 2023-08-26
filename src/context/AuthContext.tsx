@@ -6,13 +6,15 @@ import {sleep} from '../helpers/sleep';
 import {useStorage} from '../data/useStorage';
 import {useRequest} from '../api/useRequest';
 import {TokenResponse} from '../interfaces/BaseApiInterface';
+import {ApiEndpoints} from '../api/routes';
+import {SocketContext} from './SocketContext';
 
 type AuthContextProps = {
   status: StatusTypes;
   //signUp: (obj: CreateUser, pass: string) => Promise<void>;
   signIn: (obj: LoginData) => Promise<void>;
   logOut: () => void;
-  token: string;
+  JWTInfo: TokenResponse;
 };
 
 type StatusTypes = 'checking' | 'authenticated' | 'notauthenticated';
@@ -21,10 +23,11 @@ export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: any) => {
   const {ShowAlert} = useContext(AlertContext);
-  const {CheckToken, GetToken, SaveToken, RemoveAllData} = useStorage();
-  const {postRequestToken} = useRequest();
+  const {SaveJWTInfo, GetJWTInfo, CheckJWTInfo, RemoveAllData} = useStorage();
+  const {postRequest} = useRequest();
   const [status, setstatus] = useState<StatusTypes>('checking');
-  const [token, settoken] = useState('');
+  const [JWTInfo, setJWTInfo] = useState<TokenResponse>({} as TokenResponse);
+  const {startConnection, closeConnection} = useContext(SocketContext);
 
   useEffect(() => {
     checkToken();
@@ -41,11 +44,12 @@ export const AuthProvider = ({children}: any) => {
 
   const checkToken = async (): Promise<void> => {
     await sleep(2);
-    await CheckToken().then(check =>
+    await CheckJWTInfo().then(check =>
       check
-        ? GetToken().then(token => {
-            settoken(token);
+        ? GetJWTInfo().then(jwtInfo => {
+            setJWTInfo(jwtInfo);
             setstatus('authenticated');
+            startConnection(jwtInfo.token, jwtInfo.userName);
           })
         : setstatus('notauthenticated'),
     );
@@ -76,7 +80,7 @@ export const AuthProvider = ({children}: any) => {
       });
   }; */
 
-  const signIn = async ({correo, password}: LoginData) => {
+  /*   const signIn = async ({correo, password}: LoginData) => {
     // Function to login
     if (correo.length === 0 || password.length === 0) {
       // If email or password not exist
@@ -102,9 +106,34 @@ export const AuthProvider = ({children}: any) => {
       })
       .catch(() => {});
   };
+ */
+
+  const signIn = async ({correo, password}: LoginData) => {
+    // Function to login
+    if (correo.length === 0 || password.length === 0) {
+      // If email or password not exist
+      ShowAlert('default', {
+        title: 'Error',
+        message: 'Debe llenar los campos requeridos',
+      });
+      return;
+    }
+
+    await postRequest<TokenResponse>(ApiEndpoints.login, {
+      email: correo,
+      password,
+    })
+      .then(jwtInfo => {
+        setstatus('authenticated');
+        SaveJWTInfo(jwtInfo);
+        startConnection(jwtInfo.token, jwtInfo.userName);
+      })
+      .catch(console.log);
+  };
 
   const logOut = async () => {
     await RemoveAllData();
+    //closeConnection();
     setstatus('notauthenticated');
   };
 
@@ -112,7 +141,7 @@ export const AuthProvider = ({children}: any) => {
     <AuthContext.Provider
       value={{
         status,
-        token,
+        JWTInfo,
         //signUp,
         signIn,
         logOut,

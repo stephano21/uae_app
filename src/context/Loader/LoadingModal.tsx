@@ -1,20 +1,14 @@
 import React from 'react';
 import {colores, styles} from '../../theme/appTheme';
-// @ts-expect-error
-import AnimatedLoader from 'react-native-animated-loader';
+import LottieView from 'lottie-react-native';
 
 export const LoadingModal = () => {
   return (
-    <AnimatedLoader
-      visible={true}
-      overlayColor={colores.darkLoader}
+    <LottieView
       source={require('../..//assets/Loader/Loader-Modal.json')}
-      animationStyle={{
-        flex: 1,
-        ...styles.centerItems,
-        //padding: '20%',
-      }}
-      animationType={'fade'}
-      speed={1.75}></AnimatedLoader>
+      style={{flex: 1, backgroundColor: colores.darkTransparent}}
+      speed={1.75}
+      autoPlay
+      loop></LottieView>
   );
 };

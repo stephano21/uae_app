@@ -23,7 +23,13 @@ export const WelcomeScreen = () => {
           resizeMode: 'contain',
           alignSelf: 'center',
         }}></Image>
-      <Text style={{textAlign: 'justify', color: colores.negro, maxWidth: 300}}>
+      <Text
+        style={{
+          textAlign: 'justify',
+          color: colores.negro,
+          maxWidth: 300,
+          marginBottom: 30,
+        }}>
         Por favor, permite acceder a tu ubicación, a la memoria interna y a la
         cámara de tu dispositivo para que tengas la mejor experiencia en la
         aplicación

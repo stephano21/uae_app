@@ -31,11 +31,8 @@ export const NextScreen = () => {
               </Text>
             </>
           )}
-          ListEmpty={() => (
-            <Text style={{color: 'gray'}}>
-              No existen elementos para mostrar
-            </Text>
-          )}></List>
+          ListEmptyText={'No existen elementos para mostrar'}
+          refreshFunction={() => {}}></List>
       </>
     </BaseScreen>
   );

@@ -10,15 +10,17 @@ import {AuthContext} from '../context/AuthContext';
 import {StackOption} from './StackOption';
 import {DrawerHeader} from './DrawerHeader';
 import {AlertContext} from '../context/AlertContext';
-import {LoginScreen} from '../screens/LoginScreen';
+import {NextScreen} from '../screens/NextScreen';
 import {Tabs} from './Tabs';
-import {RegisterScreen} from '../screens/RegisterScreen';
+import {RayadosScreen} from '../screens/RayadosScreen';
+import {SocketScreen} from '../screens/SocketScreen';
 
 const Drawer = createDrawerNavigator();
 
 export const MenuLateral = () => {
   return (
     <Drawer.Navigator
+      useLegacyImplementation={false}
       defaultStatus="open"
       drawerContent={props => <MenuInterno {...props} />}
       screenOptions={{
@@ -30,8 +32,9 @@ export const MenuLateral = () => {
         ),
       }}>
       <Drawer.Screen name="Tabs" component={Tabs} />
-      <Drawer.Screen name="NextScreen" component={LoginScreen} />
-      <Drawer.Screen name="RayadosScreen" component={RegisterScreen} />
+      <Drawer.Screen name="NextScreen" component={NextScreen} />
+      <Drawer.Screen name="RayadosScreen" component={RayadosScreen} />
+      <Drawer.Screen name="SocketScreen" component={SocketScreen} />
     </Drawer.Navigator>
   );
 };
@@ -55,6 +58,12 @@ const MenuItems = [
     name: 'Rayados',
     title: 'Rayados',
     route: 'RayadosScreen',
+  },
+  {
+    icon: iconos.advertencia,
+    name: 'Socket',
+    title: 'Socket',
+    route: 'SocketScreen',
   },
 ];
 

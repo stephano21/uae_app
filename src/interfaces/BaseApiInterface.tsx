@@ -1,11 +1,16 @@
 //Api Login
 
-export interface TokenResponse {
+/* export interface TokenResponse {
   access_token: string;
   token_type: string;
   userName: string;
-}
+} */
 
+export interface TokenResponse {
+  token: string;
+  token_type: string;
+  userName: string;
+}
 //ApirError
 
 export interface ApiErrorResponse {
