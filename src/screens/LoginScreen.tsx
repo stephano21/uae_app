@@ -8,15 +8,14 @@ import {InputForm} from '../components/InputForm';
 import {BaseScreen} from '../Template/BaseScreen';
 import {TextButton} from '../components/TextButton';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {Background} from './Background';
 import DeviceInfo from 'react-native-device-info';
 
 let user = '';
 let pass = '';
 
 if (__DEV__) {
-  user = 'geo@smoke.com';
-  pass = 'Smoke123*+';
+  user = 'acuenca';
+  pass = 'Coyote2022';
 }
 
 export const LoginScreen = () => {
@@ -93,7 +92,6 @@ export const LoginScreen = () => {
           Versión: {DeviceInfo.getVersion()}
         </Text>
       </View>
-      <Background></Background>
     </BaseScreen>
   );
 };
