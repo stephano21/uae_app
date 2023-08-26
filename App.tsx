@@ -1,118 +1,68 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {colores} from './src/theme/appTheme';
+import {PermissionsProvider} from './src/context/PermissionsContext';
+import {AuthProvider} from './src/context/AuthContext';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import {Navigator} from './src/navigator/Navigator';
+import {LoaderProvider} from './src/context/LoaderContext';
+import {AlertProvider} from './src/context/AlertContext';
+import {MapProvider} from './src/context/MapContext';
+import Toast from 'react-native-toast-message';
+import {CheckInternetProvider} from './src/context/CheckInternetContext';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+//#region AppState
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const AppState = ({children}: {children: JSX.Element | JSX.Element[]}) => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <CheckInternetProvider>
+      {/* This is a provider that checks if the internet is available. */}
+      <LoaderProvider>
+        {/* This is a provider that displays a animated loading. */}
+        <AlertProvider>
+          {/* This is a provider that displays a modal popup alert with message, promt or image. */}
+          <PermissionsProvider>
+            {/* This is a provider that checks if the user has the required permissions. */}
+            <MapProvider>
+                {/* This is a provider that show a popup with documents as pdf or images. */}
+                <AuthProvider>{children}</AuthProvider>
+                {/* This is a provider that checks if the user is logged in. */}
+            </MapProvider>
+          </PermissionsProvider>
+        </AlertProvider>
+      </LoaderProvider>
+    </CheckInternetProvider>
   );
-}
+};
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+//#endregion
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+const App = () => {
+  /*  useEffect(() => {
+    SplashScreen.hide(); //hides the splash screen on app load.
+  }, []); */
+
+  const MyTheme = {
+    ...DefaultTheme,
+    dark: false,
+    colors: {
+      ...DefaultTheme.colors,
+      background: colores.plomoclaro,
+    },
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer theme={MyTheme}>
+      {/* This is the navigation container, which allows for navigation within the app */}
+      <AppState>
+        {/* This is the app state, which contains global state that can be accessed from any component */}
+        <Navigator></Navigator>
+        {/* This is the navigator, which allows for navigation within the app */}
+        <Toast />
+        {/* This is the toast component, which allows for the display of notifications */}
+      </AppState>
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
