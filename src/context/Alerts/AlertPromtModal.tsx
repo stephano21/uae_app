@@ -35,7 +35,7 @@ export const AlertPromtModal = ({
       <View style={{alignSelf: 'flex-end', flexDirection: 'row'}}>
         <AlertButton
           icono={iconos.equis}
-          color={colores.rojo}
+          color={colores.danger}
           anyFunction={CloseFunction}></AlertButton>
         <AlertButton
           icono={iconos.visto}

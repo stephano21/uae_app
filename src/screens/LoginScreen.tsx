@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {View, Keyboard, Text, Image, useWindowDimensions} from 'react-native';
+import {View, Keyboard, Text, Image, useWindowDimensions,StyleSheet,KeyboardAvoidingView} from 'react-native';
 import {colores} from '../theme/appTheme';
 import {AuthContext} from '../context/AuthContext';
 import {useForm} from '../hooks/useForm';
@@ -64,7 +64,7 @@ export const LoginScreen = () => {
       <ButtonWithText
         anyfunction={() => Login()}
         title={'INICIAR SESIÓN'}></ButtonWithText>
-      {/* <View
+       <View
         style={{
           alignSelf: 'flex-end',
           alignItems: 'flex-end',
@@ -81,17 +81,30 @@ export const LoginScreen = () => {
               CommonActions.navigate('RecoveryPasswordScreen'),
             )
           }></TextButton>
-      </View> */}
-      <View
-        style={{
-          position: 'absolute',
-          right: '10%',
-          bottom: '10%',
-        }}>
-        <Text style={{color: colores.negro, fontWeight: 'bold'}}>
+      </View> 
+      <View style={styles.versionContainer}>
+        <Text style={styles.versionText}>
           Versión: {DeviceInfo.getVersion()}
         </Text>
       </View>
     </BaseScreen>
   );
 };
+const styles = StyleSheet.create({
+  versionContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    padding: 10,
+    backgroundColor: 'white',
+    borderColor: '',
+    borderWidth: 0,
+    borderTopLeftRadius: 10,
+    alignItems: 'flex-end',
+    flex: 1, // Add flex: 1 to ensure it sticks to the bottom
+  },
+  versionText: {
+    color: '#72b01d',
+    fontWeight: 'bold',
+  },
+});

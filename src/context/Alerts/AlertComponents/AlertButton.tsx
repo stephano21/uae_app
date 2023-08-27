@@ -11,7 +11,7 @@ interface Props {
 
 export const AlertButton = ({
   anyFunction,
-  color = colores.verde,
+  color = colores.success,
   icono = iconos.visto,
 }: Props) => {
   return (

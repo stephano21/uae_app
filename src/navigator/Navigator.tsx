@@ -45,7 +45,7 @@ export const Navigator = () => {
               name="RegisterScreen"
               component={RegisterScreen}
               options={{
-                header: props => <StackHeader title={''}></StackHeader>,
+                header: props => <StackHeader title={'Formulario de registro'}></StackHeader>,
               }}
             />
             <Stack.Screen
