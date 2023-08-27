@@ -32,7 +32,7 @@ export const MenuLateral = () => {
         ),
       }}>
       <Drawer.Screen name="Tabs" component={Tabs} />
-      <Drawer.Screen name="NextScreen" component={NextScreen} />
+      <Drawer.Screen name="Geo Location" component={NextScreen} />
       <Drawer.Screen name="RayadosScreen" component={RayadosScreen} />
       <Drawer.Screen name="SocketScreen" component={SocketScreen} />
     </Drawer.Navigator>
@@ -50,7 +50,7 @@ const MenuItems = [
   {
     icon: iconos.ubicacion,
     name: 'Next Screen',
-    title: 'Next Screen',
+    title: 'Geo Location Test',
     route: 'NextScreen',
   },
   {

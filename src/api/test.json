@@ -1,0 +1,108 @@
+[
+    {
+        "id": 1,
+        "FillColor": "#FF0000",
+        "Activo": true,
+        "Id_Lote": 1,
+        "Lote": "Lote 1",
+        "geocoordenadas": [
+            {
+                "id": 1,
+                "Id_Poligono": 1,
+                "lat": "40.7128000000000000",
+                "lng": "-74.0060000000000000",
+                "Activo": true
+            },
+            {
+                "id": 2,
+                "Id_Poligono": 1,
+                "lat": "34.0522000000000000",
+                "lng": "-118.2437000000000000",
+                "Activo": true
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "FillColor": "#FF0000",
+        "Activo": true,
+        "Id_Lote": 1,
+        "Lote": "Lote 1",
+        "geocoordenadas": [
+            {
+                "id": 1,
+                "Id_Poligono": 1,
+                "lat": "40.7128000000000000",
+                "lng": "-74.0060000000000000",
+                "Activo": true
+            },
+            {
+                "id": 2,
+                "Id_Poligono": 1,
+                "lat": "34.0522000000000000",
+                "lng": "-118.2437000000000000",
+                "Activo": true
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "FillColor": "#FF0000",
+        "Activo": true,
+        "Id_Lote": 1,
+        "Lote": "Lote 1",
+        "geocoordenadas": [
+            {
+                "id": 1,
+                "Id_Poligono": 1,
+                "lat": "40.7128000000000000",
+                "lng": "-74.0060000000000000",
+                "Activo": true
+            },
+            {
+                "id": 2,
+                "Id_Poligono": 1,
+                "lat": "34.0522000000000000",
+                "lng": "-118.2437000000000000",
+                "Activo": true
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "FillColor": "#FF0000",
+        "Activo": true,
+        "Id_Lote": 2,
+        "Lote": "Lote 2",
+        "geocoordenadas": [
+            {
+                "id": 1,
+                "Id_Poligono": 2,
+                "lat": "-2.2493261167245824",
+                "lng": "-79.89800889706895",
+                "Activo": true
+            },
+            {
+                "id": 2,
+                "Id_Poligono": 2,
+                "lat": "-2.249422601846622",
+                "lng": "-79.89843536830232",
+                "Activo": true
+            },
+            {
+                "id": 3,
+                "Id_Poligono": 2,
+                "lat": "-2.2490741833203045",
+                "lng": "-79.89848901248261",
+                "Activo": true
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 2,
+                "lat": "-2.249001819462096",
+                "lng": "-79.89806522345826",
+                "Activo": true
+            }
+        ]
+    }
+]
