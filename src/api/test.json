@@ -4,20 +4,35 @@
         "FillColor": "#FF0000",
         "Activo": true,
         "Id_Lote": 1,
-        "Lote": "Lote 1",
+        "Lote": "Apptelink dev",
+        "codigoLote": "AAPDEV",
         "geocoordenadas": [
             {
                 "id": 1,
                 "Id_Poligono": 1,
-                "lat": "40.7128000000000000",
-                "lng": "-74.0060000000000000",
+                "lat": -2.176602847885667,
+                "lng": -79.8796246483898,
                 "Activo": true
             },
             {
                 "id": 2,
                 "Id_Poligono": 1,
-                "lat": "34.0522000000000000",
-                "lng": "-118.2437000000000000",
+                "lat": -2.17655996350385,
+                "lng": -79.8748717740154,
+                "Activo": true
+            },
+            {
+                "id": 3,
+                "Id_Poligono": 1,
+                "lat": -2.1801193630408306,
+                "lng": -79.87531165629385,
+                "Activo": true
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 1,
+                "lat": -2.1794117722365556,
+                "lng": -79.8804722264385,
                 "Activo": true
             }
         ]
@@ -28,19 +43,20 @@
         "Activo": true,
         "Id_Lote": 1,
         "Lote": "Lote 1",
+        "codigoLote": "sdfds",
         "geocoordenadas": [
             {
                 "id": 1,
                 "Id_Poligono": 1,
-                "lat": "40.7128000000000000",
-                "lng": "-74.0060000000000000",
+                "lat": 40.7128000000000000,
+                "lng": -74.0060000000000000,
                 "Activo": true
             },
             {
                 "id": 2,
                 "Id_Poligono": 1,
-                "lat": "34.0522000000000000",
-                "lng": "-118.2437000000000000",
+                "lat": 34.0522000000000000,
+                "lng": -118.2437000000000000,
                 "Activo": true
             }
         ]
@@ -72,36 +88,41 @@
         "id": 2,
         "FillColor": "#FF0000",
         "Activo": true,
-        "Id_Lote": 2,
-        "Lote": "Lote 2",
+        "Id_Lote": 1875,
+        "Lote": "Test EEUU",
+        "codigoLote": "EEUU_SF_522",
         "geocoordenadas": [
             {
                 "id": 1,
                 "Id_Poligono": 2,
-                "lat": "-2.2493261167245824",
-                "lng": "-79.89800889706895",
-                "Activo": true
+                "Activo": true,
+                "lat": 56.06494732920163,
+                "lng": -140.15204710719584,
+                "fillColor": "#ff0000"
             },
             {
                 "id": 2,
                 "Id_Poligono": 2,
-                "lat": "-2.249422601846622",
-                "lng": "-79.89843536830232",
-                "Activo": true
+                "Activo": true,
+                "lat": 56.45547431020598,
+                "lng": -50.15204710719584,
+                "fillColor": "#ff0000"
             },
             {
                 "id": 3,
                 "Id_Poligono": 2,
-                "lat": "-2.2490741833203045",
-                "lng": "-79.89848901248261",
-                "Activo": true
+                "Activo": true,
+                "lat": 20.785330162625055,
+                "lng": -54.72235960719584,
+                "fillColor": "#ff0000"
             },
             {
                 "id": 4,
                 "Id_Poligono": 2,
-                "lat": "-2.249001819462096",
-                "lng": "-79.89806522345826",
-                "Activo": true
+                "Activo": true,
+                "lat": 17.464319755322283,
+                "lng": -139.09735960719584,
+                "fillColor": "#ff0000"
             }
         ]
     }

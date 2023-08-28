@@ -2,9 +2,10 @@ import {Text} from 'react-native';
 import _lotes from './../api/test.json';
 import React, {useState, useEffect} from 'react';
 import Geolocation from 'react-native-geolocation-service';
+import {IPoligono, IGeocoordenada,ILocation,IRegion } from './../interfaces/ApiInterface'
 
 export const NextScreen = () => {
-  const [location, setLocation] = useState<any>(); //definir un cuerpo o interfaz para location
+  const [location, setLocation] = useState<ILocation>(); //definir un cuerpo o interfaz para location
 
   useEffect(() => {
     getLocation2();
@@ -43,7 +44,7 @@ export const NextScreen = () => {
   const getLocation2 = async () => {
     Geolocation.getCurrentPosition(
       async position => {
-        const locationData = position.coords;
+        const locationData:Geolocation.GeoCoordinates = position.coords;
         locationData.region = _lotes //en la interfaz GeoCoordinates por parte de GeoLocation no se encuentra region, por eso este error
           .filter(item =>
             pointInRegion(
@@ -55,7 +56,12 @@ export const NextScreen = () => {
               })),
             ),
           )
-          .map(item => item.Lote);
+          .map((item )=> ({
+            Lote: item.Lote,
+            Id: item.Id_Lote,
+            Cod: item.codigoLote
+
+            }));
         setLocation(locationData);
       },
       error => {
