@@ -1,5 +1,13 @@
 import React, {useContext} from 'react';
-import {View, Keyboard, Text, Image, useWindowDimensions,StyleSheet,KeyboardAvoidingView} from 'react-native';
+import {
+  View,
+  Keyboard,
+  Text,
+  Image,
+  useWindowDimensions,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {colores} from '../theme/appTheme';
 import {AuthContext} from '../context/AuthContext';
 import {useForm} from '../hooks/useForm';
@@ -14,6 +22,8 @@ let user = '';
 let pass = '';
 
 if (__DEV__) {
+  //user = 'acuenca';
+  //pass = 'Coyote2022';
   user = 'jpalma@apptelink.com';
   pass = 'Prueba2023*+';
 }
@@ -64,7 +74,7 @@ export const LoginScreen = () => {
       <ButtonWithText
         anyfunction={() => Login()}
         title={'INICIAR SESIÓN'}></ButtonWithText>
-       <View
+      <View
         style={{
           alignSelf: 'flex-end',
           alignItems: 'flex-end',
@@ -81,7 +91,7 @@ export const LoginScreen = () => {
               CommonActions.navigate('RecoveryPasswordScreen'),
             )
           }></TextButton>
-      </View> 
+      </View>
       <View style={styles.versionContainer}>
         <Text style={styles.versionText}>
           Versión: {DeviceInfo.getVersion()}
