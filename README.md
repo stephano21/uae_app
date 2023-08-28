@@ -1,3 +1,10 @@
+# Important
+**Add line in GeoCoordinates**
+```bash
+# In   export interface GeoCoordinates {
+~/your_proyect/node_modules/react-native-geolocation-service/index.d.ts
+```
+<pre>region:IRegion[]| mull;</pre>
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
