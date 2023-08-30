@@ -36,19 +36,12 @@ export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}>
-      {hasBack ? (
+      {hasBack && (
         <TouchableOpacity
           activeOpacity={0.6}
           onPress={() => navigation.goBack()}
           style={{height: 50, width: 50, ...styles.centerItems}}>
           <Icon name={iconos.atras} size={30} color={colores.primario} />
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-          style={{height: 50, width: 50, ...styles.centerItems}}>
-          <Icon name={iconos.menu} size={30} color={colores.primario} />
         </TouchableOpacity>
       )}
       {title.length === 0 ? (

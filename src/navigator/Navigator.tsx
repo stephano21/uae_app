@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {Header, createStackNavigator} from '@react-navigation/stack';
 import {LoginScreen} from '../screens/LoginScreen';
 import {AuthContext} from '../context/AuthContext';
 import {LoadingScreen} from '../screens/LoadingScreen';
@@ -10,6 +10,10 @@ import {colores} from '../theme/appTheme';
 import {StackHeader} from './StackHeader';
 import {RegisterScreen} from '../screens/RegisterScreen';
 import {RecoveryPasswordScreen} from '../screens/RecoveryPasswordScreen';
+import {HomeScreen} from '../screens/HomeScreen';
+import {NextScreen} from '../screens/NextScreen';
+import {DrawerHeader} from './DrawerHeader';
+import {Tabs} from './Tabs';
 
 const Stack = createStackNavigator();
 export const Navigator = () => {
@@ -45,7 +49,9 @@ export const Navigator = () => {
               name="RegisterScreen"
               component={RegisterScreen}
               options={{
-                header: props => <StackHeader title={'Formulario de registro'}></StackHeader>,
+                header: props => (
+                  <StackHeader title={'Formulario de registro'}></StackHeader>
+                ),
               }}
             />
             <Stack.Screen
@@ -63,8 +69,8 @@ export const Navigator = () => {
             <WelcomeScreen></WelcomeScreen>
           ) : (
             <>
-              <MenuLateral></MenuLateral>
-              {/* <>
+              {/* <MenuLateral></MenuLateral> */}
+              <>
                 <Stack.Navigator
                   screenOptions={{
                     headerShown: true,
@@ -77,13 +83,21 @@ export const Navigator = () => {
                     },
                   }}>
                   <Stack.Screen
+                    name="Tabs"
+                    component={Tabs}
+                    options={{
+                      header: props => <DrawerHeader title={''}></DrawerHeader>,
+                    }}
+                  />
+                  <Stack.Screen
                     name="HomeScreen"
                     component={HomeScreen}
-                    options={{
-                      header: props => (
-                        <StackHeader title={'Mis Entregas'}></StackHeader>
-                      ),
-                    }}
+                    options={{headerShown: false}}
+                    // options={{
+                    //   header: props => (
+                    //     <StackHeader title={'Mis Entregas'}></StackHeader>
+                    //   ),
+                    // }}
                   />
                   <Stack.Screen
                     name="NextScreen"
@@ -95,7 +109,7 @@ export const Navigator = () => {
                     }}
                   />
                 </Stack.Navigator>
-              </> */}
+              </>
             </>
           )}
         </>
