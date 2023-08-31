@@ -66,21 +66,47 @@
         "FillColor": "#FF0000",
         "Activo": true,
         "Id_Lote": 1,
-        "Lote": "Lote 1",
+        "Lote": "Casa Jeff",
         "geocoordenadas": [
             {
                 "id": 1,
-                "Id_Poligono": 1,
-                "lat": "40.7128000000000000",
-                "lng": "-74.0060000000000000",
-                "Activo": true
+                "Id_Poligono": 2,
+                "Activo": true,
+                "lat": -2.0591432284624815,
+                "lng": -79.98298102920245,
+                "fillColor": "#ff0000"
             },
             {
                 "id": 2,
-                "Id_Poligono": 1,
-                "lat": "34.0522000000000000",
-                "lng": "-118.2437000000000000",
-                "Activo": true
+                "Id_Poligono": 2,
+                "Activo": true,
+                "lat": -2.060322637919807,
+                "lng": -79.97914010589312,
+                "fillColor": "#ff0000"
+            },
+            {
+                "id": 3,
+                "Id_Poligono": 2,
+                "Activo": true,
+                "lat": -2.063732198528109,
+                "lng": -79.98021298949908,
+                "fillColor": "#ff0000"
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 2,
+                "Activo": true,
+                "lat": -2.0635392047265015,
+                "lng": -79.98220855300616,
+                "fillColor": "#ff0000"
+            },
+            {
+                "id": 5,
+                "Id_Poligono": 2,
+                "Activo": true,
+                "lat": -2.0622954663322175,
+                "lng": -79.98390370910357,
+                "fillColor": "#ff0000"
             }
         ]
     },
