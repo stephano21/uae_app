@@ -9,31 +9,35 @@
         "geocoordenadas": [
             {
                 "id": 1,
-                "Id_Poligono": 1,
-                "lat": -2.176602847885667,
-                "lng": -79.8796246483898,
-                "Activo": true
+                "Id_Poligono": 2,
+                "Activo": true,
+                "lat": -2.176818878337215,
+                "lng": -79.87952285254822,
+                "fillColor": "#211eb3"
             },
             {
                 "id": 2,
-                "Id_Poligono": 1,
-                "lat": -2.17655996350385,
-                "lng": -79.8748717740154,
-                "Activo": true
+                "Id_Poligono": 2,
+                "Activo": true,
+                "lat": -2.1769046470848945,
+                "lng": -79.87259202445374,
+                "fillColor": "#211eb3"
             },
             {
                 "id": 3,
-                "Id_Poligono": 1,
-                "lat": -2.1801193630408306,
-                "lng": -79.87531165629385,
-                "Activo": true
+                "Id_Poligono": 2,
+                "Activo": true,
+                "lat": -2.181085867612196,
+                "lng": -79.87463050330506,
+                "fillColor": "#211eb3"
             },
             {
                 "id": 4,
-                "Id_Poligono": 1,
-                "lat": -2.1794117722365556,
-                "lng": -79.8804722264385,
-                "Activo": true
+                "Id_Poligono": 2,
+                "Activo": true,
+                "lat": -2.179777897310631,
+                "lng": -79.88001637900696,
+                "fillColor": "#211eb3"
             }
         ]
     },
