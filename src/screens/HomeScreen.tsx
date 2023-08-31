@@ -9,6 +9,8 @@ import {SearchInput} from '../components/SearchInput';
 import {Base64Img} from '../assets/ImagesBase64';
 import {useRequest} from '../api/useRequest';
 import {ApiEndpoints} from '../api/routes';
+import {ButtonWithText} from '../components/ButtonWithText';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 
 const AvisoSelector = [
   {
@@ -49,6 +51,7 @@ export const HomeScreen = () => {
   const {showDocument} = useContext(DocumentViewContext);
   const {showMap} = useContext(MapContext);
   const {postRequest} = useRequest();
+  const navigation = useNavigation();
 
   const pruebafuncion = () => {
     console.log('prueba de OkFunction sin parametro');
@@ -146,6 +149,13 @@ export const HomeScreen = () => {
         catalog={AvisoSelector}
         textCompare={item => [item.nombre, item.codigo, item.descripcion]}
         result={items => console.log(items)}></SearchInput>
+
+      <ButtonWithText
+        anyfunction={() =>
+          navigation.dispatch(CommonActions.navigate('NextScreen'))
+        }
+        title="Pantalla Location"
+      />
     </BaseScreen>
   );
 };

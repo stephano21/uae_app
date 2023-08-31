@@ -2,36 +2,31 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {colores} from '../theme/appTheme';
-import {Platform} from 'react-native';
+import {Platform, useWindowDimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {HomeScreen} from '../screens/HomeScreen';
-import {NextScreen} from '../screens/NextScreen';
 import {iconos} from '../theme/appTheme';
+import {Proceso} from '../screens/Proceso';
+import {NextScreen} from '../screens/NextScreen';
 
 const TabOptions = [
   {
     name: 'HomeScreen',
     title: 'Inicio',
     icon: iconos.home,
-    component: HomeScreen,
-  },
-  {
-    name: 'NextScreen',
-    title: 'Busqueda',
-    icon: iconos.lupa,
-    component: NextScreen,
-  },
-  {
-    name: 'Next2Screen',
-    title: 'Favoritos',
-    icon: iconos.favorito,
     component: NextScreen,
   },
   {
     name: 'Next3Screen',
     title: 'Perfil',
-    icon: 'aperture-outline',
-    component: NextScreen,
+    icon: iconos.perfilOutline,
+    component: Proceso,
+  },
+  {
+    name: 'Next2Screen',
+    title: 'Texto',
+    icon: iconos.papel,
+    component: Proceso,
   },
 ];
 
@@ -46,11 +41,13 @@ export const Tabs = () => {
 const TabAndroid = createMaterialBottomTabNavigator();
 
 const TabsAndroid = () => {
+  const {width, height} = useWindowDimensions();
+
   return (
     <TabAndroid.Navigator
       sceneAnimationEnabled={true}
       barStyle={{backgroundColor: colores.blanco}}
-      activeColor={colores.secundario}
+      activeColor={colores.primario}
       inactiveColor={colores.plomo}>
       {TabOptions.map(({name, title, icon, component}, index) => (
         <TabAndroid.Screen
@@ -58,8 +55,12 @@ const TabsAndroid = () => {
           name={name}
           options={{
             title,
-            tabBarIcon: () => (
-              <Icon name={icon} size={25} color={colores.secundario} />
+            tabBarIcon: ({focused}) => (
+              <Icon
+                name={icon}
+                size={28}
+                color={focused ? colores.primario : colores.plomo}
+              />
             ),
           }}
           component={component}
