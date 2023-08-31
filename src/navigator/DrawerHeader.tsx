@@ -10,6 +10,8 @@ import {
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {LoaderContext} from '../context/LoaderContext';
 import {sleep} from '../helpers/sleep';
+import {AuthContext} from '../context/AuthContext';
+import {AlertContext} from '../context/AlertContext';
 
 interface Props {
   hasBack?: boolean;
@@ -18,12 +20,16 @@ interface Props {
 
 export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
   const navigation = useNavigation<DrawerNavigationProp<ParamListBase>>();
-  const {setIsFetching} = useContext(LoaderContext);
+  const {logOut} = useContext(AuthContext);
+  const {ShowAlert} = useContext(AlertContext);
+  let username = 'React Native';
 
-  const Catalogos = async () => {
-    setIsFetching(true);
-    await sleep(2);
-    setIsFetching(false);
+  const logout = () => {
+    ShowAlert('yesno', {
+      title: 'Cerrar Sesión',
+      message: '¿Desea cerrar sesión?',
+      OkFunction: logOut,
+    });
   };
 
   return (
@@ -36,13 +42,15 @@ export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}>
-      {hasBack && (
+      {hasBack ? (
         <TouchableOpacity
           activeOpacity={0.6}
           onPress={() => navigation.goBack()}
           style={{height: 50, width: 50, ...styles.centerItems}}>
           <Icon name={iconos.atras} size={30} color={colores.primario} />
         </TouchableOpacity>
+      ) : (
+        <></>
       )}
       {title.length === 0 ? (
         <Image
@@ -59,10 +67,10 @@ export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
         </Text>
       )}
       <TouchableOpacity
-        onPress={() => Catalogos()}
+        onPress={() => logOut()}
         activeOpacity={0.6}
         style={{height: 50, width: 50, ...styles.centerItems}}>
-        <Icon name={iconos.recargar} size={30} color={colores.primario} />
+        <Icon name={iconos.logout} size={30} color={colores.primario} />
       </TouchableOpacity>
     </View>
   );

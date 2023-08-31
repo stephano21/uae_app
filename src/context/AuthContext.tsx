@@ -49,7 +49,7 @@ export const AuthProvider = ({children}: any) => {
         ? GetJWTInfo().then(jwtInfo => {
             setJWTInfo(jwtInfo);
             setstatus('authenticated');
-            startConnection(jwtInfo.token, jwtInfo.userName);
+            //startConnection(jwtInfo.token, jwtInfo.userName);
           })
         : setstatus('notauthenticated'),
     );
@@ -126,7 +126,7 @@ export const AuthProvider = ({children}: any) => {
       .then(jwtInfo => {
         setstatus('authenticated');
         SaveJWTInfo(jwtInfo);
-        startConnection(jwtInfo.token, jwtInfo.userName);
+        //startConnection(jwtInfo.token, jwtInfo.userName);
       })
       .catch(console.log);
   };

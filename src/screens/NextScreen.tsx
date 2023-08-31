@@ -2,18 +2,17 @@ import {Text} from 'react-native';
 import _lotes from './../api/test.json';
 import React, {useState, useEffect} from 'react';
 import Geolocation from 'react-native-geolocation-service';
-import {IPoligono, IGeocoordenada,ILocation,IRegion } from './../interfaces/ApiInterface'
+import {ILocation} from './../interfaces/ApiInterface';
+import {colores} from '../theme/appTheme';
 
 export const NextScreen = () => {
   const [location, setLocation] = useState<ILocation>(); //definir un cuerpo o interfaz para location
-
   useEffect(() => {
     getLocation2();
   }, []);
 
   const pointInRegion = (lat: number, lon: number, vertices: any[]) => {
     // Convertir las coordenadas a flotantes
-    console.log(vertices);
     lat = parseFloat(lat.toString());
     lon = parseFloat(lon.toString());
     // Inicializar el contador
@@ -44,7 +43,7 @@ export const NextScreen = () => {
   const getLocation2 = async () => {
     Geolocation.getCurrentPosition(
       async position => {
-        const locationData:Geolocation.GeoCoordinates = position.coords;
+        const locationData: any = position.coords;
         locationData.region = _lotes //en la interfaz GeoCoordinates por parte de GeoLocation no se encuentra region, por eso este error
           .filter(item =>
             pointInRegion(
@@ -56,12 +55,11 @@ export const NextScreen = () => {
               })),
             ),
           )
-          .map((item )=> ({
+          .map(item => ({
             Lote: item.Lote,
             Id: item.Id_Lote,
-            Cod: item.codigoLote
-
-            }));
+            Cod: item.codigoLote,
+          }));
         setLocation(locationData);
       },
       error => {
@@ -74,7 +72,9 @@ export const NextScreen = () => {
   return (
     <>
       {/* <StatusBar /> usa librería de expo xd*/}
-      <Text>{JSON.stringify(location, null, 30)}</Text>
+      <Text style={{color: colores.negro}}>
+        {JSON.stringify(location, null, 3)}
+      </Text>
     </>
   );
 };
