@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, Text} from 'react-native';
 import {ButtonWithText} from '../components/ButtonWithText';
 import {PermissionsContext} from '../context/PermissionsContext';
 import {styles, colores} from '../theme/appTheme';
@@ -16,7 +16,7 @@ export const WelcomeScreen = () => {
         justifyContent: 'space-evenly',
       }}>
       <Image
-        source={require('../assets/logo.gif')}
+        source={require('../assets/logoUAE.png')}
         style={{
           height: 200,
           width: 300,

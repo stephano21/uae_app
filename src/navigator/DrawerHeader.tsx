@@ -22,7 +22,6 @@ export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
   const navigation = useNavigation<DrawerNavigationProp<ParamListBase>>();
   const {logOut} = useContext(AuthContext);
   const {ShowAlert} = useContext(AlertContext);
-  let username = 'React Native';
 
   const logout = () => {
     ShowAlert('yesno', {
@@ -39,6 +38,14 @@ export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
         width: '100%',
         backgroundColor: colores.blanco,
         ...styles.centerItems,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}>
@@ -57,7 +64,7 @@ export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
           source={require('../assets/banner.png')}
           style={{
             height: '100%',
-            width: '50%',
+            width: '70%',
             resizeMode: 'contain',
             alignSelf: 'center',
           }}></Image>

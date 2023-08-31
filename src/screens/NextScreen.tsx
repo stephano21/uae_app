@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import {ILocation} from './../interfaces/ApiInterface';
 import {colores} from '../theme/appTheme';
+import {BaseScreen} from '../Template/BaseScreen';
 
 export const NextScreen = () => {
   const [location, setLocation] = useState<ILocation>(); //definir un cuerpo o interfaz para location
@@ -70,11 +71,10 @@ export const NextScreen = () => {
   };
 
   return (
-    <>
-      {/* <StatusBar /> usa librería de expo xd*/}
+    <BaseScreen>
       <Text style={{color: colores.negro}}>
         {JSON.stringify(location, null, 3)}
       </Text>
-    </>
+    </BaseScreen>
   );
 };
