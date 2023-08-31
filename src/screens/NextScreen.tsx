@@ -2,7 +2,7 @@ import {Text} from 'react-native';
 import _lotes from './../api/test.json';
 import React, {useState, useEffect} from 'react';
 import Geolocation from 'react-native-geolocation-service';
-import {IPoligono, IGeocoordenada,ILocation,IRegion } from './../interfaces/ApiInterface'
+import {IPoligono, IGeocoordenada,ILocation,IRegion,IVertices} from './../interfaces/ApiInterface'
 
 export const NextScreen = () => {
   const [location, setLocation] = useState<ILocation>(); //definir un cuerpo o interfaz para location

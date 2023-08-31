@@ -78,3 +78,7 @@ export interface IRegion{
   Cod:string,
   Name:string,
 }
+export interface IVertices{
+  latitude: number;
+  longitude: number;
+}
