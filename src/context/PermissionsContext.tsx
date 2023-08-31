@@ -73,7 +73,7 @@ export const PermissionsProvider = ({children}: any) => {
     const permissionStatuses = await Promise.all(
       permissions!.map(async permission => await check(permission)),
     );
-    console.log(permissionStatuses);
+    //console.log(permissionStatuses);
     if (permissionStatuses.every(status => status === 'granted')) {
       setpermissions('granted');
     } else {

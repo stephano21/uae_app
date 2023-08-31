@@ -2,14 +2,8 @@ import React, {useContext} from 'react';
 import {View, TouchableOpacity, Image, Text} from 'react-native';
 import {colores, iconos, styles} from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {
-  DrawerActions,
-  ParamListBase,
-  useNavigation,
-} from '@react-navigation/native';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {LoaderContext} from '../context/LoaderContext';
-import {sleep} from '../helpers/sleep';
 import {AuthContext} from '../context/AuthContext';
 import {AlertContext} from '../context/AlertContext';
 
@@ -74,7 +68,7 @@ export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
         </Text>
       )}
       <TouchableOpacity
-        onPress={() => logOut()}
+        onPress={() => logout()}
         activeOpacity={0.6}
         style={{height: 50, width: 50, ...styles.centerItems}}>
         <Icon name={iconos.logout} size={30} color={colores.primario} />
