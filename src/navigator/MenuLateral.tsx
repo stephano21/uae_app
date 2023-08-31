@@ -12,7 +12,6 @@ import {DrawerHeader} from './DrawerHeader';
 import {AlertContext} from '../context/AlertContext';
 import {NextScreen} from '../screens/NextScreen';
 import {Tabs} from './Tabs';
-import {RayadosScreen} from '../screens/RayadosScreen';
 import {SocketScreen} from '../screens/SocketScreen';
 
 const Drawer = createDrawerNavigator();
@@ -33,7 +32,6 @@ export const MenuLateral = () => {
       }}>
       <Drawer.Screen name="Tabs" component={Tabs} />
       <Drawer.Screen name="Geo Location" component={NextScreen} />
-      <Drawer.Screen name="RayadosScreen" component={RayadosScreen} />
       <Drawer.Screen name="SocketScreen" component={SocketScreen} />
     </Drawer.Navigator>
   );

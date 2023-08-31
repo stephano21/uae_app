@@ -80,12 +80,12 @@ export interface ILocation extends GeoCoordinates {
   region: IRegion[];
 }
 
-export interface IRegion{
-  id:number,
-  Cod:string,
-  Name:string,
+export interface IRegion {
+  Id: number;
+  Cod: string;
+  Lote: string;
 }
-export interface IVertices{
+export interface IVertices {
   latitude: number;
   longitude: number;
 }

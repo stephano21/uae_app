@@ -17,15 +17,15 @@ const TabOptions = [
     component: NextScreen,
   },
   {
-    name: 'Next3Screen',
-    title: 'Perfil',
-    icon: iconos.perfilOutline,
+    name: 'Next2Screen',
+    title: 'Lecturas',
+    icon: iconos.ordenDeTrabajo,
     component: Proceso,
   },
   {
-    name: 'Next2Screen',
-    title: 'Texto',
-    icon: iconos.papel,
+    name: 'Next3Screen',
+    title: 'Perfil',
+    icon: iconos.perfilOutline,
     component: Proceso,
   },
 ];
