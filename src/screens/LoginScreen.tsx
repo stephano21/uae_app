@@ -59,7 +59,7 @@ export const LoginScreen = () => {
           fontSize: 30,
           textAlign: 'center',
         }}>
-        Texto Random
+        INICIAR SESIÓN
       </Text>
       <InputForm
         placeholder={'Usuario'}

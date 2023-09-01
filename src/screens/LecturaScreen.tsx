@@ -1,10 +1,9 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {CommonActions, useNavigation, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';
 import {IRegion} from '../interfaces/ApiInterface';
 import {colores, styles} from '../theme/appTheme';
-import {useForm} from '../hooks/useForm';
 import {InputForm} from '../components/InputForm';
 import {Card} from 'react-native-paper';
 import {useWindowDimensions} from 'react-native';
