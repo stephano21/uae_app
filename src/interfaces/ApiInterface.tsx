@@ -45,7 +45,7 @@ export interface ILectura {
   GR5: number;
   Cherelles: null | number;
   Observacion: string;
-  FechaVisita: Date;// esta fecha se envia por debajo no la selecciona el usuario (borraq el comentario xd)
+  FechaVisita: Date;
   Activo: boolean;
 }
 export interface IPoligono {
