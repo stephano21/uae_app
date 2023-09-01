@@ -38,17 +38,14 @@ export interface ILectura {
   E3: number;
   E4: number;
   E5: number;
-  Id_Planta: number;
-  Monilla: null | number;
-  Phythptora: null | number;
-  Colletotrichum: null | number;
-  Corynespora: null | number;
-  Lasodiplodia: null | number;
+  GR1: number;
+  GR2: number;
+  GR3: number;
+  GR4: number;
+  GR5: number;
   Cherelles: null | number;
-  Insectos: null | number;
-  Animales: null | number;
   Observacion: string;
-  FechaVisita: Date;
+  FechaVisita: Date;// esta fecha se envia por debajo no la selecciona el usuario (borraq el comentario xd)
   Activo: boolean;
 }
 export interface IPoligono {
