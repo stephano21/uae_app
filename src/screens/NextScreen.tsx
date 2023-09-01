@@ -21,9 +21,10 @@ export const NextScreen = () => {
         location?.region.map((a, index) => (
           <ButtonWithText
             key={index}
-            anyfunction={() =>
-              navigation.dispatch(CommonActions.navigate('LecturaScreen', {a}))
-            }
+            anyfunction={() => {
+              console.log(a);
+              navigation.dispatch(CommonActions.navigate('LecturaScreen', {a}));
+            }}
             title={a.Lote}
           />
         ))

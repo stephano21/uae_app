@@ -1740,6 +1740,13 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
+"@react-native-community/datetimepicker@>=6.7.0":
+  version "7.5.0"
+  resolved "https://registry.npmjs.org/@react-native-community/datetimepicker/-/datetimepicker-7.5.0.tgz"
+  integrity sha512-nwMje384ib8017P4phJ1v+Y9xkTEGiilV2uoGjFqCNhMFUeBG7kaVy9WKfS1Y0joDlOk4BISm3+3AP4Es5lYZQ==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/netinfo@^9.4.1":
   version "9.4.1"
   resolved "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-9.4.1.tgz"
@@ -6202,6 +6209,13 @@ react-native-maps@^1.7.1:
   dependencies:
     "@types/geojson" "^7946.0.10"
 
+react-native-modal-datetime-picker@^17.1.0:
+  version "17.1.0"
+  resolved "https://registry.npmjs.org/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-17.1.0.tgz"
+  integrity sha512-jfTwfaCLtBffYbQ+pOGFLM+J5HmUh3vb9rT0JrrQPjxzecdc8pNYreB1c96+mVuq8bDCvaCdIeuEsslTqLJL0Q==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-pager-view@*, react-native-pager-view@^6.2.0:
   version "6.2.0"
   resolved "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-6.2.0.tgz"
@@ -6296,7 +6310,7 @@ react-native-webview@^13.3.1:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
-react-native@*, "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@>= 0.64.3", react-native@>=0.46, react-native@>=0.57, react-native@>=0.59, react-native@>=0.63.3, react-native@>=0.64, react-native@0.72.3:
+react-native@*, "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@>= 0.64.3", react-native@>=0.46, react-native@>=0.57, react-native@>=0.59, react-native@>=0.63.3, react-native@>=0.64, react-native@>=0.65.0, react-native@0.72.3:
   version "0.72.3"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.72.3.tgz"
   integrity sha512-QqISi+JVmCssNP2FlQ4MWhlc4O/I00MRE1/GClvyZ8h/6kdsyk/sOirkYdZqX3+DrJfI3q+OnyMnsyaXIQ/5tQ==

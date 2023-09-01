@@ -28,7 +28,7 @@ export const StackHeader = ({title}: Props) => {
         style={{height: 50, width: 50, ...styles.centerItems}}>
         <Icon name={iconos.atras} size={30} color={colores.blanco} />
       </TouchableOpacity>
-      <Text style={{...styles.textTitle}}>{title + ' ' + appinfo.version}</Text>
+      <Text style={{...styles.textTitle}}>{title}</Text>
       <View style={{height: 50, width: 50}}></View>
     </View>
   );
