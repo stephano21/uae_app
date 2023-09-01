@@ -9,7 +9,7 @@
         "geocoordenadas": [
             {
                 "id": 1,
-                "Id_Poligono": 2,
+                "Id_Poligono": 1,
                 "Activo": true,
                 "lat": -2.176818878337215,
                 "lng": -79.87952285254822,
@@ -17,7 +17,7 @@
             },
             {
                 "id": 2,
-                "Id_Poligono": 2,
+                "Id_Poligono": 1,
                 "Activo": true,
                 "lat": -2.1769046470848945,
                 "lng": -79.87259202445374,
@@ -25,7 +25,7 @@
             },
             {
                 "id": 3,
-                "Id_Poligono": 2,
+                "Id_Poligono": 1,
                 "Activo": true,
                 "lat": -2.181085867612196,
                 "lng": -79.87463050330506,
@@ -33,7 +33,7 @@
             },
             {
                 "id": 4,
-                "Id_Poligono": 2,
+                "Id_Poligono": 1,
                 "Activo": true,
                 "lat": -2.179777897310631,
                 "lng": -79.88001637900696,
@@ -42,7 +42,7 @@
         ]
     },
     {
-        "id": 1,
+        "id": 2,
         "FillColor": "#FF0000",
         "Activo": true,
         "Id_Lote": 1,
@@ -51,14 +51,14 @@
         "geocoordenadas": [
             {
                 "id": 1,
-                "Id_Poligono": 1,
+                "Id_Poligono": 2,
                 "lat": 40.7128000000000000,
                 "lng": -74.0060000000000000,
                 "Activo": true
             },
             {
                 "id": 2,
-                "Id_Poligono": 1,
+                "Id_Poligono": 2,
                 "lat": 34.0522000000000000,
                 "lng": -118.2437000000000000,
                 "Activo": true
@@ -66,7 +66,7 @@
         ]
     },
     {
-        "id": 1,
+        "id": 3,
         "FillColor": "#FF0000",
         "Activo": true,
         "Id_Lote": 1,
@@ -74,7 +74,7 @@
         "geocoordenadas": [
             {
                 "id": 1,
-                "Id_Poligono": 2,
+                "Id_Poligono": 3,
                 "Activo": true,
                 "lat": -2.0591432284624815,
                 "lng": -79.98298102920245,
@@ -82,7 +82,7 @@
             },
             {
                 "id": 2,
-                "Id_Poligono": 2,
+                "Id_Poligono": 3,
                 "Activo": true,
                 "lat": -2.060322637919807,
                 "lng": -79.97914010589312,
@@ -90,7 +90,7 @@
             },
             {
                 "id": 3,
-                "Id_Poligono": 2,
+                "Id_Poligono": 3,
                 "Activo": true,
                 "lat": -2.063732198528109,
                 "lng": -79.98021298949908,
@@ -98,7 +98,7 @@
             },
             {
                 "id": 4,
-                "Id_Poligono": 2,
+                "Id_Poligono": 3,
                 "Activo": true,
                 "lat": -2.0635392047265015,
                 "lng": -79.98220855300616,
@@ -106,7 +106,7 @@
             },
             {
                 "id": 5,
-                "Id_Poligono": 2,
+                "Id_Poligono": 3,
                 "Activo": true,
                 "lat": -2.0622954663322175,
                 "lng": -79.98390370910357,
@@ -115,7 +115,7 @@
         ]
     },
     {
-        "id": 2,
+        "id": 4,
         "FillColor": "#FF0000",
         "Activo": true,
         "Id_Lote": 1875,
@@ -124,7 +124,7 @@
         "geocoordenadas": [
             {
                 "id": 1,
-                "Id_Poligono": 2,
+                "Id_Poligono": 4,
                 "Activo": true,
                 "lat": 56.06494732920163,
                 "lng": -140.15204710719584,
@@ -132,7 +132,7 @@
             },
             {
                 "id": 2,
-                "Id_Poligono": 2,
+                "Id_Poligono": 4,
                 "Activo": true,
                 "lat": 56.45547431020598,
                 "lng": -50.15204710719584,
@@ -140,7 +140,7 @@
             },
             {
                 "id": 3,
-                "Id_Poligono": 2,
+                "Id_Poligono": 4,
                 "Activo": true,
                 "lat": 20.785330162625055,
                 "lng": -54.72235960719584,
@@ -148,12 +148,286 @@
             },
             {
                 "id": 4,
-                "Id_Poligono": 2,
+                "Id_Poligono": 4,
                 "Activo": true,
                 "lat": 17.464319755322283,
                 "lng": -139.09735960719584,
                 "fillColor": "#ff0000"
             }
+        ]
+    },
+    {
+        "id": 5,
+        "FillColor": "#FF0000",
+        "Activo": true,
+        "Id_Lote": 121,
+        "Lote": "Esculela com pt1",
+        "codigoLote": "UAE_ESC_COMP",
+        "geocoordenadas": [
+            {
+                "id": 1,
+                "Id_Poligono": 5,
+                "Activo": true,
+                "lat": -2.2396355139960913,
+                "lng": -79.89370029358865,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 2,
+                "Id_Poligono": 5,
+                "Activo": true,
+                "lat": -2.239639534236292,
+                "lng": -79.8935648420334,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 3,
+                "Id_Poligono": 5,
+                "Activo": true,
+                "lat": -2.23981910495376,
+                "lng": -79.89356350092889,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 5,
+                "Activo": true,
+                "lat": -2.2398043640747884,
+                "lng": -79.89370699911119,
+                "fillColor": "#00ff04"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "FillColor": "#FF0000",
+        "Activo": true,
+        "Id_Lote": 122,
+        "Lote": "Facultad UAE",
+        "codigoLote": "UAE_FAC",
+        "geocoordenadas": [
+            {
+                "id": 1,
+                "Id_Poligono": 6,
+                "Activo": true,
+                "lat": -2.239808928796995,
+                "lng": -79.89340692722318,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 2,
+                "Id_Poligono": 6,
+                "Activo": true,
+                "lat": -2.2402297138277545,
+                "lng": -79.89342436158178,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 3,
+                "Id_Poligono": 6,
+                "Activo": true,
+                "lat": -2.240239094384389,
+                "lng": -79.89316955172536,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 6,
+                "Activo": true,
+                "lat": -2.2398223295960182,
+                "lng": -79.89316284620283,
+                "fillColor": "#00ff04"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "FillColor": "#FF0000",
+        "Activo": true,
+        "Id_Lote": 123,
+        "Lote": "Investigación UAE",
+        "codigoLote": "UAE_INV",
+        "geocoordenadas": [
+            {
+                "id": 4,
+                "Id_Poligono": 7,
+                "Activo": true,
+                "lat": -2.24030648040668,
+                "lng": -79.89488293040097,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 7,
+                "Activo": true,
+                "lat": -2.240260917704562,
+                "lng": -79.89456777084172,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 7,
+                "Activo": true,
+                "lat": -2.240484710963083,
+                "lng": -79.89453156102002,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 7,
+                "Activo": true,
+                "lat": -2.2405007919144713,
+                "lng": -79.89458654630482,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 7,
+                "Activo": true,
+                "lat": -2.240437808187187,
+                "lng": -79.89459459293187,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 7,
+                "Activo": true,
+                "lat": -2.2404806907252106,
+                "lng": -79.89483599174321,
+                "fillColor": "#00ff04"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "FillColor": "#FF0000",
+        "Activo": true,
+        "Id_Lote": 124,
+        "Lote": "Another UAE",
+        "codigoLote": "UAE_anthrer",
+        "geocoordenadas": [
+            {
+                "id": 1,
+                "Id_Poligono": 8,
+                "Activo": true,
+                "lat": -2.2395279747139334,
+                "lng": -79.89368100016573,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 2,
+                "Id_Poligono": 8,
+                "Activo": true,
+                "lat": -2.2395293147940976,
+                "lng": -79.89355761855104,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 3,
+                "Id_Poligono": 8,
+                "Activo": true,
+                "lat": -2.239639201363434,
+                "lng": -79.8935683473871,
+                "fillColor": "#00ff04"
+            },
+            {
+                "id": 4,
+                "Id_Poligono": 8,
+                "Activo": true,
+                "lat": -2.239631160883033,
+                "lng": -79.89368368237474,
+                "fillColor": "#00ff04"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "FillColor": "#FF0000",
+        "Activo": true,
+        "Id_Lote": 124,
+        "Lote": "Pileta UAE",
+        "codigoLote": "UAE_Pileta",
+        "geocoordenadas": [
+            {
+                "id": 1,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.239803809428595,
+                "lng": -79.89380799552656,
+                "fillColor": "#4dff00"
+             },
+             {
+                "id": 2,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.2398011292687623,
+                "lng": -79.89439405819631,
+                "fillColor": "#4dff00"
+             },
+             {
+                "id": 3,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.2398480320650522,
+                "lng": -79.89438467046476,
+                "fillColor": "#4dff00"
+             },
+             {
+                "id": 4,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.2398319511064884,
+                "lng": -79.8942304434464,
+                "fillColor": "#4dff00"
+             },
+             {
+                "id": 5,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.2400812059443154,
+                "lng": -79.89418484589315,
+                "fillColor": "#4dff00"
+             },
+             {
+                "id": 5,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.240077185705323,
+                "lng": -79.8941030385182,
+                "fillColor": "#4dff00"
+             },
+             {
+                "id": 7,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.2400383233945873,
+                "lng": -79.89412315508581,
+                "fillColor": "#4dff00"
+             },
+             {
+                "id": 8,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.240007501561199,
+                "lng": -79.89409365078664,
+                "fillColor": "#4dff00"
+             },
+             {
+                "id": 9,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.240073165466331,
+                "lng": -79.8940493943379,
+                "fillColor": "#4dff00"
+             },
+             {
+                "id": 10,
+                "Id_Poligono": 9,
+                "Activo": true,
+                "lat": -2.2400517241915114,
+                "lng": -79.89380263110853,
+                "fillColor": "#4dff00"
+             }
         ]
     }
 ]
