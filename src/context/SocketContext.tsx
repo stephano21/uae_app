@@ -70,7 +70,7 @@ export const SocketProvider = ({children}: Props) => {
   };
 
   useEffect(() => {
-    console.log('Estado Conexion a SignalR: ', connection);
+    //console.log('Estado Conexion a SignalR: ', connection);
   }, [connection]);
 
   return (

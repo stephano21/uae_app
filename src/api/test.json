@@ -1,7 +1,7 @@
 [
-    {
+      {
         "id": 1,
-        "FillColor": "#FF0000",
+        "Id_Poligono": 2,
         "Activo": true,
         "Id_Lote": 1,
         "Lote": "Apptelink dev",
