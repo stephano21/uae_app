@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {useRoute} from '@react-navigation/native';
+import {CommonActions, useNavigation, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';
 import {IRegion} from '../interfaces/ApiInterface';
 import {colores, styles} from '../theme/appTheme';
@@ -10,29 +10,18 @@ import {Card} from 'react-native-paper';
 import {useWindowDimensions} from 'react-native';
 import {TextButton} from '../components/TextButton';
 import {ButtonWithText} from '../components/ButtonWithText';
+import {AlertContext} from '../context/AlertContext';
 
 export const LecturaScreen = () => {
   const route = useRoute();
   const [paginado, setPaginado] = useState<number>(0);
+  const navigation = useNavigation();
   const [fechaVisita, setFechavisita] = useState(new Date());
+  const {ShowAlert} = useContext(AlertContext);
   const {a} = route.params as {
     a: IRegion;
   };
-  const {
-    E1,
-    E2,
-    E3,
-    E4,
-    E5,
-    GR1,
-    GR2,
-    GR3,
-    GR4,
-    GR5,
-    Cherelles,
-    Observacion,
-    onChange,
-  } = useForm({
+  const [lectura, setLectura] = useState({
     E1: '',
     E2: '',
     E3: '',
@@ -46,6 +35,27 @@ export const LecturaScreen = () => {
     Cherelles: '',
     Observacion: '',
   });
+
+  const no = () => {
+    navigation.dispatch(CommonActions.goBack);
+  };
+
+  const si = () => {
+    setLectura({
+      E1: '',
+      E2: '',
+      E3: '',
+      E4: '',
+      E5: '',
+      GR1: '',
+      GR2: '',
+      GR3: '',
+      GR4: '',
+      GR5: '',
+      Cherelles: '',
+      Observacion: '',
+    });
+  };
 
   const {width} = useWindowDimensions();
   return (
@@ -79,48 +89,48 @@ export const LecturaScreen = () => {
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'E1'}
-                  value={E1}
-                  onChange={value => onChange(value, 'E1')}
+                  value={lectura['E1']}
+                  onChange={value => setLectura({...lectura, ['E1']: value})}
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'E2'}
-                  value={E2}
-                  onChange={value => onChange(value, 'E2')}
+                  value={lectura['E2']}
+                  onChange={value => setLectura({...lectura, ['E2']: value})}
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'E3'}
-                  value={E3}
-                  onChange={value => onChange(value, 'E3')}
+                  value={lectura['E3']}
+                  onChange={value => setLectura({...lectura, ['E3']: value})}
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'E4'}
-                  value={E4}
-                  onChange={value => onChange(value, 'E4')}
+                  value={lectura['E4']}
+                  onChange={value => setLectura({...lectura, ['E4']: value})}
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'E5'}
-                  value={E5}
-                  onChange={value => onChange(value, 'E5')}
+                  value={lectura['E5']}
+                  onChange={value => setLectura({...lectura, ['E5']: value})}
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'GR1'}
-                  value={GR1}
-                  onChange={value => onChange(value, 'GR1')}
+                  value={lectura['GR1']}
+                  onChange={value => setLectura({...lectura, ['GR1']: value})}
                 />
               </View>
               <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
@@ -138,48 +148,52 @@ export const LecturaScreen = () => {
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'GR2'}
-                  value={GR2}
-                  onChange={value => onChange(value, 'GR2')}
+                  value={lectura['GR2']}
+                  onChange={value => setLectura({...lectura, ['GR2']: value})}
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'GR3'}
-                  value={GR3}
-                  onChange={value => onChange(value, 'GR3')}
+                  value={lectura['GR3']}
+                  onChange={value => setLectura({...lectura, ['GR3']: value})}
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'GR4'}
-                  value={GR4}
-                  onChange={value => onChange(value, 'GR4')}
+                  value={lectura['GR4']}
+                  onChange={value => setLectura({...lectura, ['GR4']: value})}
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'GR5'}
-                  value={GR5}
-                  onChange={value => onChange(value, 'GR5')}
+                  value={lectura['GR5']}
+                  onChange={value => setLectura({...lectura, ['GR5']: value})}
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'Cherelles'}
-                  value={Cherelles}
-                  onChange={value => onChange(value, 'Cherelles')}
+                  value={lectura['Cherelles']}
+                  onChange={value =>
+                    setLectura({...lectura, ['Cherelles']: value})
+                  }
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="default"
                   ancho={0.8}
                   placeholder={'Observacion'}
-                  value={Observacion}
-                  onChange={value => onChange(value, 'Observacion')}
+                  value={lectura['Observacion']}
+                  onChange={value =>
+                    setLectura({...lectura, ['Observacion']: value})
+                  }
                 />
               </View>
               <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
@@ -188,7 +202,17 @@ export const LecturaScreen = () => {
                   anyfunction={() => setPaginado(0)}
                 />
               </View>
-              <ButtonWithText anyfunction={() => {}} title="Guardar Lectura" />
+              <ButtonWithText
+                anyfunction={() => {
+                  ShowAlert('yesno', {
+                    title: 'Aviso',
+                    message: '¿Deseas hacer otra lectura?',
+                    OkFunction: si,
+                    CancelFunction: no,
+                  });
+                }}
+                title="Guardar Lectura"
+              />
             </>
           )}
         </Card.Content>
