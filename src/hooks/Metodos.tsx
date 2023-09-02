@@ -16,7 +16,7 @@ export const Metodos = () => {
     let contador = 0;
     // Obtener el número de vértices del polígono
     const numVertices = vertices.length;
-    setIsFetching(true);
+    //setIsFetching(true);
     // Iterar sobre los lados del polígono
     for (let i = 0; i < numVertices; i++) {
       const v1 = vertices[i];
@@ -58,7 +58,7 @@ export const Metodos = () => {
             Cod: item.codigoLote,
           }));
         setLocation(locationData);
-        setIsFetching(false);
+        //setIsFetching(false);
       },
       error => {
         console.error('Error getting location:', error);

@@ -12,7 +12,15 @@ export const NextScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    let refrescarUbicación: NodeJS.Timeout | null;
     getLocation2();
+    refrescarUbicación = setInterval(getLocation2, 5000);
+
+    return () => {
+      if (refrescarUbicación) {
+        clearInterval(refrescarUbicación);
+      }
+    };
   }, []);
 
   return (
