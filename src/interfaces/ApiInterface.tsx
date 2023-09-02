@@ -86,3 +86,21 @@ export interface IVertices {
   latitude: number;
   longitude: number;
 }
+
+export interface lecturasTotales {
+  id: number;
+  codLectura: string;
+  E1: string;
+  E2: string;
+  E3: string;
+  E4: string;
+  E5: string;
+  GR1: string;
+  GR2: string;
+  GR3: string;
+  GR4: string;
+  GR5: string;
+  Cherelles: string;
+  Observacion: string;
+  Fecha: string;
+}

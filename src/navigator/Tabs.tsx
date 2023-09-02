@@ -8,6 +8,7 @@ import {HomeScreen} from '../screens/HomeScreen';
 import {iconos} from '../theme/appTheme';
 import {Proceso} from '../screens/Proceso';
 import {NextScreen} from '../screens/NextScreen';
+import {ReadingScreen} from '../screens/ReadingScreen';
 
 const TabOptions = [
   {
@@ -20,7 +21,7 @@ const TabOptions = [
     name: 'Next2Screen',
     title: 'Lecturas',
     icon: iconos.ordenDeTrabajo,
-    component: Proceso,
+    component: ReadingScreen,
   },
   {
     name: 'Next3Screen',
