@@ -24,8 +24,8 @@ let pass = '';
 if (__DEV__) {
   //user = 'acuenca';
   //pass = 'Coyote2022';
-  user = 'jpalma@apptelink.com';
-  pass = 'Prueba2023*+';
+  user = 'Admin';
+  pass = 'Test2020*+';
 }
 
 export const LoginScreen = () => {
