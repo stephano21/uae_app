@@ -5,7 +5,9 @@ export const ApiEndpoints = {
   BaseApi: '/api',
   //Token: '/Token',
   login: '/auth/login/',
-  Token: '/auth/ValidateToken',
+  Token: '/auth/refresh/',
+  Poligonos: '/geolotes/',
+  Lectura: '/lecturas/',
   chatHub: '/chatHub',
   RegistrarArchivosHumo: '/smoke/imagestest',
 };
