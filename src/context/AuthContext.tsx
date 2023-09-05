@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import queryString from 'query-string';
-import {LoginData} from '../interfaces/UserInterface';
+import {CreateUser, LoginData} from '../interfaces/UserInterface';
 import {AlertContext} from './AlertContext';
 import {sleep} from '../helpers/sleep';
 import {useStorage} from '../data/useStorage';
@@ -11,7 +11,7 @@ import {SocketContext} from './SocketContext';
 
 type AuthContextProps = {
   status: StatusTypes;
-  //signUp: (obj: CreateUser, pass: string) => Promise<void>;
+  signUp: (obj: CreateUser, pass: string) => Promise<void>;
   signIn: (obj: LoginData) => Promise<void>;
   logOut: () => void;
   JWTInfo: TokenResponse;
@@ -130,6 +130,28 @@ export const AuthProvider = ({children}: any) => {
       })
       .catch(console.log);
   };
+  const signUp = async ({correo, password}: LoginData) => {
+    // Function to login
+    if (correo.length === 0 || password.length === 0) {
+      // If email or password not exist
+      ShowAlert('default', {
+        title: 'Error',
+        message: 'Debe llenar los campos requeridos',
+      });
+      return;
+    }
+
+    await postRequest<TokenResponse>(ApiEndpoints.register, {
+      username: correo,
+      password,
+    })
+      .then(jwtInfo => {
+        setstatus('authenticated');
+        SaveJWTInfo(jwtInfo);
+        //startConnection(jwtInfo.token, jwtInfo.userName);
+      })
+      .catch(console.log);
+  };
 
   const logOut = async () => {
     await RemoveAllData();
@@ -142,7 +164,7 @@ export const AuthProvider = ({children}: any) => {
       value={{
         status,
         JWTInfo,
-        //signUp,
+        signUp,
         signIn,
         logOut,
       }}>

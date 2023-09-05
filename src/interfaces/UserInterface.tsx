@@ -2,6 +2,10 @@ export interface LoginData {
   correo: string;
   password: string;
 }
+export interface CreateUser {
+  correo: string;
+  password: string;
+}
 
 export interface Location {
   latitude: number;
