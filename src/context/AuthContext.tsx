@@ -11,7 +11,8 @@ import {SocketContext} from './SocketContext';
 
 type AuthContextProps = {
   status: StatusTypes;
-  signUp: (obj: CreateUser, pass: string) => Promise<void>;
+  //signUp: (obj: CreateUser, pass: string) => Promise<void>;
+  signUp: (obj: CreateUser) => Promise<void>;
   signIn: (obj: LoginData) => Promise<void>;
   logOut: () => void;
   JWTInfo: TokenResponse;
@@ -141,13 +142,12 @@ export const AuthProvider = ({children}: any) => {
       return;
     }
 
-    await postRequest<TokenResponse>(ApiEndpoints.register, {
+    await postRequest(ApiEndpoints.register, {
       username: correo,
       password,
     })
-      .then(jwtInfo => {
-        setstatus('authenticated');
-        SaveJWTInfo(jwtInfo);
+      .then((mss: any) => {
+        ShowAlert('default', {message: mss ? mss : '', title: 'Exito'});
         //startConnection(jwtInfo.token, jwtInfo.userName);
       })
       .catch(console.log);
