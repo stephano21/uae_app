@@ -120,7 +120,7 @@ export const AuthProvider = ({children}: any) => {
     }
 
     await postRequest<TokenResponse>(ApiEndpoints.login, {
-      email: correo,
+      username: correo,
       password,
     })
       .then(jwtInfo => {
