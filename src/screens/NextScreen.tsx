@@ -30,7 +30,6 @@ export const NextScreen = () => {
           <ButtonWithText
             key={index}
             anyfunction={() => {
-              console.log(a);
               navigation.dispatch(CommonActions.navigate('LecturaScreen', {a}));
             }}
             title={a.Lote}

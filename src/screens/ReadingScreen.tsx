@@ -1,50 +1,59 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {BaseScreen} from '../Template/BaseScreen';
 import {
   Text,
-  FlatList,
   View,
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
 import {lecturasTotales} from '../interfaces/ApiInterface';
-import {LocalStorageHelper} from '../hooks/useLocalStorage';
 import {List} from '../components/List';
 import {colores, styles} from '../theme/appTheme';
 import {formatoDeFecha} from '../helpers/formatoDeFecha';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {LoaderContext} from '../context/LoaderContext';
+import {sleep} from '../helpers/sleep';
 
 export const ReadingScreen = () => {
   const {FormatoFechaAgenda} = formatoDeFecha();
   const {width} = useWindowDimensions();
+  const {setIsFetching} = useContext(LoaderContext);
   const [lecturasGuardadas, setLecturasGuardadas] = useState<lecturasTotales[]>(
     [],
   );
 
   useEffect(() => {
-    // Función para cargar las lecturas guardadas desde el almacenamiento local
-    const cargarLecturasGuardadas = async () => {
-      try {
-        const lecturasJSON = await LocalStorageHelper.getItem(
-          'LecturasLocales',
-        );
-        if (lecturasJSON) {
-          const lecturas = JSON.parse(lecturasJSON);
-          setLecturasGuardadas(lecturas);
-        }
-      } catch (error) {
-        console.error('Error al cargar las lecturas guardadas:', error);
-      }
-    };
-
-    // Llama a la función para cargar las lecturas guardadas al cargar la pantalla
+    // Cargar las lecturas guardadas en "LecturasLocal" al inicio del component
     cargarLecturasGuardadas();
   }, []);
+
+  const cargarLecturasGuardadas = async () => {
+    try {
+      const lecturasExistentes = await AsyncStorage.getItem('LecturasLocal');
+      if (lecturasExistentes) {
+        const lecturasExistentesArray: lecturasTotales[] =
+          JSON.parse(lecturasExistentes);
+        console.log('Lecturas guardadas:', lecturasExistentesArray);
+        setLecturasGuardadas(lecturasExistentesArray);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const Catalogos = async () => {
+    setIsFetching(true);
+    cargarLecturasGuardadas();
+    await sleep(2);
+    setIsFetching(false);
+  };
 
   const renderLecturas = (a: lecturasTotales) => {
     const fechaActual = FormatoFechaAgenda(new Date().toISOString());
     const fechaLectura = FormatoFechaAgenda(a.Fecha.toString());
     const esFechaActual = fechaLectura === fechaActual;
+
     return (
       <View key={a.id} style={lecturasStyless.itemContainer}>
         <View style={{...lecturasStyless.dateContainer, width: width * 0.2}}>
@@ -52,18 +61,12 @@ export const ReadingScreen = () => {
             {FormatoFechaAgenda(a.Fecha.toString())}
           </Text>
         </View>
-
-        {/* <TouchableOpacity></TouchableOpacity> */}
-        <View style={{...lecturasStyless.routeContainer, width: width * 0.7}}>
+        <View
+          key={a.id}
+          style={{...lecturasStyless.routeContainer, width: width * 0.7}}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => {
-              //   navigation.dispatch(
-              //     CommonActions.navigate('ActividadesOTScreen', {
-              //       datos: a,
-              //     }),
-              //   );
-            }}
+            onPress={() => {}}
             key={a.id}
             style={lecturasStyless.rutaContainer}>
             <View
@@ -96,7 +99,7 @@ export const ReadingScreen = () => {
       </Text>
       <List
         data={lecturasGuardadas}
-        refreshFunction={() => {}}
+        refreshFunction={() => Catalogos()}
         renderItem={renderLecturas}
         ListEmptyText="No hay lecturas por visualizar"
       />

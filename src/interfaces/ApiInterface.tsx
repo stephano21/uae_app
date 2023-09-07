@@ -88,7 +88,7 @@ export interface IVertices {
 }
 
 export interface lecturasTotales {
-  id: number;
+  id: string;
   codLectura: string;
   E1: string;
   E2: string;
@@ -103,4 +103,22 @@ export interface lecturasTotales {
   Cherelles: string;
   Observacion: string;
   Fecha: string;
+}
+
+interface LecturaSerializers {
+  E1?: number | null;
+  E2?: number | null;
+  E3?: number | null;
+  E4?: number | null;
+  E5?: number | null;
+  GR1?: number | null;
+  GR2?: number | null;
+  GR3?: number | null;
+  GR4?: number | null;
+  GR5?: number | null;
+  Cherelles?: number | null;
+  Observacion?: string | null;
+  FechaVisita?: string | null;
+  Activo?: boolean | null;
+  Id_Lote?: number | null;
 }

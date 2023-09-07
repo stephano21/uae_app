@@ -10,20 +10,21 @@ import {useWindowDimensions} from 'react-native';
 import {TextButton} from '../components/TextButton';
 import {ButtonWithText} from '../components/ButtonWithText';
 import {AlertContext} from '../context/AlertContext';
-import {LocalStorageHelper} from '../hooks/useLocalStorage';
+import {CheckInternetContext} from '../context/CheckInternetContext';
+import {useRequest} from '../api/useRequest';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const LecturaScreen = () => {
   const route = useRoute();
-  const [paginado, setPaginado] = useState<number>(0);
+  const {postRequest} = useRequest();
   const navigation = useNavigation();
+  const {width} = useWindowDimensions();
   const {ShowAlert} = useContext(AlertContext);
+  const [paginado, setPaginado] = useState<number>(0);
+  const {hasConection} = useContext(CheckInternetContext);
   const {a} = route.params as {
     a: IRegion;
   };
-  const {width} = useWindowDimensions();
-
-  const [allLecturas, setAllLecturas] = useState<lecturasTotales[]>([]);
-
   const [lectura, setLectura] = useState({
     E1: '',
     E2: '',
@@ -39,10 +40,15 @@ export const LecturaScreen = () => {
     Observacion: '',
     Fecha: '',
   });
+  const [allLecturas, setAllLecturas] = useState<lecturasTotales[]>([]);
+
+  const generateFecha = () => {
+    const dates = new Date().toISOString();
+    setLectura({...lectura, ['Fecha']: dates});
+  };
 
   useEffect(() => {
-    const a = new Date().toISOString();
-    setLectura({...lectura, ['Fecha']: a});
+    generateFecha();
   }, []);
 
   const no = () => {
@@ -53,22 +59,51 @@ export const LecturaScreen = () => {
     lecturas: lecturasTotales[],
   ): Promise<boolean> => {
     try {
-      const lecturasJSON = JSON.stringify(lecturas);
-      await LocalStorageHelper.setItem('LecturasLocales', lecturasJSON);
-      console.log('Lecturas: ', {lecturasJSON});
+      // Obtén las lecturas existentes en "LecturasLocal" (si las hay)
+      const lecturasExistentes = await AsyncStorage.getItem('LecturasLocal');
+      const lecturasExistentesArray: lecturasTotales[] = lecturasExistentes
+        ? JSON.parse(lecturasExistentes)
+        : [];
+
+      // Combina las lecturas existentes con las nuevas
+      const lecturasCombinadas = [...lecturasExistentesArray, ...lecturas];
+
+      // Guarda las lecturas combinadas en "LecturasLocal"
+      await AsyncStorage.setItem(
+        'LecturasLocal',
+        JSON.stringify(lecturasCombinadas),
+      );
+
+      console.log('allandlocal', lecturasCombinadas);
+
+      ShowAlert('default', {
+        title: 'Guardado',
+        message: 'Se ha guardado correctamente',
+      });
+
       return true; // Devuelve true si el guardado fue exitoso
     } catch (error) {
-      console.error(
-        'Error al guardar las lecturas en el almacenamiento local:',
-        error,
-      );
-      return false; // Devuelve false si ocurrió un error
+      console.error(error);
+      return false; // Devuelve false si hubo un error al guardar
+    }
+  };
+
+  const eliminarCatalogosDeMemoria = async () => {
+    try {
+      await AsyncStorage.removeItem('LecturasLocal');
+    } catch (error) {
+      console.error(error);
+      ShowAlert('default', {
+        title: 'Error',
+        message:
+          'Ocurrió un error al intentar eliminar los datos del grupo "catalogos".',
+      });
     }
   };
 
   const si = async () => {
     const nuevaLectura = {
-      id: allLecturas.length + 1, // Genera un nuevo ID único
+      id: Date.now().toString(36) + Math.random().toString(36).substring(2), // Genera un nuevo ID único
       codLectura: a.Cod,
       E1: lectura['E1'],
       E2: lectura['E2'],
@@ -106,7 +141,9 @@ export const LecturaScreen = () => {
         Observacion: '',
         Fecha: '',
       });
-      setAllLecturas([]);
+      setPaginado(0);
+      setAllLecturas([]); // Limpia también el estado allLecturas
+      generateFecha();
     } else {
       ShowAlert('default', {
         title: 'Error',
@@ -244,13 +281,12 @@ export const LecturaScreen = () => {
                 />
                 <InputForm
                   colorBase={colores.plomoclaro}
-                  keyboard="default"
                   ancho={0.8}
                   placeholder={'Observacion'}
-                  value={lectura['Observacion']}
-                  onChange={value =>
-                    setLectura({...lectura, ['Observacion']: value})
-                  }
+                  value={lectura.Observacion.toUpperCase()}
+                  onChange={value => {
+                    setLectura({...lectura, ['Observacion']: value});
+                  }}
                 />
               </View>
               <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
@@ -270,6 +306,12 @@ export const LecturaScreen = () => {
                 }}
                 title="Guardar Lectura"
               />
+              {__DEV__ && (
+                <ButtonWithText
+                  anyfunction={eliminarCatalogosDeMemoria}
+                  title="Eliminar Local"
+                />
+              )}
             </>
           )}
         </Card.Content>
