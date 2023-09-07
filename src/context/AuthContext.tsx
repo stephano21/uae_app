@@ -125,6 +125,7 @@ export const AuthProvider = ({children}: any) => {
       password,
     })
       .then(jwtInfo => {
+        console.log(jwtInfo);
         setstatus('authenticated');
         SaveJWTInfo(jwtInfo);
         //startConnection(jwtInfo.token, jwtInfo.userName);

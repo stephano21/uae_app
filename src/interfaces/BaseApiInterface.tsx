@@ -7,9 +7,8 @@
 } */
 
 export interface TokenResponse {
-  token: string;
-  token_type: string;
-  userName: string;
+  access_token: string;
+  refresh_token: string;
 }
 //ApirError
 

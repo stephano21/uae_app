@@ -19,16 +19,18 @@ export const useApiConfig = () => {
     baseURL: ApiEndpoints.BaseURL + ApiEndpoints.BaseApi,
     headers: {
       'Content-Type': 'application/json',
-      ...(JWTInfo && JWTInfo.token !== undefined
-        ? {Authorization: `Bearer ${JWTInfo.token}`}
+      ...(JWTInfo && JWTInfo.access_token !== undefined
+        ? {Authorization: `Bearer ${JWTInfo.access_token}`}
         : {}),
     },
   });
   const ApiPostFileRequest = axios.create({
-    baseURL: ApiEndpoints.BaseURL,
+    baseURL: ApiEndpoints.BaseURL + ApiEndpoints.BaseApi,
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer  ${JWTInfo !== undefined ? JWTInfo.token : ''}`,
+      Authorization: `Bearer  ${
+        JWTInfo !== undefined ? JWTInfo.access_token : ''
+      }`,
       otherHeader: 'foo',
     },
   });

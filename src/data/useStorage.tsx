@@ -2,7 +2,8 @@ import {TokenResponse} from '../interfaces/BaseApiInterface';
 import {useBaseStorage} from './useBaseStorage';
 
 const keyStorage = {
-  token: 'token',
+  access_token: 'token',
+  refresh_token: 'token',
 };
 
 export const useStorage = () => {
@@ -11,20 +12,20 @@ export const useStorage = () => {
 
   //#region Token
   const SaveJWTInfo = async (data: TokenResponse) => {
-    return await SaveData(data, keyStorage.token);
+    return await SaveData(data, keyStorage.access_token);
   };
 
   const GetJWTInfo = async (): Promise<TokenResponse> => {
-    return await GetData<TokenResponse>(keyStorage.token);
+    return await GetData<TokenResponse>(keyStorage.access_token);
   };
 
   const CheckJWTInfo = async (): Promise<boolean> => {
-    return await CheckData(keyStorage.token);
+    return await CheckData(keyStorage.access_token);
   };
   //#endregion
 
   const RemoveAllData = async () => {
-    await RemoveData([keyStorage.token]);
+    await RemoveData([keyStorage.access_token]);
   };
 
   return {SaveJWTInfo, GetJWTInfo, CheckJWTInfo, RemoveAllData};

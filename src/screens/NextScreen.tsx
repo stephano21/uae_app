@@ -8,10 +8,11 @@ import {CommonActions, useNavigation} from '@react-navigation/native';
 import {colores} from '../theme/appTheme';
 
 export const NextScreen = () => {
-  const {getLocation2, location} = Metodos();
+  const {getLocation2, location, geolotes} = Metodos();
   const navigation = useNavigation();
 
   useEffect(() => {
+    geolotes();
     let refrescarUbicación: NodeJS.Timeout | null;
     getLocation2();
     refrescarUbicación = setInterval(getLocation2, 5000);

@@ -32,17 +32,17 @@ export interface ILote {
 }
 
 export interface ILectura {
-  id: number;
-  E1: number;
-  E2: number;
-  E3: number;
-  E4: number;
-  E5: number;
-  GR1: number;
-  GR2: number;
-  GR3: number;
-  GR4: number;
-  GR5: number;
+  id: number | null;
+  E1: number | null;
+  E2: number | null;
+  E3: number | null;
+  E4: number | null;
+  E5: number | null;
+  GR1: number | null;
+  GR2: number | null;
+  GR3: number | null;
+  GR4: number | null;
+  GR5: number | null;
   Cherelles: null | number;
   Observacion: string;
   FechaVisita: Date;

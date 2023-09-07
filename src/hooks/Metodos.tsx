@@ -1,12 +1,16 @@
 import {useContext, useState} from 'react';
 import _lotes from './../api/test.json';
 import Geolocation from 'react-native-geolocation-service';
-import {ILocation} from './../interfaces/ApiInterface';
+import {ILocation, IPoligono} from './../interfaces/ApiInterface';
 import {LoaderContext} from '../context/LoaderContext';
+import {useRequest} from '../api/useRequest';
+import {ApiEndpoints} from '../api/routes';
 
 export const Metodos = () => {
   const [location, setLocation] = useState<ILocation>(); //definir un cuerpo o interfaz para location
   const {setIsFetching} = useContext(LoaderContext);
+  const {getRequest} = useRequest();
+  const [poligonos, setPoligonos] = useState<IPoligono[]>([]);
 
   const pointInRegion = (lat: number, lon: number, vertices: any[]) => {
     // Convertir las coordenadas a flotantes
@@ -66,8 +70,18 @@ export const Metodos = () => {
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   };
+
+  const geolotes = async () => {
+    await getRequest<IPoligono[]>(ApiEndpoints.Poligonos)
+      .then(lotes => {
+        setPoligonos(lotes), console.log('polígonos: ', lotes);
+      })
+      .catch(a => console.log(JSON.stringify(a, null, 3)));
+  };
   return {
     getLocation2,
+    geolotes,
+    poligonos,
     location,
   };
 };

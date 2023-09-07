@@ -13,6 +13,7 @@ import {AlertContext} from '../context/AlertContext';
 import {CheckInternetContext} from '../context/CheckInternetContext';
 import {useRequest} from '../api/useRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ApiEndpoints} from '../api/routes';
 
 export const LecturaScreen = () => {
   const route = useRoute();
@@ -38,26 +39,47 @@ export const LecturaScreen = () => {
     GR5: '',
     Cherelles: '',
     Observacion: '',
-    Fecha: '',
+    FechaVisita: '',
   });
-  const [allLecturas, setAllLecturas] = useState<lecturasTotales[]>([]);
+  const [allLecturas, setAllLecturas] = useState<any[]>([]);
 
   const generateFecha = () => {
     const dates = new Date().toISOString();
-    setLectura({...lectura, ['Fecha']: dates});
+    setLectura({...lectura, ['FechaVisita']: dates});
   };
 
   useEffect(() => {
     generateFecha();
   }, []);
 
-  const no = () => {
+  const no = async () => {
+    const nuevaLectura = {
+      id: Date.now().toString(36) + Math.random().toString(36).substring(2), // Genera un nuevo ID único
+      codLectura: a.Cod,
+      E1: lectura['E1'],
+      E2: lectura['E2'],
+      E3: lectura['E3'],
+      E4: lectura['E4'],
+      E5: lectura['E5'],
+      GR1: lectura['GR1'],
+      GR2: lectura['GR2'],
+      GR3: lectura['GR3'],
+      GR4: lectura['GR4'],
+      GR5: lectura['GR5'],
+      Cherelles: lectura['Cherelles'],
+      Observacion: lectura['Observacion'],
+      Fecha: lectura['FechaVisita'],
+    };
+
+    const nuevasLecturas = [...allLecturas, nuevaLectura];
+    setAllLecturas(nuevasLecturas);
+
+    const guardadoExitoso = await guardarLecturasEnLocal(nuevasLecturas);
+
     navigation.dispatch(CommonActions.goBack);
   };
 
-  const guardarLecturasEnLocal = async (
-    lecturas: lecturasTotales[],
-  ): Promise<boolean> => {
+  const guardarLecturasEnLocal = async (lecturas: any[]): Promise<boolean> => {
     try {
       // Obtén las lecturas existentes en "LecturasLocal" (si las hay)
       const lecturasExistentes = await AsyncStorage.getItem('LecturasLocal');
@@ -76,10 +98,55 @@ export const LecturaScreen = () => {
 
       console.log('allandlocal', lecturasCombinadas);
 
+      if (hasConection) {
+        await postRequest(ApiEndpoints.Lectura, {
+          E1: lectura['E1'] ? parseInt(lectura['E1'], 10) : 0,
+          E2: lectura['E2'] ? parseInt(lectura['E2'], 10) : 0,
+          E3: lectura['E3'] ? parseInt(lectura['E3'], 10) : 0,
+          E4: lectura['E4'] ? parseInt(lectura['E4'], 10) : 0,
+          E5: lectura['E5'] ? parseInt(lectura['E5'], 10) : 0,
+          GR1: lectura['GR1'] ? parseInt(lectura['GR1'], 10) : 0,
+          GR2: lectura['GR2'] ? parseInt(lectura['GR2'], 10) : 0,
+          GR3: lectura['GR3'] ? parseInt(lectura['GR3'], 10) : 0,
+          GR4: lectura['GR4'] ? parseInt(lectura['GR4'], 10) : 0,
+          GR5: lectura['GR5'] ? parseInt(lectura['GR5'], 10) : 0,
+          Cherelles: lectura['Cherelles']
+            ? parseInt(lectura['Cherelles'], 10)
+            : 0,
+          Observacion: lectura['Observacion'],
+          Fecha: new Date(),
+          Id_Lote: a.Id,
+        })
+          .then(a => console.log(a))
+          .catch(error => console.log(JSON.stringify(error, null, 3)));
+      }
+
       ShowAlert('default', {
         title: 'Guardado',
         message: 'Se ha guardado correctamente',
       });
+
+      setLectura({
+        E1: '',
+        E2: '',
+        E3: '',
+        E4: '',
+        E5: '',
+        GR1: '',
+        GR2: '',
+        GR3: '',
+        GR4: '',
+        GR5: '',
+        Cherelles: '',
+        Observacion: '',
+        FechaVisita: '',
+      });
+
+      // useEffect(() => {
+      //   console.log('Lectura se ha actualizado:', lectura);
+      // }, [lectura]);
+      setPaginado(0);
+      setAllLecturas([]); // Limpia también el estado allLecturas
 
       return true; // Devuelve true si el guardado fue exitoso
     } catch (error) {
@@ -117,7 +184,7 @@ export const LecturaScreen = () => {
       GR5: lectura['GR5'],
       Cherelles: lectura['Cherelles'],
       Observacion: lectura['Observacion'],
-      Fecha: lectura['Fecha'],
+      Fecha: lectura['FechaVisita'],
     };
 
     const nuevasLecturas = [...allLecturas, nuevaLectura];
@@ -125,24 +192,30 @@ export const LecturaScreen = () => {
 
     const guardadoExitoso = await guardarLecturasEnLocal(nuevasLecturas);
 
+    if (hasConection) {
+      await postRequest(ApiEndpoints.Lectura, {
+        E1: lectura['E1'] ? parseInt(lectura['E1'], 10) : 0,
+        E2: lectura['E2'] ? parseInt(lectura['E2'], 10) : 0,
+        E3: lectura['E3'] ? parseInt(lectura['E3'], 10) : 0,
+        E4: lectura['E4'] ? parseInt(lectura['E4'], 10) : 0,
+        E5: lectura['E5'] ? parseInt(lectura['E5'], 10) : 0,
+        GR1: lectura['GR1'] ? parseInt(lectura['GR1'], 10) : 0,
+        GR2: lectura['GR2'] ? parseInt(lectura['GR2'], 10) : 0,
+        GR3: lectura['GR3'] ? parseInt(lectura['GR3'], 10) : 0,
+        GR4: lectura['GR4'] ? parseInt(lectura['GR4'], 10) : 0,
+        GR5: lectura['GR5'] ? parseInt(lectura['GR5'], 10) : 0,
+        Cherelles: lectura['Cherelles']
+          ? parseInt(lectura['Cherelles'], 10)
+          : 0,
+        Observacion: lectura['Observacion'],
+        Fecha: new Date(),
+        Id_Lote: a.Id,
+      })
+        .then(a => console.log(a))
+        .catch(error => console.log(JSON.stringify(error, null, 3)));
+    }
+
     if (guardadoExitoso) {
-      setLectura({
-        E1: '',
-        E2: '',
-        E3: '',
-        E4: '',
-        E5: '',
-        GR1: '',
-        GR2: '',
-        GR3: '',
-        GR4: '',
-        GR5: '',
-        Cherelles: '',
-        Observacion: '',
-        Fecha: '',
-      });
-      setPaginado(0);
-      setAllLecturas([]); // Limpia también el estado allLecturas
       generateFecha();
     } else {
       ShowAlert('default', {
@@ -183,7 +256,7 @@ export const LecturaScreen = () => {
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'E1'}
-                  value={lectura['E1']}
+                  value={lectura['E1'].toString()}
                   onChange={value => setLectura({...lectura, ['E1']: value})}
                 />
                 <InputForm
