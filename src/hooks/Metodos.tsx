@@ -8,7 +8,7 @@ import {ApiEndpoints} from '../api/routes';
 
 export const Metodos = () => {
   const [location, setLocation] = useState<ILocation>(); //definir un cuerpo o interfaz para location
-  const {setIsFetching} = useContext(LoaderContext);
+  const {setIsLoading} = useContext(LoaderContext);
   const {getRequest} = useRequest();
   const [poligonos, setPoligonos] = useState<IPoligono[]>([]);
 
@@ -41,11 +41,11 @@ export const Metodos = () => {
     return contador % 2 === 1;
   };
 
-  const getLocation2 = async () => {
+  const getLocation2 = async (item: IPoligono[]) => {
     Geolocation.getCurrentPosition(
       async position => {
         const locationData: any = position.coords;
-        locationData.region = _lotes //en la interfaz GeoCoordinates por parte de GeoLocation no se encuentra region, por eso este error
+        locationData.region = item
           .filter(item =>
             pointInRegion(
               locationData.latitude,
@@ -59,9 +59,10 @@ export const Metodos = () => {
           .map(item => ({
             Lote: item.Lote,
             Id: item.Id_Lote,
-            Cod: item.codigoLote,
+            Cod: item.CodigoLote,
           }));
         setLocation(locationData);
+        console.log('datalocation', locationData);
         //setIsFetching(false);
       },
       error => {
@@ -74,7 +75,7 @@ export const Metodos = () => {
   const geolotes = async () => {
     await getRequest<IPoligono[]>(ApiEndpoints.Poligonos)
       .then(lotes => {
-        setPoligonos(lotes), console.log('polígonos: ', lotes);
+        setPoligonos(lotes);
       })
       .catch(a => console.log(JSON.stringify(a, null, 3)));
   };

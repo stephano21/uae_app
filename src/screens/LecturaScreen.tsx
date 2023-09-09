@@ -41,7 +41,25 @@ export const LecturaScreen = () => {
     Observacion: '',
     FechaVisita: '',
   });
-  const [allLecturas, setAllLecturas] = useState<any[]>([]);
+
+  const [allLecturas, setAllLecturas] = useState<{
+    [key: string]: {
+      codLectura: string;
+      E1: string;
+      E2: string;
+      E3: string;
+      E4: string;
+      E5: string;
+      GR1: string;
+      GR2: string;
+      GR3: string;
+      GR4: string;
+      GR5: string;
+      Cherelles: string;
+      Observacion: string;
+      Fecha: string;
+    };
+  }>({});
 
   const generateFecha = () => {
     const dates = new Date().toISOString();
@@ -52,34 +70,7 @@ export const LecturaScreen = () => {
     generateFecha();
   }, []);
 
-  const no = async () => {
-    const nuevaLectura = {
-      id: Date.now().toString(36) + Math.random().toString(36).substring(2), // Genera un nuevo ID único
-      codLectura: a.Cod,
-      E1: lectura['E1'],
-      E2: lectura['E2'],
-      E3: lectura['E3'],
-      E4: lectura['E4'],
-      E5: lectura['E5'],
-      GR1: lectura['GR1'],
-      GR2: lectura['GR2'],
-      GR3: lectura['GR3'],
-      GR4: lectura['GR4'],
-      GR5: lectura['GR5'],
-      Cherelles: lectura['Cherelles'],
-      Observacion: lectura['Observacion'],
-      Fecha: lectura['FechaVisita'],
-    };
-
-    const nuevasLecturas = [...allLecturas, nuevaLectura];
-    setAllLecturas(nuevasLecturas);
-
-    const guardadoExitoso = await guardarLecturasEnLocal(nuevasLecturas);
-
-    navigation.dispatch(CommonActions.goBack);
-  };
-
-  const guardarLecturasEnLocal = async (lecturas: any[]): Promise<boolean> => {
+  const guardarLecturasEnLocal = async (lecturas: any): Promise<boolean> => {
     try {
       // Obtén las lecturas existentes en "LecturasLocal" (si las hay)
       const lecturasExistentes = await AsyncStorage.getItem('LecturasLocal');
@@ -89,43 +80,11 @@ export const LecturaScreen = () => {
 
       // Combina las lecturas existentes con las nuevas
       const lecturasCombinadas = [...lecturasExistentesArray, ...lecturas];
-
       // Guarda las lecturas combinadas en "LecturasLocal"
       await AsyncStorage.setItem(
         'LecturasLocal',
         JSON.stringify(lecturasCombinadas),
       );
-
-      console.log('allandlocal', lecturasCombinadas);
-
-      if (hasConection) {
-        await postRequest(ApiEndpoints.Lectura, {
-          E1: lectura['E1'] ? parseInt(lectura['E1'], 10) : 0,
-          E2: lectura['E2'] ? parseInt(lectura['E2'], 10) : 0,
-          E3: lectura['E3'] ? parseInt(lectura['E3'], 10) : 0,
-          E4: lectura['E4'] ? parseInt(lectura['E4'], 10) : 0,
-          E5: lectura['E5'] ? parseInt(lectura['E5'], 10) : 0,
-          GR1: lectura['GR1'] ? parseInt(lectura['GR1'], 10) : 0,
-          GR2: lectura['GR2'] ? parseInt(lectura['GR2'], 10) : 0,
-          GR3: lectura['GR3'] ? parseInt(lectura['GR3'], 10) : 0,
-          GR4: lectura['GR4'] ? parseInt(lectura['GR4'], 10) : 0,
-          GR5: lectura['GR5'] ? parseInt(lectura['GR5'], 10) : 0,
-          Cherelles: lectura['Cherelles']
-            ? parseInt(lectura['Cherelles'], 10)
-            : 0,
-          Observacion: lectura['Observacion'],
-          FechaVisita: new Date(),
-          Id_Lote: a.Id,
-        })
-          .then(a => console.log(a))
-          .catch(error => console.log(JSON.stringify(error, null, 3)));
-      }
-
-      ShowAlert('default', {
-        title: 'Guardado',
-        message: 'Se ha guardado correctamente',
-      });
-
       setLectura({
         E1: '',
         E2: '',
@@ -146,7 +105,7 @@ export const LecturaScreen = () => {
       //   console.log('Lectura se ha actualizado:', lectura);
       // }, [lectura]);
       setPaginado(0);
-      setAllLecturas([]); // Limpia también el estado allLecturas
+      setAllLecturas({}); // Limpia también el estado allLecturas
 
       return true; // Devuelve true si el guardado fue exitoso
     } catch (error) {
@@ -169,28 +128,29 @@ export const LecturaScreen = () => {
   };
 
   const si = async () => {
+    const xyz =
+      Date.now().toString(36) + Math.random().toString(36).substring(2);
+
     const nuevaLectura = {
-      id: Date.now().toString(36) + Math.random().toString(36).substring(2), // Genera un nuevo ID único
-      codLectura: a.Cod,
-      E1: lectura['E1'],
-      E2: lectura['E2'],
-      E3: lectura['E3'],
-      E4: lectura['E4'],
-      E5: lectura['E5'],
-      GR1: lectura['GR1'],
-      GR2: lectura['GR2'],
-      GR3: lectura['GR3'],
-      GR4: lectura['GR4'],
-      GR5: lectura['GR5'],
-      Cherelles: lectura['Cherelles'],
-      Observacion: lectura['Observacion'],
-      Fecha: lectura['FechaVisita'],
+      [xyz]: {
+        codLectura: a.CodigoLote,
+        E1: lectura['E1'],
+        E2: lectura['E2'],
+        E3: lectura['E3'],
+        E4: lectura['E4'],
+        E5: lectura['E5'],
+        GR1: lectura['GR1'],
+        GR2: lectura['GR2'],
+        GR3: lectura['GR3'],
+        GR4: lectura['GR4'],
+        GR5: lectura['GR5'],
+        Cherelles: lectura['Cherelles'],
+        Observacion: lectura['Observacion'],
+        Fecha: lectura['FechaVisita'],
+      },
     };
 
-    const nuevasLecturas = [...allLecturas, nuevaLectura];
-    setAllLecturas(nuevasLecturas);
-
-    const guardadoExitoso = await guardarLecturasEnLocal(nuevasLecturas);
+    setAllLecturas(nuevaLectura);
 
     if (hasConection) {
       await postRequest(ApiEndpoints.Lectura, {
@@ -213,15 +173,17 @@ export const LecturaScreen = () => {
       })
         .then(a => console.log(a))
         .catch(error => console.log(JSON.stringify(error, null, 3)));
-    }
-
-    if (guardadoExitoso) {
-      generateFecha();
     } else {
-      ShowAlert('default', {
-        title: 'Error',
-        message: 'Ocurrió un error al intentar guardar los datos localmente.',
-      });
+      const lecturasTotales = [allLecturas, nuevaLectura];
+      const guardadoExitoso = await guardarLecturasEnLocal(lecturasTotales);
+      if (guardadoExitoso) {
+        generateFecha();
+      } else {
+        ShowAlert('default', {
+          title: 'Error',
+          message: 'Ocurrió un error al intentar guardar los datos localmente.',
+        });
+      }
     }
   };
 
@@ -239,7 +201,7 @@ export const LecturaScreen = () => {
             width: width * 0.8,
             ...styles.centerItems,
           }}
-          title={a.Cod}
+          title={a.CodigoLote}
           titleStyle={{...stylesComprasGastos.title, fontSize: width * 0.055}}
         />
         <Card.Content
@@ -374,7 +336,9 @@ export const LecturaScreen = () => {
                     title: 'Aviso',
                     message: '¿Deseas hacer otra lectura?',
                     OkFunction: si,
-                    CancelFunction: no,
+                    CancelFunction: () => {
+                      si(), navigation.goBack();
+                    },
                   });
                 }}
                 title="Guardar Lectura"
