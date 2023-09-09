@@ -21,7 +21,7 @@ export const ReadingScreen = () => {
   const {FormatoFechaAgenda} = formatoDeFecha();
   const {width} = useWindowDimensions();
   const {getRequest} = useRequest();
-  const {setIsFetching} = useContext(LoaderContext);
+  const {setIsLoading} = useContext(LoaderContext);
   const [lecturasGuardadas, setLecturasGuardadas] = useState<lecturasTotales[]>(
     [],
   );
@@ -54,10 +54,10 @@ export const ReadingScreen = () => {
   };
 
   const Catalogos = async () => {
-    setIsFetching(true);
+    setIsLoading(true);
     cargarLecturasGuardadas();
     await sleep(2);
-    setIsFetching(false);
+    setIsLoading(false);
   };
 
   const renderLecturas = (a: lecturasTotales) => {
