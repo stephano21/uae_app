@@ -114,7 +114,7 @@ export const LecturaScreen = () => {
             ? parseInt(lectura['Cherelles'], 10)
             : 0,
           Observacion: lectura['Observacion'],
-          Fecha: new Date(),
+          FechaVisita: new Date(),
           Id_Lote: a.Id,
         })
           .then(a => console.log(a))
@@ -208,7 +208,7 @@ export const LecturaScreen = () => {
           ? parseInt(lectura['Cherelles'], 10)
           : 0,
         Observacion: lectura['Observacion'],
-        Fecha: new Date(),
+        FechaVisita: new Date(),
         Id_Lote: a.Id,
       })
         .then(a => console.log(a))
