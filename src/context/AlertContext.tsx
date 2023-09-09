@@ -100,22 +100,26 @@ export const AlertProvider = ({children}: Props) => {
   };
 
   const ShowAlertApiError = (
-    {response}: AxiosError<ApiErrorResponse>,
+    error: AxiosError<ApiErrorResponse>,
     OkFunction?: () => void,
   ) => {
     ShowAlert('default', {
       title: 'Error',
-      message: !hasConection
-        ? 'Verifique su conexión a Internet'
-        : response === undefined
-        ? 'Ocurrió un error con el servidor'
-        : typeof response.data === 'string'
-        ? response.data
-        : response.data.Message !== undefined
-        ? response.data.Message
-        : response.data.error_description !== undefined
-        ? response.data.error_description
-        : 'Ocurrió un error en la consulta',
+      message:
+        error.response?.status === 401
+          ? 'Su cuenta no está autorizada, por favor inicie sesión nuevamente.'
+          : !hasConection
+          ? 'Verifique su conexión a Internet'
+          : error.response?.status! >= 400 && error.response?.status! < 500
+          ? typeof error.response?.data === 'string'
+            ? error.response.data // Si la respuesta es un string, úsalo directamente
+            : typeof error.response?.data === 'object' &&
+              typeof error.response.data.error_description === 'string'
+            ? error.response.data.error_description // Si hay un error_description en el objeto JSON, úsalo
+            : 'Ocurrió un error en la consulta'
+          : error.response?.status! >= 500
+          ? 'Ocurrió un error en el servidor'
+          : 'Ocurrió un error inesperado',
       OkFunction,
     });
   };
