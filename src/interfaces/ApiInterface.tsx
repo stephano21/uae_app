@@ -105,20 +105,20 @@ export interface lecturasTotales {
   Fecha: string;
 }
 
-interface LecturaSerializers {
-  E1?: number | null;
-  E2?: number | null;
-  E3?: number | null;
-  E4?: number | null;
-  E5?: number | null;
-  GR1?: number | null;
-  GR2?: number | null;
-  GR3?: number | null;
-  GR4?: number | null;
-  GR5?: number | null;
-  Cherelles?: number | null;
-  Observacion?: string | null;
-  FechaVisita?: string | null;
-  Activo?: boolean | null;
-  Id_Lote?: number | null;
+export interface Geolotes {
+  id: number;
+  FillColor: string;
+  Activo: boolean;
+  Id_Lote: number;
+  Lote: string;
+  CodigoLote: string;
+  geocoordenadas: Geocoordenada[];
+}
+
+export interface Geocoordenada {
+  id: number;
+  lat: number;
+  lng: number;
+  Activo: boolean;
+  Id_Poligono: number;
 }

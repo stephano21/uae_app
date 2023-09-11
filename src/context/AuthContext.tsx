@@ -49,6 +49,7 @@ export const AuthProvider = ({children}: any) => {
       check
         ? GetJWTInfo().then(jwtInfo => {
             setJWTInfo(jwtInfo.access_token);
+            console.log(jwtInfo);
             setstatus('authenticated');
             //startConnection(jwtInfo.token, jwtInfo.userName);
           })

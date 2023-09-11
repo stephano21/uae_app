@@ -16,8 +16,6 @@ export const NextScreen = () => {
   const navigation = useNavigation();
   const {hasConection} = useContext(CheckInternetContext);
 
-  console.log(location);
-
   useEffect(() => {
     if (hasConection) {
       geolotes();
@@ -56,13 +54,13 @@ export const NextScreen = () => {
 
       if (lotesGuardados) {
         const lotes: IPoligono[] = JSON.parse(lotesGuardados);
-        console.log('Lotes guardados:', lotes);
         setRefreshLocation(lotes);
       }
     } catch (error) {
       console.error(error);
     }
   };
+  console.log(location);
 
   return (
     <BaseScreen>

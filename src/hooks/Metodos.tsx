@@ -1,7 +1,7 @@
 import {useContext, useState} from 'react';
 import _lotes from './../api/test.json';
 import Geolocation from 'react-native-geolocation-service';
-import {ILocation, IPoligono} from './../interfaces/ApiInterface';
+import {Geolotes, ILocation, IPoligono} from './../interfaces/ApiInterface';
 import {LoaderContext} from '../context/LoaderContext';
 import {useRequest} from '../api/useRequest';
 import {ApiEndpoints} from '../api/routes';
@@ -41,32 +41,77 @@ export const Metodos = () => {
     return contador % 2 === 1;
   };
 
-  const getLocation2 = async (item: IPoligono[]) => {
+  // const getLocation2 = async (item: Geolotes[]) => {
+  //   Geolocation.getCurrentPosition(
+  //     async position => {
+  //       const locationData: Geolotes[] = position.coords;
+  //       locationData.region = item
+  //         .filter(item =>
+  //           pointInRegion(
+  //             locationData.latitude,
+  //             locationData.longitude,
+  //             item.geocoordenadas.map((item: any) => ({
+  //               longitude: parseFloat(item.lng),
+  //               latitude: parseFloat(item.lat),
+  //             })),
+  //           ),
+  //         )
+  //         .map(item => ({
+  //           Lote: item.Lote,
+  //           Id: item.Id_Lote,
+  //           Cod: item.CodigoLote,
+  //         }));
+  //       setLocation(locationData);
+  //       //setIsFetching(false);
+  //     },
+  //     error => {
+  //       console.error('Error getting location:', error);
+  //     },
+  //     {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  //   );
+  // };
+
+  const getLocation2 = async (items: Geolotes[]) => {
     Geolocation.getCurrentPosition(
       async position => {
-        const locationData: any = position.coords;
-        locationData.region = item
-          .filter(item =>
-            pointInRegion(
-              locationData.latitude,
-              locationData.longitude,
-              item.geocoordenadas.map((item: any) => ({
-                longitude: parseFloat(item.lng),
-                latitude: parseFloat(item.lat),
-              })),
-            ),
-          )
-          .map(item => ({
-            Lote: item.Lote,
-            Id: item.Id_Lote,
-            Cod: item.CodigoLote,
-          }));
+        // Obtener las coordenadas de posición actual
+        const {
+          latitude,
+          longitude,
+          accuracy,
+          altitude,
+          heading,
+          speed,
+          altitudeAccuracy,
+        } = position.coords;
+
+        // Mapear los datos de Geolotes a la estructura deseada
+        const regionData = items.map(item => ({
+          Id: item.Id_Lote,
+          Lote: item.Lote,
+          CodigoLote: item.CodigoLote,
+        }));
+
+        // Crear el objeto de ubicación con todos los datos
+        const locationData: ILocation = {
+          latitude,
+          longitude,
+          accuracy,
+          altitude,
+          heading,
+          speed,
+          altitudeAccuracy,
+          region: regionData,
+        };
+
+        // Actualizar el estado con los datos de ubicación
         setLocation(locationData);
-        console.log('datalocation', locationData);
-        //setIsFetching(false);
+
+        // Mostrar los datos en la consola
+        console.log('Datos de ubicación:', locationData);
       },
       error => {
-        console.error('Error getting location:', error);
+        console.error('Error al obtener la ubicación:', error);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
