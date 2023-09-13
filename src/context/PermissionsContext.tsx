@@ -22,7 +22,7 @@ type PermissionsContextProps = {
 
 let AndroidPermissions: Permission[] = [
   PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-  PERMISSIONS.ANDROID.CAMERA,
+  //PERMISSIONS.ANDROID.CAMERA,
   //PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
 ];
 /* const androidSDKVersion = Platform.OS === 'android' ? Platform.Version : 0;

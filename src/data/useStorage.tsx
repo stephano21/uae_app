@@ -28,6 +28,7 @@ export const useStorage = () => {
   const RemoveAllData = async () => {
     await AsyncStorage.removeItem(keyStorage.access_token);
     await AsyncStorage.removeItem(keyStorage.refresh_token);
+    await AsyncStorage.removeItem(keyStorage.refresh_token);
   };
 
   return {
