@@ -59,7 +59,7 @@ export interface IVertices {
 
 export interface lecturasTotales {
   id: string;
-  codLectura: string;
+  codLectura: string; //SyncId: string;
   E1: string;
   E2: string;
   E3: string;
@@ -73,6 +73,7 @@ export interface lecturasTotales {
   Cherelles: string;
   Observacion: string;
   Fecha: string;
+  Id_Planta: number;
 }
 
 export interface Geolotes {
