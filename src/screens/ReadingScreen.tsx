@@ -16,6 +16,7 @@ import {LoaderContext} from '../context/LoaderContext';
 import {sleep} from '../helpers/sleep';
 import {useRequest} from '../api/useRequest';
 import {ApiEndpoints} from '../api/routes';
+import {ButtonWithText} from '../components/ButtonWithText';
 
 export const ReadingScreen = () => {
   const {FormatoFechaAgenda} = formatoDeFecha();
@@ -45,7 +46,10 @@ export const ReadingScreen = () => {
       if (lecturasExistentes) {
         const lecturasExistentesArray: lecturasTotales[] =
           JSON.parse(lecturasExistentes);
-        console.log('Lecturas guardadas:', lecturasExistentesArray);
+        console.log(
+          'Lecturas guardadas:',
+          JSON.stringify(lecturasExistentesArray, null, 3),
+        );
         setLecturasGuardadas(lecturasExistentesArray);
       }
     } catch (error) {
@@ -114,6 +118,16 @@ export const ReadingScreen = () => {
         renderItem={renderLecturas}
         ListEmptyText="No hay lecturas por visualizar"
       />
+      <View>
+        {lecturasGuardadas.length > 0 && (
+          <ButtonWithText
+            anyfunction={() => {}}
+            title={`Tiene ${
+              Object.keys(lecturasGuardadas).length
+            } leturas por guardar.`}
+          />
+        )}
+      </View>
     </BaseScreen>
   );
 };

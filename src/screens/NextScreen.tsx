@@ -1,7 +1,7 @@
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {CheckInternetContext} from '../context/CheckInternetContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Geolotes, ILocation, IPoligono} from '../interfaces/ApiInterface';
+import {Geolotes, ILocation} from '../interfaces/ApiInterface';
 import React, {useContext, useEffect, useState} from 'react';
 import {ButtonWithText} from '../components/ButtonWithText';
 import Geolocation from 'react-native-geolocation-service';
@@ -9,24 +9,24 @@ import {AuthContext} from '../context/AuthContext';
 import {BaseScreen} from '../Template/BaseScreen';
 import {colores} from '../theme/appTheme';
 import {Metodos} from '../hooks/Metodos';
-import _lotes from './../api/test.json';
 import {sleep} from '../helpers/sleep';
 import {Text} from 'react-native';
 
 export const NextScreen = () => {
   const navigation = useNavigation();
   const {JWTInfo} = useContext(AuthContext);
-  const {geolotes, pointInRegion, poligonos} = Metodos();
+  const {geolotes, pointInRegion, poligonos, plantas, getPlantas} = Metodos();
   const {hasConection} = useContext(CheckInternetContext);
-  const [refreshLocation, setRefreshLocation] = useState<IPoligono[]>([]);
-  const [location, setLocation] = useState<ILocation>(); //definir un cuerpo o interfaz para location
+  const [refreshLocation, setRefreshLocation] = useState<Geolotes[]>([]);
+  const [location, setLocation] = useState<ILocation | null>(null); //definir un cuerpo o interfaz para location
 
   useEffect(() => {
     if (hasConection && JWTInfo.length > 0) {
       geolotes();
+      getPlantas();
     }
     cargarLecturasGuardadas();
-
+    sleep(2);
     let refrescarUbicación: NodeJS.Timeout | null;
     refrescarUbicación = setInterval(() => {
       getLocation2(); // Llamada a getLocation2 con argumento
@@ -42,11 +42,9 @@ export const NextScreen = () => {
   const cargarLecturasGuardadas = async () => {
     try {
       const lotesGuardados = await AsyncStorage.getItem('GeoLotes');
-      console.log('Datos guardados localmente:', lotesGuardados); // Agregar esta línea para verificar los datos guardados
 
       if (lotesGuardados) {
-        const lotes: IPoligono[] = JSON.parse(lotesGuardados);
-        console.log('Datos cargados correctamente:', lotes); // Agregar esta línea para verificar los datos cargados
+        const lotes: Geolotes[] = JSON.parse(lotesGuardados);
         setRefreshLocation(lotes);
       } else {
         console.log('No se encontraron datos guardados en AsyncStorage');
@@ -57,30 +55,35 @@ export const NextScreen = () => {
   };
 
   const getLocation2 = async () => {
+    const datos: Geolotes[] = hasConection ? refreshLocation : poligonos;
     Geolocation.getCurrentPosition(
       async position => {
         const locationData: any = position.coords;
-        locationData.region =
-          refreshLocation.length > 0
-            ? refreshLocation
-            : poligonos
-                .filter(item =>
-                  pointInRegion(
-                    locationData.latitude,
-                    locationData.longitude,
-                    item.geocoordenadas.map((item: any) => ({
-                      longitude: parseFloat(item.lng),
-                      latitude: parseFloat(item.lat),
-                    })),
-                  ),
-                )
-                .map(item => ({
-                  Lote: item.Lote,
-                  Id: item.Id_Lote,
-                  Cod: item.CodigoLote,
-                }));
+
+        // Filtrar los polígonos basados en la ubicación actual
+        const filteredPoligonos = datos.filter(item =>
+          pointInRegion(
+            locationData.latitude,
+            locationData.longitude,
+            item.geocoordenadas.map((item: any) => ({
+              longitude: parseFloat(item.lng),
+              latitude: parseFloat(item.lat),
+            })),
+          ),
+        );
+
+        // Mapear los polígonos filtrados a un arreglo de objetos
+        const regionData = filteredPoligonos.map(item => ({
+          Lote: item.Lote,
+          Id: item.Id_Lote,
+          Cod: item.CodigoLote,
+        }));
+
+        // Asignar la propiedad 'region' en locationData con los datos mapeados
+        locationData.region = regionData;
+
+        // Actualizar el estado con los datos de ubicación
         setLocation(locationData);
-        //setIsFetching(false);
       },
       error => {
         console.error('Error getting location:', error);
@@ -96,7 +99,7 @@ export const NextScreen = () => {
           <ButtonWithText
             key={index}
             anyfunction={() => {
-              navigation.dispatch(CommonActions.navigate('LecturaScreen', {a}));
+              navigation.dispatch(CommonActions.navigate('PlantasScreen', {a}));
             }}
             title={a.Lote}
           />

@@ -100,9 +100,12 @@ export const AlertProvider = ({children}: Props) => {
   };
 
   const ShowAlertApiError = (
-    error: AxiosError<ApiErrorResponse>,
+    error: AxiosError<ApiErrorResponse | any>,
     OkFunction?: () => void,
   ) => {
+    console.log(JSON.stringify(error, null, 3));
+    console.log('status: ', error.response?.status);
+
     ShowAlert('default', {
       title: 'Error',
       message:
@@ -111,11 +114,14 @@ export const AlertProvider = ({children}: Props) => {
           : !hasConection
           ? 'Verifique su conexión a Internet'
           : error.response?.status! >= 400 && error.response?.status! < 500
-          ? typeof error.response?.data === 'string'
+          ? typeof error.response?.data === 'string' &&
+            !(error.response?.data as string).toString().match(/<html|<\?xml/)
             ? error.response.data // Si la respuesta es un string, úsalo directamente
             : typeof error.response?.data === 'object' &&
-              typeof error.response.data.error_description === 'string'
-            ? error.response.data.error_description // Si hay un error_description en el objeto JSON, úsalo
+              typeof error.response.data.detail === 'string'
+            ? error.response.data.detail // Si hay un error_description en el objeto JSON, úsalo
+            : typeof error.response?.data.error_description === 'string'
+            ? error.response.data.error_description // Agrega esta condición
             : 'Ocurrió un error en la consulta'
           : error.response?.status! >= 500
           ? 'Ocurrió un error en el servidor'

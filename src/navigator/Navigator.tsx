@@ -16,6 +16,7 @@ import {DrawerHeader} from './DrawerHeader';
 import {Tabs} from './Tabs';
 import {LecturaScreen} from '../screens/LecturaScreen';
 import {ReadingScreen} from '../screens/ReadingScreen';
+import {PlantasScreen} from '../screens/PlantasScreen';
 
 const Stack = createStackNavigator();
 export const Navigator = () => {
@@ -125,6 +126,15 @@ export const Navigator = () => {
                     options={{
                       header: props => (
                         <StackHeader title={'Ver Lecturas'}></StackHeader>
+                      ),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="PlantasScreen"
+                    component={PlantasScreen}
+                    options={{
+                      header: props => (
+                        <StackHeader title={'Plantas'}></StackHeader>
                       ),
                     }}
                   />
