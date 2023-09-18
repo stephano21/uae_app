@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {CommonActions, useNavigation, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';
-import {IRegion, Plantas, lecturasTotales} from '../interfaces/ApiInterface';
+import {GlobalLecturas, IRegion, Plantas} from '../interfaces/ApiInterface';
 import {colores, styles} from '../theme/appTheme';
 import {InputForm} from '../components/InputForm';
 import {Card} from 'react-native-paper';
@@ -42,24 +42,7 @@ export const LecturaScreen = () => {
     FechaVisita: '',
   });
 
-  const [allLecturas, setAllLecturas] = useState<{
-    [key: string]: {
-      codLectura: number;
-      E1: string;
-      E2: string;
-      E3: string;
-      E4: string;
-      E5: string;
-      GR1: string;
-      GR2: string;
-      GR3: string;
-      GR4: string;
-      GR5: string;
-      Cherelles: string;
-      Observacion: string;
-      Fecha: string;
-    };
-  }>({});
+  const [allLecturas, setAllLecturas] = useState<GlobalLecturas>({});
 
   const generateFecha = () => {
     const dates = new Date().toISOString();
@@ -70,42 +53,24 @@ export const LecturaScreen = () => {
     generateFecha();
   }, []);
 
-  const guardarLecturasEnLocal = async (lecturas: any): Promise<boolean> => {
+  const guardarLecturasEnLocal = async (
+    lecturas: GlobalLecturas[],
+  ): Promise<boolean> => {
     try {
       // Obtén las lecturas existentes en "LecturasLocal" (si las hay)
       const lecturasExistentes = await AsyncStorage.getItem('LecturasLocal');
-      const lecturasExistentesArray: lecturasTotales[] = lecturasExistentes
+      let lecturasExistentesArray: GlobalLecturas[] = lecturasExistentes
         ? JSON.parse(lecturasExistentes)
         : [];
 
-      // Combina las lecturas existentes con las nuevas
-      const lecturasCombinadas = [...lecturasExistentesArray, ...lecturas];
-      // Guarda las lecturas combinadas en "LecturasLocal"
+      // Agrega las lecturas nuevas al arreglo existente
+      lecturasExistentesArray = [...lecturasExistentesArray, ...lecturas];
+
+      // Guarda el arreglo actualizado en "LecturasLocal"
       await AsyncStorage.setItem(
         'LecturasLocal',
-        JSON.stringify(lecturasCombinadas),
+        JSON.stringify(lecturasExistentesArray),
       );
-      setLectura({
-        E1: '',
-        E2: '',
-        E3: '',
-        E4: '',
-        E5: '',
-        GR1: '',
-        GR2: '',
-        GR3: '',
-        GR4: '',
-        GR5: '',
-        Cherelles: '',
-        Observacion: '',
-        FechaVisita: '',
-      });
-
-      // useEffect(() => {
-      //   console.log('Lectura se ha actualizado:', lectura);
-      // }, [lectura]);
-      setPaginado(0);
-      setAllLecturas({}); // Limpia también el estado allLecturas
 
       return true; // Devuelve true si el guardado fue exitoso
     } catch (error) {
@@ -133,7 +98,8 @@ export const LecturaScreen = () => {
 
     const nuevaLectura = {
       [xyz]: {
-        codLectura: plnt.id,
+        Id_Planta: plnt.id,
+        planta: plnt.Nombre,
         E1: lectura['E1'],
         E2: lectura['E2'],
         E3: lectura['E3'],
@@ -145,12 +111,17 @@ export const LecturaScreen = () => {
         GR4: lectura['GR4'],
         GR5: lectura['GR5'],
         Cherelles: lectura['Cherelles'],
+        SyncId: xyz,
         Observacion: lectura['Observacion'],
-        Fecha: lectura['FechaVisita'],
+        Fecha_Visita: lectura['FechaVisita'],
       },
     };
 
-    setAllLecturas(nuevaLectura);
+    // Agregar la nueva lectura a allLecturas
+    setAllLecturas(prevLecturas => ({
+      ...prevLecturas,
+      ...nuevaLectura,
+    }));
 
     if (hasConection) {
       await postRequest(ApiEndpoints.Lectura, {
@@ -171,15 +142,35 @@ export const LecturaScreen = () => {
         SyncId: xyz,
         Observacion: lectura['Observacion'],
         FechaVisita: new Date(),
-        Id_Lote: plnt.Id_Lote,
+        Id_Planta: plnt.id,
       })
         .then(a => console.log(a))
         .catch(error => console.log(JSON.stringify(error, null, 3)));
     } else {
-      const lecturasTotales = [allLecturas, nuevaLectura];
+      const lecturasTotales =
+        Object.keys(allLecturas).length === 0
+          ? [allLecturas, nuevaLectura]
+          : [nuevaLectura];
       const guardadoExitoso = await guardarLecturasEnLocal(lecturasTotales);
       if (guardadoExitoso) {
         generateFecha();
+        setLectura({
+          E1: '',
+          E2: '',
+          E3: '',
+          E4: '',
+          E5: '',
+          GR1: '',
+          GR2: '',
+          GR3: '',
+          GR4: '',
+          GR5: '',
+          Cherelles: '',
+          Observacion: '',
+          FechaVisita: '',
+        });
+        setPaginado(0);
+        setAllLecturas({});
       } else {
         ShowAlert('default', {
           title: 'Error',

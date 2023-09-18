@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
-import {ILectura, lecturasTotales} from '../interfaces/ApiInterface';
+import {GlobalLecturas, ILectura} from '../interfaces/ApiInterface';
 import {List} from '../components/List';
 import {colores, styles} from '../theme/appTheme';
 import {formatoDeFecha} from '../helpers/formatoDeFecha';
@@ -17,19 +17,24 @@ import {sleep} from '../helpers/sleep';
 import {useRequest} from '../api/useRequest';
 import {ApiEndpoints} from '../api/routes';
 import {ButtonWithText} from '../components/ButtonWithText';
+import {CheckInternetContext} from '../context/CheckInternetContext';
+import {AlertContext} from '../context/AlertContext';
 
 export const ReadingScreen = () => {
   const {FormatoFechaAgenda} = formatoDeFecha();
   const {width} = useWindowDimensions();
   const {getRequest} = useRequest();
+  const {postRequest} = useRequest();
+  const {hasConection} = useContext(CheckInternetContext);
   const {setIsLoading} = useContext(LoaderContext);
-  const [lecturasGuardadas, setLecturasGuardadas] = useState<lecturasTotales[]>(
+  const {ShowAlert} = useContext(AlertContext);
+  const [lecturasGuardadas, setLecturasGuardadas] = useState<GlobalLecturas[]>(
     [],
   );
-  const [apilecturas, setApiLecturas] = useState<ILectura[]>([]);
+  const [apiLecturas, setApiLecturas] = useState<ILectura[]>([]);
 
   useEffect(() => {
-    // Cargar las lecturas guardadas en "LecturasLocal" al inicio del component
+    // Cargar las lecturas guardadas en "LecturasLocal" al inicio del componente
     cargarLecturasGuardadas();
     lecturasRealizadas();
   }, []);
@@ -44,12 +49,9 @@ export const ReadingScreen = () => {
     try {
       const lecturasExistentes = await AsyncStorage.getItem('LecturasLocal');
       if (lecturasExistentes) {
-        const lecturasExistentesArray: lecturasTotales[] =
+        const lecturasExistentesArray: GlobalLecturas[] =
           JSON.parse(lecturasExistentes);
-        console.log(
-          'Lecturas guardadas:',
-          JSON.stringify(lecturasExistentesArray, null, 3),
-        );
+
         setLecturasGuardadas(lecturasExistentesArray);
       }
     } catch (error) {
@@ -64,67 +66,109 @@ export const ReadingScreen = () => {
     setIsLoading(false);
   };
 
-  const renderLecturas = (a: lecturasTotales) => {
-    const fechaActual = FormatoFechaAgenda(new Date().toISOString());
-    const fechaLectura = FormatoFechaAgenda(a.FechaVisita.toString());
-    const esFechaActual = fechaLectura === fechaActual;
-
+  const renderLecturas = (lectura: GlobalLecturas) => {
+    // Itera a través de las propiedades del objeto GlobalLecturas y muestra sus valores
     return (
-      <View key={a.id} style={lecturasStyless.itemContainer}>
-        <View style={{...lecturasStyless.dateContainer, width: width * 0.2}}>
-          <Text style={{fontSize: width * 0.045, ...lecturasStyless.date}}>
-            {FormatoFechaAgenda(a.FechaVisita.toString())}
-          </Text>
-        </View>
-        <View
-          key={a.id}
-          style={{...lecturasStyless.routeContainer, width: width * 0.7}}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => {}}
-            key={a.id}
-            style={lecturasStyless.rutaContainer}>
+      <View style={{...lecturasStyles.rutaContainer, width: width * 0.8}}>
+        {Object.keys(lectura).map(key => (
+          <View key={key} style={{flexDirection: 'column'}}>
             <View
               style={{
-                width: width * 0.012,
-                backgroundColor: esFechaActual ? colores.verdePasto : '#ff6961',
-                ...lecturasStyless.bar,
-              }}></View>
-            <View style={{flexDirection: 'column'}}>
-              <View
-                style={{
-                  alignItems: 'flex-end',
-                  width: width * 0.65,
-                }}>
-                <Text style={lecturasStyless.routeCod}>{a.codLectura}</Text>
-              </View>
-              <Text style={lecturasStyless.route}>{a.Observacion}</Text>
+                alignItems: 'flex-end',
+                width: width * 0.65,
+              }}>
+              <Text style={lecturasStyles.routeCod}>{lectura[key].planta}</Text>
             </View>
-          </TouchableOpacity>
-        </View>
+            <Text style={lecturasStyles.route}>{lectura[key].Observacion}</Text>
+          </View>
+        ))}
       </View>
     );
+  };
+  const enviarLecturasAlServidor = async (lecturas: GlobalLecturas[]) => {
+    try {
+      const lecturasConDatos = lecturas.filter(lectura => {
+        // Verifica si la lectura tiene al menos un campo con datos
+        for (const key in lectura) {
+          if (lectura[key] !== null && lectura[key] !== undefined) {
+            return true; // La lectura tiene al menos un campo con datos
+          }
+        }
+        return false; // La lectura es un objeto vacío
+      });
+      console.log('datoslecturas', lecturasConDatos);
+
+      for (const key in lecturasConDatos) {
+        if (lecturasConDatos.hasOwnProperty(key)) {
+          const lectura = lecturasConDatos[key];
+
+          // Mapea las propiedades de lectura correctamente
+          const lecturaParaEnviar = {
+            Id_Planta: lectura.Id_Planta || 0, // Asegura que Id_Planta sea un número o 0 si es undefined
+            E1: lectura || 0,
+            E2: lectura.E2 || 0,
+            E3: lectura.E3 || 0,
+            E4: lectura.E4 || 0,
+            E5: lectura.E5 || 0,
+            GR1: lectura.GR1 || 0,
+            GR2: lectura.GR2 || 0,
+            GR3: lectura.GR3 || 0,
+            GR4: lectura.GR4 || 0,
+            GR5: lectura.GR5 || 0,
+            Cherelles: lectura.Cherelles || 0,
+            Observacion: lectura.Observacion || '',
+            SyncId: lectura.SyncId || '',
+            FechaVisita: lectura.Fecha_Visita || '', // Asegura que coincida con el nombre correcto
+          };
+
+          console.log('envairlectura', lecturaParaEnviar);
+
+          // Hacer la solicitud al servidor para guardar la lectura
+          await postRequest(ApiEndpoints.Lectura, lecturaParaEnviar);
+
+          // Si la solicitud se completa con éxito, borra la lectura guardada en memoria local
+          const lecturasExistentes = await AsyncStorage.getItem(
+            'LecturasLocal',
+          );
+          if (lecturasExistentes) {
+            const lecturasExistentesArray: GlobalLecturas[] =
+              JSON.parse(lecturasExistentes);
+            // Encuentra y elimina la lectura que coincida con la lectura enviada
+            const lecturasActualizadas = lecturasExistentesArray.filter(
+              lect => lect.SyncId !== lectura.SyncId,
+            );
+            await AsyncStorage.setItem(
+              'LecturasLocal',
+              JSON.stringify(lecturasActualizadas),
+            );
+            setLecturasGuardadas(lecturasActualizadas);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error al enviar las lecturas al servidor:', error);
+    }
   };
 
   return (
     <BaseScreen>
-      <Text style={lecturasStyless.routeCod}>
-        {' '}
-        Lecturas guardadas localmente
-      </Text>
       <List
         data={lecturasGuardadas}
         refreshFunction={() => Catalogos()}
         renderItem={renderLecturas}
         ListEmptyText="No hay lecturas por visualizar"
       />
+
       <View>
-        {lecturasGuardadas.length > 0 && (
+        {lecturasGuardadas.length > 0 && hasConection && (
           <ButtonWithText
-            anyfunction={() => {}}
-            title={`Tiene ${
-              Object.keys(lecturasGuardadas).length
-            } leturas por guardar.`}
+            anyfunction={() =>
+              ShowAlert('default', {
+                message: 'Estamos trabajando en ello',
+                title: 'Informacion',
+              })
+            }
+            title={`Guardar Lecturas en el servidor.`}
           />
         )}
       </View>
@@ -132,48 +176,18 @@ export const ReadingScreen = () => {
   );
 };
 
-const lecturasStyless = StyleSheet.create({
-  container: {
-    padding: 16,
-  },
-  itemContainer: {
-    marginVertical: 20,
-    marginBottom: 16,
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    borderBottomColor: colores.plomoclaro,
-  },
-  dateContainer: {
-    paddingRight: 16,
-    alignSelf: 'center',
-    alignItems: 'center',
-  },
-  date: {
-    color: '#424242',
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  routeContainer: {
-    flexDirection: 'column',
-  },
-  bar: {
-    height: '100%',
-    marginRight: 5,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-  },
+const lecturasStyles = StyleSheet.create({
   rutaContainer: {
     height: '90%',
-    padding: 1,
+    flex: 1,
     ...styles.sombra,
     marginBottom: 10,
-    flexDirection: 'row',
     backgroundColor: '#ececec',
   },
   route: {
     fontSize: 16,
     marginBottom: 4,
+    marginHorizontal: 5,
     color: colores.negro,
   },
   routeCod: {
