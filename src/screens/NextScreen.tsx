@@ -7,7 +7,7 @@ import {ButtonWithText} from '../components/ButtonWithText';
 import Geolocation from 'react-native-geolocation-service';
 import {AuthContext} from '../context/AuthContext';
 import {BaseScreen} from '../Template/BaseScreen';
-import {colores} from '../theme/appTheme';
+import {colores, iconos} from '../theme/appTheme';
 import {Metodos} from '../hooks/Metodos';
 import {sleep} from '../helpers/sleep';
 import {Text} from 'react-native';
@@ -21,11 +21,7 @@ export const NextScreen = () => {
   const [location, setLocation] = useState<ILocation | null>(null); //definir un cuerpo o interfaz para location
 
   useEffect(() => {
-    if (hasConection && JWTInfo.length > 0) {
-      geolotes();
-      getPlantas();
-    }
-    cargarLecturasGuardadas();
+    volverAcargar();
     sleep(2);
     let refrescarUbicación: NodeJS.Timeout | null;
     refrescarUbicación = setInterval(() => {
@@ -38,6 +34,14 @@ export const NextScreen = () => {
       }
     };
   }, []); // Añadir poligonos como dependencia
+
+  const volverAcargar = () => {
+    if (hasConection && JWTInfo.length > 0) {
+      geolotes();
+      getPlantas();
+    }
+    cargarLecturasGuardadas();
+  };
 
   const cargarLecturasGuardadas = async () => {
     try {
@@ -53,43 +57,49 @@ export const NextScreen = () => {
       console.error('Error al cargar los datos desde AsyncStorage:', error);
     }
   };
-
   const getLocation2 = async () => {
-    const datos: Geolotes[] = hasConection ? refreshLocation : poligonos;
-    Geolocation.getCurrentPosition(
-      async position => {
-        const locationData: any = position.coords;
+    // Definir la fuente de datos en función de la conexión
+    if (
+      Object.keys(poligonos).length > 0 ||
+      Object.keys(refreshLocation).length > 0
+    ) {
+      const datos: Geolotes[] = hasConection ? poligonos : refreshLocation;
+      // Obtener la ubicación actual
+      Geolocation.getCurrentPosition(
+        async position => {
+          const locationData: any = position.coords;
 
-        // Filtrar los polígonos basados en la ubicación actual
-        const filteredPoligonos = datos.filter(item =>
-          pointInRegion(
-            locationData.latitude,
-            locationData.longitude,
-            item.geocoordenadas.map((item: any) => ({
-              longitude: parseFloat(item.lng),
-              latitude: parseFloat(item.lat),
-            })),
-          ),
-        );
+          // Filtrar los polígonos basados en la ubicación actual
+          const filteredPoligonos = datos.filter(item =>
+            pointInRegion(
+              locationData.latitude,
+              locationData.longitude,
+              item.geocoordenadas.map((item: any) => ({
+                longitude: parseFloat(item.lng),
+                latitude: parseFloat(item.lat),
+              })),
+            ),
+          );
 
-        // Mapear los polígonos filtrados a un arreglo de objetos
-        const regionData = filteredPoligonos.map(item => ({
-          Lote: item.Lote,
-          Id: item.Id_Lote,
-          Cod: item.CodigoLote,
-        }));
+          // Mapear los polígonos filtrados a un arreglo de objetos
+          const regionData = filteredPoligonos.map(item => ({
+            Lote: item.Lote,
+            Id: item.Id_Lote,
+            Cod: item.CodigoLote,
+          }));
 
-        // Asignar la propiedad 'region' en locationData con los datos mapeados
-        locationData.region = regionData;
+          // Asignar la propiedad 'region' en locationData con los datos mapeados
+          locationData.region = regionData;
 
-        // Actualizar el estado con los datos de ubicación
-        setLocation(locationData);
-      },
-      error => {
-        console.error('Error getting location:', error);
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    );
+          // Actualizar el estado con los datos de ubicación
+          setLocation(locationData);
+        },
+        error => {
+          console.error('Error getting location:', error);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    }
   };
 
   return (
@@ -105,7 +115,16 @@ export const NextScreen = () => {
           />
         ))
       ) : (
-        <Text style={{color: colores.negro}}>No hay regiones disponibles</Text>
+        <>
+          <Text style={{color: colores.negro}}>
+            No hay regiones disponibles
+          </Text>
+          {/* <ButtonWithText
+            title="¿No hay datos? Carga de nuevo"
+            icon={iconos.recargar}
+            anyfunction={volverAcargar}
+          /> */}
+        </>
       )}
     </BaseScreen>
   );

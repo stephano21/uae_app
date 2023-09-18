@@ -74,7 +74,7 @@ export const LoginScreen = () => {
       <ButtonWithText
         anyfunction={() => Login()}
         title={'INICIAR SESIÓN'}></ButtonWithText>
-      <View
+      {/* <View
         style={{
           alignSelf: 'flex-end',
           alignItems: 'flex-end',
@@ -91,7 +91,7 @@ export const LoginScreen = () => {
               CommonActions.navigate('RecoveryPasswordScreen'),
             )
           }></TextButton>
-      </View>
+      </View> */}
       <View style={styles.versionContainer}>
         <Text style={styles.versionText}>
           Versión: {DeviceInfo.getVersion()}

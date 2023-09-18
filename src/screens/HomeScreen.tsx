@@ -60,23 +60,6 @@ export const HomeScreen = () => {
     console.log('prueba de OkFunction con parametro: ', text);
   };
 
-  const envioImagenesHumoBase64 = async () => {
-    const fotosHumo: string[] = [];
-    for (let i = 0; i < 40; i++) {
-      fotosHumo.push(Base64Img.izquierda);
-    }
-
-    console.log('cantidad: ', fotosHumo.length);
-    await postRequest<string>(ApiEndpoints.RegistrarArchivosHumo, fotosHumo)
-      .then(resp => {
-        ShowAlert('default', {
-          title: 'Exito',
-          message: resp,
-        });
-      })
-      .catch(() => {});
-  };
-
   return (
     <BaseScreen>
       <Text>HomeScreen</Text>
@@ -134,9 +117,7 @@ export const HomeScreen = () => {
           )
         }></Button>
       <Text>HomeScreen</Text>
-      <Button
-        title="Enviar imagenes Humo en base 64"
-        onPress={envioImagenesHumoBase64}></Button>
+
       <Text>HomeScreen</Text>
       <Selector
         catalog={AvisoSelector}

@@ -5,7 +5,6 @@ import {LoaderContext} from '../context/LoaderContext';
 import {useRequest} from '../api/useRequest';
 import {ApiEndpoints} from '../api/routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 export const Metodos = () => {
   const {setIsLoading} = useContext(LoaderContext);
   const {getRequest} = useRequest();
@@ -16,7 +15,7 @@ export const Metodos = () => {
     // Convertir las coordenadas a flotantes
     lat = parseFloat(lat.toString());
     lon = parseFloat(lon.toString());
-    // Inicializar el contador
+    // Inicializar el contadora
     let contador = 0;
     // Obtener el número de vértices del polígono
     const numVertices = vertices.length;
@@ -95,7 +94,6 @@ export const Metodos = () => {
       if (lotes && lotes.length > 0) {
         // Guarda los datos en AsyncStorage
         await AsyncStorage.setItem('GeoLotes', JSON.stringify(lotes));
-        console.log('Locations guardados localmente:');
       } else {
         console.log('No se encontraron datos válidos para guardar.');
       }
@@ -111,7 +109,6 @@ export const Metodos = () => {
       if (plantitas && plantitas.length > 0) {
         // Guarda los datos en AsyncStorage
         await AsyncStorage.setItem('Plantas', JSON.stringify(plantitas));
-        console.log('Plantas guardados localmente:');
       } else {
         console.log('No se encontraron datos válidos para guardar.');
       }

@@ -66,14 +66,14 @@ export const ReadingScreen = () => {
 
   const renderLecturas = (a: lecturasTotales) => {
     const fechaActual = FormatoFechaAgenda(new Date().toISOString());
-    const fechaLectura = FormatoFechaAgenda(a.Fecha.toString());
+    const fechaLectura = FormatoFechaAgenda(a.FechaVisita.toString());
     const esFechaActual = fechaLectura === fechaActual;
 
     return (
       <View key={a.id} style={lecturasStyless.itemContainer}>
         <View style={{...lecturasStyless.dateContainer, width: width * 0.2}}>
           <Text style={{fontSize: width * 0.045, ...lecturasStyless.date}}>
-            {FormatoFechaAgenda(a.Fecha.toString())}
+            {FormatoFechaAgenda(a.FechaVisita.toString())}
           </Text>
         </View>
         <View

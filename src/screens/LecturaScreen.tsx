@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {CommonActions, useNavigation, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';
-import {IRegion, lecturasTotales} from '../interfaces/ApiInterface';
+import {IRegion, Plantas, lecturasTotales} from '../interfaces/ApiInterface';
 import {colores, styles} from '../theme/appTheme';
 import {InputForm} from '../components/InputForm';
 import {Card} from 'react-native-paper';
@@ -23,8 +23,8 @@ export const LecturaScreen = () => {
   const {ShowAlert} = useContext(AlertContext);
   const [paginado, setPaginado] = useState<number>(0);
   const {hasConection} = useContext(CheckInternetContext);
-  const {a} = route.params as {
-    a: IRegion;
+  const {plnt} = route.params as {
+    plnt: Plantas;
   };
   const [lectura, setLectura] = useState({
     E1: '',
@@ -44,7 +44,7 @@ export const LecturaScreen = () => {
 
   const [allLecturas, setAllLecturas] = useState<{
     [key: string]: {
-      codLectura: string;
+      codLectura: number;
       E1: string;
       E2: string;
       E3: string;
@@ -133,7 +133,7 @@ export const LecturaScreen = () => {
 
     const nuevaLectura = {
       [xyz]: {
-        codLectura: a.CodigoLote,
+        codLectura: plnt.id,
         E1: lectura['E1'],
         E2: lectura['E2'],
         E3: lectura['E3'],
@@ -163,13 +163,15 @@ export const LecturaScreen = () => {
         GR2: lectura['GR2'] ? parseInt(lectura['GR2'], 10) : 0,
         GR3: lectura['GR3'] ? parseInt(lectura['GR3'], 10) : 0,
         GR4: lectura['GR4'] ? parseInt(lectura['GR4'], 10) : 0,
+
         GR5: lectura['GR5'] ? parseInt(lectura['GR5'], 10) : 0,
         Cherelles: lectura['Cherelles']
           ? parseInt(lectura['Cherelles'], 10)
           : 0,
+        SyncId: xyz,
         Observacion: lectura['Observacion'],
         FechaVisita: new Date(),
-        Id_Lote: a.Id,
+        Id_Lote: plnt.Id_Lote,
       })
         .then(a => console.log(a))
         .catch(error => console.log(JSON.stringify(error, null, 3)));
@@ -201,7 +203,7 @@ export const LecturaScreen = () => {
             width: width * 0.8,
             ...styles.centerItems,
           }}
-          title={a.CodigoLote}
+          title={plnt.Nombre}
           titleStyle={{...stylesComprasGastos.title, fontSize: width * 0.055}}
         />
         <Card.Content

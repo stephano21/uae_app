@@ -34,6 +34,7 @@ export interface ILectura {
   Observacion: string;
   FechaVisita: Date;
   Activo: boolean;
+  Id_Planta: number;
 }
 
 export interface ILocation extends GeoCoordinates {
@@ -72,7 +73,7 @@ export interface lecturasTotales {
   GR5: string;
   Cherelles: string;
   Observacion: string;
-  Fecha: string;
+  FechaVisita: string;
   Id_Planta: number;
 }
 
