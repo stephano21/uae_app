@@ -19,6 +19,7 @@ import {ApiEndpoints} from '../api/routes';
 import {ButtonWithText} from '../components/ButtonWithText';
 import {CheckInternetContext} from '../context/CheckInternetContext';
 import {AlertContext} from '../context/AlertContext';
+import {useNavigation} from '@react-navigation/native';
 
 export const ReadingScreen = () => {
   const {FormatoFechaAgenda} = formatoDeFecha();
@@ -26,6 +27,7 @@ export const ReadingScreen = () => {
   const {getRequest} = useRequest();
   const {postRequest} = useRequest();
   const {hasConection} = useContext(CheckInternetContext);
+  const navigation = useNavigation();
   const {setIsLoading} = useContext(LoaderContext);
   const {ShowAlert} = useContext(AlertContext);
   const [lecturasGuardadas, setLecturasGuardadas] = useState<GlobalLecturas[]>(
@@ -38,6 +40,24 @@ export const ReadingScreen = () => {
     cargarLecturasGuardadas();
     lecturasRealizadas();
   }, []);
+
+  useEffect(() => {
+    // Verificar si tienes Id_Planta en cada lectura guardada
+    const hasMissingIdPlanta = lecturasGuardadas.some(
+      lectura => !lectura.Id_Planta,
+    );
+
+    if (hasMissingIdPlanta) {
+      // Mostrar alerta de error
+      ShowAlert('default', {
+        title: 'Error',
+        message: 'No se proporcionaron los datos necesarios.',
+      });
+
+      // Hacer un goBack
+      navigation.goBack();
+    }
+  }, [lecturasGuardadas]);
 
   const lecturasRealizadas = async () => {
     await getRequest<ILectura[]>(ApiEndpoints.Lectura)
@@ -102,15 +122,10 @@ export const ReadingScreen = () => {
           Cherelles: lectura.Cherelles || 0,
           Observacion: lectura.Observacion,
           SyncId: lectura.SyncId,
-          FechaVisita: lectura.Fecha_Visita, // Asegura que coincida con el nombre correcto
+          FechaVisita: lectura.Fecha_Visita,
         };
-
-        console.log('envairlectura', lecturaParaEnviar);
-
         // Hacer la solicitud al servidor para guardar la lectura
         await postRequest(ApiEndpoints.Lectura, lecturaParaEnviar);
-
-        // Si la solicitud se completa con éxito, borra la lectura guardada en memoria local
         const lecturasExistentes = await AsyncStorage.getItem('LecturasLocal');
         if (lecturasExistentes) {
           const lecturasExistentesArray: GlobalLecturas[] =

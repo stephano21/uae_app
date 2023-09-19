@@ -14,6 +14,7 @@ import {CheckInternetContext} from '../context/CheckInternetContext';
 import {useRequest} from '../api/useRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ApiEndpoints} from '../api/routes';
+import {AxiosResponse} from 'axios';
 
 export const LecturaScreen = () => {
   const route = useRoute();
@@ -72,6 +73,10 @@ export const LecturaScreen = () => {
         JSON.stringify(lecturasExistentesArray),
       );
 
+      ShowAlert('default', {
+        title: 'Exito',
+        message: 'Los datos se han guardado localmente.',
+      });
       return true; // Devuelve true si el guardado fue exitoso
     } catch (error) {
       console.error(error);
@@ -93,93 +98,115 @@ export const LecturaScreen = () => {
   };
 
   const si = async () => {
-    const xyz =
-      Date.now().toString(36) + Math.random().toString(36).substring(2);
+    try {
+      const xyz =
+        Date.now().toString(36) + Math.random().toString(36).substring(2);
 
-    const nuevaLectura = {
-      Id_Planta: plnt.id,
-      planta: plnt.Nombre,
-      E1: lectura['E1'],
-      E2: lectura['E2'],
-      E3: lectura['E3'],
-      E4: lectura['E4'],
-      E5: lectura['E5'],
-      GR1: lectura['GR1'],
-      GR2: lectura['GR2'],
-      GR3: lectura['GR3'],
-      GR4: lectura['GR4'],
-      GR5: lectura['GR5'],
-      Cherelles: lectura['Cherelles'],
-      SyncId: xyz,
-      Observacion: lectura['Observacion'],
-      Fecha_Visita: lectura['FechaVisita'],
-    };
-
-    // Agregar la nueva lectura a allLecturas
-    setAllLecturas(prevLecturas => ({
-      ...prevLecturas,
-      ...nuevaLectura,
-    }));
-
-    if (hasConection) {
-      await postRequest(ApiEndpoints.Lectura, {
-        E1: lectura['E1'] ? parseInt(lectura['E1'], 10) : 0,
-        E2: lectura['E2'] ? parseInt(lectura['E2'], 10) : 0,
-        E3: lectura['E3'] ? parseInt(lectura['E3'], 10) : 0,
-        E4: lectura['E4'] ? parseInt(lectura['E4'], 10) : 0,
-        E5: lectura['E5'] ? parseInt(lectura['E5'], 10) : 0,
-        GR1: lectura['GR1'] ? parseInt(lectura['GR1'], 10) : 0,
-        GR2: lectura['GR2'] ? parseInt(lectura['GR2'], 10) : 0,
-        GR3: lectura['GR3'] ? parseInt(lectura['GR3'], 10) : 0,
-        GR4: lectura['GR4'] ? parseInt(lectura['GR4'], 10) : 0,
-
-        GR5: lectura['GR5'] ? parseInt(lectura['GR5'], 10) : 0,
-        Cherelles: lectura['Cherelles']
-          ? parseInt(lectura['Cherelles'], 10)
-          : 0,
+      const nuevaLectura = {
+        Id_Planta: plnt.id,
+        planta: plnt.Nombre,
+        E1: lectura['E1'],
+        E2: lectura['E2'],
+        E3: lectura['E3'],
+        E4: lectura['E4'],
+        E5: lectura['E5'],
+        GR1: lectura['GR1'],
+        GR2: lectura['GR2'],
+        GR3: lectura['GR3'],
+        GR4: lectura['GR4'],
+        GR5: lectura['GR5'],
+        Cherelles: lectura['Cherelles'],
         SyncId: xyz,
         Observacion: lectura['Observacion'],
-        FechaVisita: new Date(),
-        Id_Planta: plnt.id,
-      })
-        .then(a => console.log(a))
-        .catch(error => console.log(JSON.stringify(error, null, 3)));
-    } else {
-      const lecturasTotales =
-        Object.keys(allLecturas).length === 0
-          ? [...allLecturas, nuevaLectura]
-          : [nuevaLectura];
-      const guardadoExitoso = await guardarLecturasEnLocal(lecturasTotales);
-      if (guardadoExitoso) {
-        generateFecha();
-        setLectura({
-          E1: '',
-          E2: '',
-          E3: '',
-          E4: '',
-          E5: '',
-          GR1: '',
-          GR2: '',
-          GR3: '',
-          GR4: '',
-          GR5: '',
-          Cherelles: '',
-          Observacion: '',
-          FechaVisita: '',
-        });
-        setPaginado(0);
-        setAllLecturas([]);
+        Fecha_Visita: lectura['FechaVisita'],
+      };
+
+      // Agregar la nueva lectura a allLecturas
+      setAllLecturas(prevLecturas => ({
+        ...prevLecturas,
+        ...nuevaLectura,
+      }));
+
+      if (hasConection) {
+        const response: AxiosResponse = await postRequest(
+          ApiEndpoints.Lectura,
+          {
+            E1: lectura['E1'] ? parseInt(lectura['E1'], 10) : 0,
+            E2: lectura['E2'] ? parseInt(lectura['E2'], 10) : 0,
+            E3: lectura['E3'] ? parseInt(lectura['E3'], 10) : 0,
+            E4: lectura['E4'] ? parseInt(lectura['E4'], 10) : 0,
+            E5: lectura['E5'] ? parseInt(lectura['E5'], 10) : 0,
+            GR1: lectura['GR1'] ? parseInt(lectura['GR1'], 10) : 0,
+            GR2: lectura['GR2'] ? parseInt(lectura['GR2'], 10) : 0,
+            GR3: lectura['GR3'] ? parseInt(lectura['GR3'], 10) : 0,
+            GR4: lectura['GR4'] ? parseInt(lectura['GR4'], 10) : 0,
+            GR5: lectura['GR5'] ? parseInt(lectura['GR5'], 10) : 0,
+            Cherelles: lectura['Cherelles']
+              ? parseInt(lectura['Cherelles'], 10)
+              : 0,
+            SyncId: xyz,
+            Observacion: lectura['Observacion'],
+            FechaVisita: new Date(),
+            Id_Planta: plnt.id,
+          },
+        );
+
+        if (response.status === 200) {
+          ShowAlert('default', {
+            title: 'Exito',
+            message: 'Se guardó en el servidor correctamente.',
+          });
+          return true;
+        } else {
+          ShowAlert('default', {
+            title: 'Error',
+            message: 'No se pudo guardar en el servidor.',
+          });
+          return false;
+        }
       } else {
-        ShowAlert('default', {
-          title: 'Error',
-          message: 'Ocurrió un error al intentar guardar los datos localmente.',
-        });
+        const lecturasTotales =
+          Object.keys(allLecturas).length === 0
+            ? [...allLecturas, nuevaLectura]
+            : [nuevaLectura];
+        const guardadoExitoso = await guardarLecturasEnLocal(lecturasTotales);
+        if (guardadoExitoso) {
+          generateFecha();
+          setLectura({
+            E1: '',
+            E2: '',
+            E3: '',
+            E4: '',
+            E5: '',
+            GR1: '',
+            GR2: '',
+            GR3: '',
+            GR4: '',
+            GR5: '',
+            Cherelles: '',
+            Observacion: '',
+            FechaVisita: '',
+          });
+          setPaginado(0);
+          setAllLecturas([]);
+          return true;
+        } else {
+          ShowAlert('default', {
+            title: 'Error',
+            message:
+              'Ocurrió un error al intentar guardar los datos localmente.',
+          });
+          return false;
+        }
       }
+    } catch (error) {
+      console.error('Error en guardarLectura:', error);
+      return false;
     }
   };
 
   return (
-    <BaseScreen>
+    <BaseScreen isScroll={true}>
       <Card
         style={{
           backgroundColor: colores.plomoclaro,
@@ -322,15 +349,11 @@ export const LecturaScreen = () => {
                 />
               </View>
               <ButtonWithText
-                anyfunction={() => {
-                  ShowAlert('yesno', {
-                    title: 'Aviso',
-                    message: '¿Deseas hacer otra lectura?',
-                    OkFunction: si,
-                    CancelFunction: () => {
-                      si(), navigation.goBack();
-                    },
-                  });
+                anyfunction={async () => {
+                  const siSePudo = await si();
+                  if (siSePudo) {
+                    navigation.goBack();
+                  }
                 }}
                 title="Guardar Lectura"
               />
