@@ -12,6 +12,7 @@ export const Metodos = () => {
   const [plantas, setPlantas] = useState<Plantas[]>([]);
 
   const pointInRegion = (lat: number, lon: number, vertices: any[]) => {
+    console.info("calculating...")
     // Convertir las coordenadas a flotantes
     lat = parseFloat(lat.toString());
     lon = parseFloat(lon.toString());
@@ -40,7 +41,6 @@ export const Metodos = () => {
     return contador % 2 === 1;
   };
 
-  // const getLocation2 = async (items: Geolotes[]) => {
   //   Geolocation.getCurrentPosition(
   //     async position => {
   //       // Obtener las coordenadas de posición actual
@@ -87,34 +87,17 @@ export const Metodos = () => {
   // };
 
   const geolotes = async () => {
-    try {
-      const lotes = await getRequest<Geolotes[]>(ApiEndpoints.Poligonos);
+    await getRequest<Geolotes[]>(ApiEndpoints.Poligonos).then(async (lotes) => {
       setPoligonos(lotes);
+      await AsyncStorage.setItem('GeoLotes', JSON.stringify(lotes)).catch(e => console.log(e))
+})
 
-      if (lotes && lotes.length > 0) {
-        // Guarda los datos en AsyncStorage
-        await AsyncStorage.setItem('GeoLotes', JSON.stringify(lotes));
-      } else {
-        console.log('No se encontraron datos válidos para guardar.');
-      }
-    } catch (error) {
-      console.error('Error al obtener los datos:', error);
-    }
+     
   };
   const getPlantas = async () => {
-    try {
-      const plantitas = await getRequest<Plantas[]>(ApiEndpoints.Plantas);
-      setPlantas(plantitas);
-
-      if (plantitas && plantitas.length > 0) {
-        // Guarda los datos en AsyncStorage
-        await AsyncStorage.setItem('Plantas', JSON.stringify(plantitas));
-      } else {
-        console.log('No se encontraron datos válidos para guardar.');
-      }
-    } catch (error) {
-      console.error('Error al obtener los datos:', error);
-    }
+    await getRequest<Plantas[]>(ApiEndpoints.Plantas).then(async (plantas) => {setPlantas(plantas)
+        await AsyncStorage.setItem('Plantas', JSON.stringify(plantas)).catch(() => setPlantas([]));
+      });
   };
 
   return {
