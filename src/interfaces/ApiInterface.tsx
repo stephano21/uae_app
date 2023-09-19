@@ -59,24 +59,22 @@ export interface IVertices {
 }
 
 export interface GlobalLecturas {
-  [key: string]: {
-    Id_Planta: number;
-    planta: string;
-    E1: string;
-    E2: string;
-    E3: string;
-    E4: string;
-    E5: string;
-    GR1: string;
-    GR2: string;
-    GR3: string;
-    GR4: string;
-    GR5: string;
-    Cherelles: string;
-    Observacion: string;
-    SyncId: string;
-    Fecha_Visita: string;
-  };
+  Id_Planta: number;
+  planta: string;
+  E1: string;
+  E2: string;
+  E3: string;
+  E4: string;
+  E5: string;
+  GR1: string;
+  GR2: string;
+  GR3: string;
+  GR4: string;
+  GR5: string;
+  Cherelles: string;
+  Observacion: string;
+  SyncId: string;
+  Fecha_Visita: string;
 }
 
 export interface Geolotes {

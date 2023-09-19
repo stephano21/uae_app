@@ -42,7 +42,7 @@ export const LecturaScreen = () => {
     FechaVisita: '',
   });
 
-  const [allLecturas, setAllLecturas] = useState<GlobalLecturas>({});
+  const [allLecturas, setAllLecturas] = useState<GlobalLecturas[]>([]);
 
   const generateFecha = () => {
     const dates = new Date().toISOString();
@@ -97,24 +97,22 @@ export const LecturaScreen = () => {
       Date.now().toString(36) + Math.random().toString(36).substring(2);
 
     const nuevaLectura = {
-      [xyz]: {
-        Id_Planta: plnt.id,
-        planta: plnt.Nombre,
-        E1: lectura['E1'],
-        E2: lectura['E2'],
-        E3: lectura['E3'],
-        E4: lectura['E4'],
-        E5: lectura['E5'],
-        GR1: lectura['GR1'],
-        GR2: lectura['GR2'],
-        GR3: lectura['GR3'],
-        GR4: lectura['GR4'],
-        GR5: lectura['GR5'],
-        Cherelles: lectura['Cherelles'],
-        SyncId: xyz,
-        Observacion: lectura['Observacion'],
-        Fecha_Visita: lectura['FechaVisita'],
-      },
+      Id_Planta: plnt.id,
+      planta: plnt.Nombre,
+      E1: lectura['E1'],
+      E2: lectura['E2'],
+      E3: lectura['E3'],
+      E4: lectura['E4'],
+      E5: lectura['E5'],
+      GR1: lectura['GR1'],
+      GR2: lectura['GR2'],
+      GR3: lectura['GR3'],
+      GR4: lectura['GR4'],
+      GR5: lectura['GR5'],
+      Cherelles: lectura['Cherelles'],
+      SyncId: xyz,
+      Observacion: lectura['Observacion'],
+      Fecha_Visita: lectura['FechaVisita'],
     };
 
     // Agregar la nueva lectura a allLecturas
@@ -149,7 +147,7 @@ export const LecturaScreen = () => {
     } else {
       const lecturasTotales =
         Object.keys(allLecturas).length === 0
-          ? [allLecturas, nuevaLectura]
+          ? [...allLecturas, nuevaLectura]
           : [nuevaLectura];
       const guardadoExitoso = await guardarLecturasEnLocal(lecturasTotales);
       if (guardadoExitoso) {
@@ -170,7 +168,7 @@ export const LecturaScreen = () => {
           FechaVisita: '',
         });
         setPaginado(0);
-        setAllLecturas({});
+        setAllLecturas([]);
       } else {
         ShowAlert('default', {
           title: 'Error',

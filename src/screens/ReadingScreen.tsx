@@ -70,79 +70,60 @@ export const ReadingScreen = () => {
     // Itera a través de las propiedades del objeto GlobalLecturas y muestra sus valores
     return (
       <View style={{...lecturasStyles.rutaContainer, width: width * 0.8}}>
-        {Object.keys(lectura).map(key => (
-          <View key={key} style={{flexDirection: 'column'}}>
-            <View
-              style={{
-                alignItems: 'flex-end',
-                width: width * 0.65,
-              }}>
-              <Text style={lecturasStyles.routeCod}>{lectura[key].planta}</Text>
-            </View>
-            <Text style={lecturasStyles.route}>{lectura[key].Observacion}</Text>
+        <View key={lectura.Id_Planta} style={{flexDirection: 'column'}}>
+          <View
+            style={{
+              alignItems: 'flex-end',
+              width: width * 0.65,
+            }}>
+            <Text style={lecturasStyles.routeCod}>{lectura.planta}</Text>
           </View>
-        ))}
+          <Text style={lecturasStyles.route}>{lectura.Observacion}</Text>
+        </View>
       </View>
     );
   };
   const enviarLecturasAlServidor = async (lecturas: GlobalLecturas[]) => {
     try {
-      const lecturasConDatos = lecturas.filter(lectura => {
-        // Verifica si la lectura tiene al menos un campo con datos
-        for (const key in lectura) {
-          if (lectura[key] !== null && lectura[key] !== undefined) {
-            return true; // La lectura tiene al menos un campo con datos
-          }
-        }
-        return false; // La lectura es un objeto vacío
-      });
-      console.log('datoslecturas', lecturasConDatos);
+      for (const lectura of lecturas) {
+        // Mapea las propiedades de lectura correctamente
+        const lecturaParaEnviar = {
+          Id_Planta: lectura.Id_Planta,
+          E1: lectura.E1 || 0,
+          E2: lectura.E2 || 0,
+          E3: lectura.E3 || 0,
+          E4: lectura.E4 || 0,
+          E5: lectura.E5 || 0,
+          GR1: lectura.GR1 || 0,
+          GR2: lectura.GR2 || 0,
+          GR3: lectura.GR3 || 0,
+          GR4: lectura.GR4 || 0,
+          GR5: lectura.GR5 || 0,
+          Cherelles: lectura.Cherelles || 0,
+          Observacion: lectura.Observacion,
+          SyncId: lectura.SyncId,
+          FechaVisita: lectura.Fecha_Visita, // Asegura que coincida con el nombre correcto
+        };
 
-      for (const key in lecturasConDatos) {
-        if (lecturasConDatos.hasOwnProperty(key)) {
-          const lectura = lecturasConDatos[key];
+        console.log('envairlectura', lecturaParaEnviar);
 
-          // Mapea las propiedades de lectura correctamente
-          const lecturaParaEnviar = {
-            Id_Planta: lectura.Id_Planta || 0, // Asegura que Id_Planta sea un número o 0 si es undefined
-            E1: lectura || 0,
-            E2: lectura.E2 || 0,
-            E3: lectura.E3 || 0,
-            E4: lectura.E4 || 0,
-            E5: lectura.E5 || 0,
-            GR1: lectura.GR1 || 0,
-            GR2: lectura.GR2 || 0,
-            GR3: lectura.GR3 || 0,
-            GR4: lectura.GR4 || 0,
-            GR5: lectura.GR5 || 0,
-            Cherelles: lectura.Cherelles || 0,
-            Observacion: lectura.Observacion || '',
-            SyncId: lectura.SyncId || '',
-            FechaVisita: lectura.Fecha_Visita || '', // Asegura que coincida con el nombre correcto
-          };
+        // Hacer la solicitud al servidor para guardar la lectura
+        await postRequest(ApiEndpoints.Lectura, lecturaParaEnviar);
 
-          console.log('envairlectura', lecturaParaEnviar);
-
-          // Hacer la solicitud al servidor para guardar la lectura
-          await postRequest(ApiEndpoints.Lectura, lecturaParaEnviar);
-
-          // Si la solicitud se completa con éxito, borra la lectura guardada en memoria local
-          const lecturasExistentes = await AsyncStorage.getItem(
-            'LecturasLocal',
+        // Si la solicitud se completa con éxito, borra la lectura guardada en memoria local
+        const lecturasExistentes = await AsyncStorage.getItem('LecturasLocal');
+        if (lecturasExistentes) {
+          const lecturasExistentesArray: GlobalLecturas[] =
+            JSON.parse(lecturasExistentes);
+          // Encuentra y elimina la lectura que coincida con la lectura enviada
+          const lecturasActualizadas = lecturasExistentesArray.filter(
+            lect => lect.SyncId !== lectura.SyncId,
           );
-          if (lecturasExistentes) {
-            const lecturasExistentesArray: GlobalLecturas[] =
-              JSON.parse(lecturasExistentes);
-            // Encuentra y elimina la lectura que coincida con la lectura enviada
-            const lecturasActualizadas = lecturasExistentesArray.filter(
-              lect => lect.SyncId !== lectura.SyncId,
-            );
-            await AsyncStorage.setItem(
-              'LecturasLocal',
-              JSON.stringify(lecturasActualizadas),
-            );
-            setLecturasGuardadas(lecturasActualizadas);
-          }
+          await AsyncStorage.setItem(
+            'LecturasLocal',
+            JSON.stringify(lecturasActualizadas),
+          );
+          setLecturasGuardadas(lecturasActualizadas);
         }
       }
     } catch (error) {
@@ -163,14 +144,21 @@ export const ReadingScreen = () => {
         {lecturasGuardadas.length > 0 && hasConection && (
           <ButtonWithText
             anyfunction={() =>
-              ShowAlert('default', {
-                message: 'Estamos trabajando en ello',
-                title: 'Informacion',
-              })
+              // ShowAlert('default', {
+              //   message: 'Estamos trabajando en ello',
+              //   title: 'Informacion',
+              // })
+              enviarLecturasAlServidor(lecturasGuardadas)
             }
             title={`Guardar Lecturas en el servidor.`}
           />
         )}
+        {/* {lecturasGuardadas.length < 0 && (
+          <ButtonWithText
+            anyfunction={() => cargarLecturasGuardadas()}
+            title={`Refrescar Pantalla.`}
+          />
+        )} */}
       </View>
     </BaseScreen>
   );
