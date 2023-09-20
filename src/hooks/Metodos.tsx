@@ -12,7 +12,6 @@ export const Metodos = () => {
   const [plantas, setPlantas] = useState<Plantas[]>([]);
 
   const pointInRegion = (lat: number, lon: number, vertices: any[]) => {
-    console.info("calculating...")
     // Convertir las coordenadas a flotantes
     lat = parseFloat(lat.toString());
     lon = parseFloat(lon.toString());
@@ -86,10 +85,11 @@ export const Metodos = () => {
   //   );
   // };
 
-  const geolotes = async () => {
-    await getRequest<Geolotes[]>(ApiEndpoints.Poligonos).then(async (lotes) => {
+  const geolotes = async (): Promise<Geolotes[]> => {
+    return await getRequest<Geolotes[]>(ApiEndpoints.Poligonos).then(async (lotes) => {
       setPoligonos(lotes);
       await AsyncStorage.setItem('GeoLotes', JSON.stringify(lotes)).catch(e => console.log(e))
+      return lotes  // Devolvemos el valor y  se usa inmediatamente.
 })
 
      

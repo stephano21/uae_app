@@ -17,105 +17,95 @@ export const NextScreen = () => {
   const { JWTInfo } = useContext(AuthContext);
   const { geolotes, pointInRegion, poligonos, plantas, getPlantas } = Metodos();
   const { hasConection } = useContext(CheckInternetContext);
-  const [refreshLocation, setRefreshLocation] = useState<Geolotes[]>([]);
+  const [lotesMásRecientes, setLotesMásRecientes] = useState<Geolotes[]>([])
   const [location, setLocation] = useState<ILocation | null>(null); //definir un cuerpo o interfaz para location
   const [Flag, setFlag] = useState(true);
+
+  const getLocation = () => {
+    console.log({
+      lotesActuales: lotesMásRecientes.length,
+    });
+    // Obtener la ubicación actual
+    Geolocation.getCurrentPosition(
+      async (position) => {
+        const locationData: any = position.coords;
+        // Filtrar los polígonos basados en la ubicación actual
+        const filteredPoligonos = lotesMásRecientes.filter(item => pointInRegion(
+          locationData.latitude,
+          locationData.longitude,
+          item.geocoordenadas.map((item: any) => ({
+            longitude: parseFloat(item.lng),
+            latitude: parseFloat(item.lat),
+          }))
+        )
+        );
+
+        // Mapear los polígonos filtrados a un arreglo de objetos
+        const regionData = filteredPoligonos.map(item => ({
+          Lote: item.Lote,
+          Id: item.Id_Lote,
+          Cod: item.CodigoLote,
+        }));
+
+        // Asignar la propiedad 'region' en locationData con los datos mapeados
+        locationData.region = regionData;
+
+        // Actualizar el estado con los datos de ubicación
+        setLocation(locationData);
+      },
+      error => {
+        console.error('Error getting location:', error);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
+  }
+
   useEffect(() => {
+    let _lotesMásRecientes: Geolotes[];
     const loadData = async () => {
-      await volverAcargar();
-      await sleep(2);
-      let refrescarUbicación: NodeJS.Timeout | null;
-      refrescarUbicación = setInterval(async () => {
-        await getLocation2(); // Llamada a getLocation2 con argumento
-      }, 5000);
-
-      return () => {
-        if (refrescarUbicación) {
-          clearInterval(refrescarUbicación);
-        }
-      };
-    };
-
-    loadData();
-  }, [Flag]); // Añadir poligonos como dependencia
-
-  const volverAcargar = async () => {
-    console.log("reload..");
-    if (hasConection && JWTInfo.length > 0) {
+      // 1. Los lotes más recientes se asumen de la caché.
       try {
-        await geolotes();
-        await getPlantas();
+        const asyncStorageItem = await AsyncStorage.getItem('GeoLotes');
+        if (asyncStorageItem) {
+          _lotesMásRecientes = JSON.parse(asyncStorageItem);
+        } else {
+          console.log('No se encontraron datos guardados en AsyncStorage');
+        }
       } catch (error) {
-        // Manejar cualquier error que ocurra en geolotes o getPlantas
-        console.error('Error en geolotes o getPlantas:', error);
+        console.error('Error al cargar los datos desde AsyncStorage:', error);
       }
-    }
-    await cargarLecturasGuardadas();
-  };
-
-
-  const cargarLecturasGuardadas = async () => {
-    try {
-      const lotesGuardados = await AsyncStorage.getItem('GeoLotes');
-
-      if (lotesGuardados) {
-        const lotes: Geolotes[] = JSON.parse(lotesGuardados);
-        setRefreshLocation(lotes);
-      } else {
-        console.log('No se encontraron datos guardados en AsyncStorage');
+      // 2. Si hay acceso a la API, se descargarán los datos más recientes.
+      if (hasConection && JWTInfo.length > 0) {
+        try {
+          _lotesMásRecientes = await geolotes()
+          await getPlantas();
+        } catch (error) {
+          // Manejar cualquier error que ocurra en geolotes o getPlantas
+          console.error('Error en geolotes o getPlantas:', error);
+        }
       }
-    } catch (error) {
-      console.error('Error al cargar los datos desde AsyncStorage:', error);
+      setLotesMásRecientes(_lotesMásRecientes)
+    };
+    
+    loadData();
+  }, [hasConection]);
+  // 3. Acá abajo se chequeará de acuerdo con las regiones más recientes.
+  useEffect(() => {
+    if (lotesMásRecientes.length === 0) {
+      return
     }
-  };
-  const getLocation2 = async () => {
-    console.log("getlocation...")
-    console.log(Flag)
-    if (Object.keys(poligonos).length <= 0 || Object.keys(refreshLocation).length <= 0)
-      setFlag(false)
-    console.log(Flag)
-    // Definir la fuente de datos en función de la conexión
-    if (
-      Object.keys(poligonos).length > 0 ||
-      Object.keys(refreshLocation).length > 0
-    ) {
-      const datos: Geolotes[] = hasConection ? poligonos : refreshLocation;
-      // Obtener la ubicación actual
-      Geolocation.getCurrentPosition(
-        async position => {
-          const locationData: any = position.coords;
-          // Filtrar los polígonos basados en la ubicación actual
-          const filteredPoligonos = datos.filter(item =>
-            pointInRegion(
-              locationData.latitude,
-              locationData.longitude,
-              item.geocoordenadas.map((item: any) => ({
-                longitude: parseFloat(item.lng),
-                latitude: parseFloat(item.lat),
-              })),
-            ),
-          );
-
-          // Mapear los polígonos filtrados a un arreglo de objetos
-          const regionData = filteredPoligonos.map(item => ({
-            Lote: item.Lote,
-            Id: item.Id_Lote,
-            Cod: item.CodigoLote,
-          }));
-
-          // Asignar la propiedad 'region' en locationData con los datos mapeados
-          locationData.region = regionData;
-
-          // Actualizar el estado con los datos de ubicación
-          setLocation(locationData);
-        },
-        error => {
-          console.error('Error getting location:', error);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-      );
-    }
-  };
+    getLocation() // Se inicia actualizando la ubicación una vez tan pronto como se pueda.
+    let refrescarUbicación: NodeJS.Timeout | null;
+    refrescarUbicación = setInterval(async () => {
+      getLocation();
+    }, 5000);
+    
+    return () => {
+      if (refrescarUbicación) {
+        clearInterval(refrescarUbicación);
+      }
+    };
+  }, [lotesMásRecientes]); // Añadir poligonos como dependencia
 
   return (
     <BaseScreen>
