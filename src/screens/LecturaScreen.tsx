@@ -128,42 +128,37 @@ export const LecturaScreen = () => {
       }));
 
       if (hasConection) {
-        const response: AxiosResponse = await postRequest(
-          ApiEndpoints.Lectura,
-          {
-            E1: lectura['E1'] ? parseInt(lectura['E1'], 10) : 0,
-            E2: lectura['E2'] ? parseInt(lectura['E2'], 10) : 0,
-            E3: lectura['E3'] ? parseInt(lectura['E3'], 10) : 0,
-            E4: lectura['E4'] ? parseInt(lectura['E4'], 10) : 0,
-            E5: lectura['E5'] ? parseInt(lectura['E5'], 10) : 0,
-            GR1: lectura['GR1'] ? parseInt(lectura['GR1'], 10) : 0,
-            GR2: lectura['GR2'] ? parseInt(lectura['GR2'], 10) : 0,
-            GR3: lectura['GR3'] ? parseInt(lectura['GR3'], 10) : 0,
-            GR4: lectura['GR4'] ? parseInt(lectura['GR4'], 10) : 0,
-            GR5: lectura['GR5'] ? parseInt(lectura['GR5'], 10) : 0,
-            Cherelles: lectura['Cherelles']
-              ? parseInt(lectura['Cherelles'], 10)
-              : 0,
-            SyncId: xyz,
-            Observacion: lectura['Observacion'],
-            FechaVisita: new Date(),
-            Id_Planta: plnt.id,
-          },
-        );
-
-        if (response.status === 200) {
-          ShowAlert('default', {
-            title: 'Exito',
-            message: 'Se guardó en el servidor correctamente.',
+        await postRequest(ApiEndpoints.Lectura, {
+          E1: lectura['E1'] ? parseInt(lectura['E1'], 10) : 0,
+          E2: lectura['E2'] ? parseInt(lectura['E2'], 10) : 0,
+          E3: lectura['E3'] ? parseInt(lectura['E3'], 10) : 0,
+          E4: lectura['E4'] ? parseInt(lectura['E4'], 10) : 0,
+          E5: lectura['E5'] ? parseInt(lectura['E5'], 10) : 0,
+          GR1: lectura['GR1'] ? parseInt(lectura['GR1'], 10) : 0,
+          GR2: lectura['GR2'] ? parseInt(lectura['GR2'], 10) : 0,
+          GR3: lectura['GR3'] ? parseInt(lectura['GR3'], 10) : 0,
+          GR4: lectura['GR4'] ? parseInt(lectura['GR4'], 10) : 0,
+          GR5: lectura['GR5'] ? parseInt(lectura['GR5'], 10) : 0,
+          Cherelles: lectura['Cherelles']
+            ? parseInt(lectura['Cherelles'], 10)
+            : 0,
+          SyncId: xyz,
+          Observacion: lectura['Observacion'],
+          FechaVisita: new Date(),
+          Id_Planta: plnt.id,
+        })
+          .then(() => {
+            ShowAlert('default', {
+              title: 'Exito',
+              message: 'Se guardó en el servidor correctamente.',
+            });
+          })
+          .catch(() => {
+            ShowAlert('default', {
+              title: 'Error',
+              message: 'No se pudo guardar en el servidor.',
+            });
           });
-          return true;
-        } else {
-          ShowAlert('default', {
-            title: 'Error',
-            message: 'No se pudo guardar en el servidor.',
-          });
-          return false;
-        }
       } else {
         const lecturasTotales =
           Object.keys(allLecturas).length === 0

@@ -22,23 +22,19 @@ import {AlertContext} from '../context/AlertContext';
 import {useNavigation} from '@react-navigation/native';
 
 export const ReadingScreen = () => {
-  const {FormatoFechaAgenda} = formatoDeFecha();
-  const {width} = useWindowDimensions();
-  const {getRequest} = useRequest();
   const {postRequest} = useRequest();
-  const {hasConection} = useContext(CheckInternetContext);
   const navigation = useNavigation();
-  const {setIsLoading} = useContext(LoaderContext);
+  const {width} = useWindowDimensions();
   const {ShowAlert} = useContext(AlertContext);
+  const {setIsLoading} = useContext(LoaderContext);
+  const {hasConection} = useContext(CheckInternetContext);
   const [lecturasGuardadas, setLecturasGuardadas] = useState<GlobalLecturas[]>(
     [],
   );
-  const [apiLecturas, setApiLecturas] = useState<ILectura[]>([]);
 
   useEffect(() => {
     // Cargar las lecturas guardadas en "LecturasLocal" al inicio del componente
     cargarLecturasGuardadas();
-    lecturasRealizadas();
   }, []);
 
   useEffect(() => {
@@ -58,12 +54,6 @@ export const ReadingScreen = () => {
       navigation.goBack();
     }
   }, [lecturasGuardadas]);
-
-  const lecturasRealizadas = async () => {
-    await getRequest<ILectura[]>(ApiEndpoints.Lectura)
-      .then(a => setApiLecturas(a))
-      .catch(error => console.log(JSON.stringify(error, null, 3)));
-  };
 
   const cargarLecturasGuardadas = async () => {
     try {
