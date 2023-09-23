@@ -10,6 +10,15 @@ interface Props {
   colorTexto?: string;
   icon?: string;
   width?: number;
+  textSize?: number;
+  tamañoIcon?: number;
+  marginH?: number;
+  marginV?: number;
+  alto?: number;
+  disabled?: boolean;
+  colorIcono?: string;
+  radio?: number;
+  margVText?: number;
 }
 
 export const ButtonWithText = ({
@@ -19,28 +28,49 @@ export const ButtonWithText = ({
   colorTexto = colores.blanco,
   icon = '',
   width = 250,
+  textSize,
+  tamañoIcon = 25,
+  marginH,
+  marginV = 14,
+  alto,
+  margVText = 10,
+  radio = 10,
+  disabled = false,
+  colorIcono = colores.blanco,
 }: Props) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
+      disabled={disabled}
       onPress={anyfunction}
       style={{
+        height: alto,
+        marginHorizontal: marginH,
         backgroundColor: color,
-        marginVertical: 14,
+        marginVertical: marginV,
         ...styles.centerItems,
-        ...styles.sombra,
-        borderRadius: 10,
         alignSelf: 'center',
         flexDirection: 'row',
+        ...styles.sombra,
+        borderRadius: radio,
         width,
       }}>
-      {icon.length > 0 && (
-        <Icon name={icon} size={25} color={colores.blanco}></Icon>
-      )}
       <Text
-        style={{...styles.textButton, color: colorTexto, textAlign: 'center'}}>
+        style={{
+          ...styles.textButton,
+          fontSize: textSize,
+          color: colorTexto,
+          marginVertical: margVText,
+        }}>
         {title}
       </Text>
+      {icon.length > 0 && (
+        <Icon
+          style={{alignContent: 'flex-start'}}
+          name={icon}
+          size={tamañoIcon}
+          color={colorIcono}></Icon>
+      )}
     </TouchableOpacity>
   );
 };

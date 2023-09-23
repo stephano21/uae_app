@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {CommonActions, useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';
 import {GlobalLecturas, IRegion, Plantas} from '../interfaces/ApiInterface';
 import {colores, styles} from '../theme/appTheme';
@@ -14,11 +14,12 @@ import {CheckInternetContext} from '../context/CheckInternetContext';
 import {useRequest} from '../api/useRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ApiEndpoints} from '../api/routes';
-import {AxiosResponse} from 'axios';
+import {useBaseStorage} from '../data/useBaseStorage';
 
 export const LecturaScreen = () => {
   const route = useRoute();
   const {postRequest} = useRequest();
+  const {SaveData, GetData} = useBaseStorage();
   const navigation = useNavigation();
   const {width} = useWindowDimensions();
   const {ShowAlert} = useContext(AlertContext);
@@ -97,6 +98,18 @@ export const LecturaScreen = () => {
     }
   };
 
+  const plantaRegisterValue = (idPlanta: number) => {
+    console.log(idPlanta);
+    GetData<number[]>('Lecturarealizada')
+      .then(a => {
+        const newData = a || []; // Si a es undefined, asigna un arreglo vacío
+        return SaveData([...newData, idPlanta], 'OTRealizado');
+      })
+      .catch(error =>
+        console.log('Ocurrió un error al guardar localmente', error),
+      );
+  };
+
   const si = async () => {
     try {
       const xyz =
@@ -147,11 +160,12 @@ export const LecturaScreen = () => {
           FechaVisita: new Date(),
           Id_Planta: plnt.id,
         })
-          .then(() => {
-            ShowAlert('default', {
-              title: 'Exito',
-              message: 'Se guardó en el servidor correctamente.',
-            });
+          .then(async () => {
+            await plantaRegisterValue(plnt.id),
+              ShowAlert('default', {
+                title: 'Exito',
+                message: 'Se guardó en el servidor correctamente.',
+              });
           })
           .catch(() => {
             ShowAlert('default', {
@@ -184,6 +198,8 @@ export const LecturaScreen = () => {
           });
           setPaginado(0);
           setAllLecturas([]);
+          await plantaRegisterValue(plnt.id);
+
           return true;
         } else {
           ShowAlert('default', {
