@@ -104,3 +104,11 @@ export interface Plantas {
   Activo: boolean;
   Id_Lote: number;
 }
+export interface Porfile {
+  cedula: string;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
+
