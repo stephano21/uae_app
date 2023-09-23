@@ -9,6 +9,7 @@ import {iconos} from '../theme/appTheme';
 import {Proceso} from '../screens/Proceso';
 import {NextScreen} from '../screens/NextScreen';
 import {ReadingScreen} from '../screens/ReadingScreen';
+import {InfoScreen} from '../screens/InfoScreen';
 
 const TabOptions = [
   {
@@ -22,6 +23,12 @@ const TabOptions = [
     title: 'Lecturas',
     icon: iconos.ordenDeTrabajo,
     component: ReadingScreen,
+  },
+  {
+    name: 'Informacion',
+    title: 'Informacion',
+    icon: iconos.info,
+    component: InfoScreen,
   },
   {
     name: 'Next3Screen',

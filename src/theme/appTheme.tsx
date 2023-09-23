@@ -56,6 +56,7 @@ export const iconos = {
   guardar: 'bookmark-outline',
   home: 'home-outline',
   inicio: 'home',
+  info: 'info',
   imagen: 'image-outline',
   lapiz: 'pencil',
   lista: 'list-outline',

@@ -104,6 +104,7 @@ export interface Plantas {
   Activo: boolean;
   Id_Lote: number;
 }
+// GET: /api/auth/porfile/
 export interface Porfile {
   cedula: string;
   username: string;

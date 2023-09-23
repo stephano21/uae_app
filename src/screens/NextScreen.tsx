@@ -7,10 +7,10 @@ import { ButtonWithText } from '../components/ButtonWithText';
 import Geolocation from 'react-native-geolocation-service';
 import { AuthContext } from '../context/AuthContext';
 import { BaseScreen } from '../Template/BaseScreen';
-import { colores, iconos } from '../theme/appTheme';
+import { colores, iconos,styles } from '../theme/appTheme';
 import { Metodos } from '../hooks/Metodos';
 import { sleep } from '../helpers/sleep';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 export const NextScreen = () => {
   const navigation = useNavigation();
@@ -109,7 +109,8 @@ export const NextScreen = () => {
 
   return (
     <BaseScreen>
-      {location && location.region ? (
+    <View style={{flex: 1, ...styles.centerItems}}>
+    {location && location.region ? (
         location?.region.map((a, index) => (
           <ButtonWithText
             key={index}
@@ -131,6 +132,8 @@ export const NextScreen = () => {
           /> */}
         </>
       )}
+    </View>
+     
     </BaseScreen>
   );
 };

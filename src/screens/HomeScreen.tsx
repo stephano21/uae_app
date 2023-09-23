@@ -6,7 +6,6 @@ import {MapContext} from '../context/MapContext';
 import {DocumentViewContext} from '../context/DocumentViewContext';
 import {Selector} from '../components/Selector';
 import {SearchInput} from '../components/SearchInput';
-import {Base64Img} from '../assets/ImagesBase64';
 import {useRequest} from '../api/useRequest';
 import {ApiEndpoints} from '../api/routes';
 import {ButtonWithText} from '../components/ButtonWithText';
