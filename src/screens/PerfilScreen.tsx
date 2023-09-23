@@ -3,7 +3,7 @@ import {View, Text, useWindowDimensions} from 'react-native';
 import {colores, styles} from '../theme/appTheme';
 import {BaseScreen} from '../Template/BaseScreen';
 
-export const Proceso = () => {
+export const PerfilScreen = () => {
   const {width} = useWindowDimensions();
   return (
     <BaseScreen>

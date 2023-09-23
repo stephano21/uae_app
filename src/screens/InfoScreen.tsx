@@ -1,47 +1,71 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
-import { BaseScreen } from '../Template/BaseScreen';
-import { colores, iconos } from '../theme/appTheme';
-import { StyleSheet, Text,Dimensions } from 'react-native';
-import Accordion from '../components/Acordion';
-import ImageGallery from '../components/ImageGallery';
-import { ScrollView } from 'react-native-gesture-handler';
-const images = [
+import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {BaseScreen} from '../Template/BaseScreen';
+import {colores, iconos} from '../theme/appTheme';
+import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
+import {ImageGallery} from '../components/ImageGallery';
+import {Accordion} from '../components/Acordion';
+
+interface datos {
+  id: number;
+  titulo: string;
+  textoDescription: string;
+  imagenes: imagenes[];
+}
+
+interface imagenes {
+  url: string;
+}
+
+const datosAcordeon = [
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQluEXS2a6mFolcX5tla0_BmBJ4sXYX_7KFgj_69ran0z2JTpSciH3ZsZjrgAw30QdMCQ&usqp=CAU",
-  }
+    id: 1,
+    titulo: 'Estadios del Cacao',
+    imagenes: [
+      {
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQluEXS2a6mFolcX5tla0_BmBJ4sXYX_7KFgj_69ran0z2JTpSciH3ZsZjrgAw30QdMCQ&usqp=CAU',
+      },
+    ],
+    textoDescription: 'Imágen de referencia para los estadios.',
+  },
+  {
+    id: 2,
+    titulo: 'Grados de la monilla',
+    imagenes: [
+      {
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU',
+      },
+    ],
+    textoDescription: 'Imágen de referencia para los estadios.',
+  },
 ];
-const imagenes2 = [
-  { url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU" }
-]
-const { width } = Dimensions.get('window');
+
 export const InfoScreen = () => {
+  const {width} = useWindowDimensions();
   const navigation = useNavigation();
+
+  const renderAcordions = (datos: datos) => (
+    <Accordion key={datos.id} title={datos.titulo}>
+      <Text style={{...InfoStyles.text, fontSize: width * 0.05}}>
+        {datos.textoDescription}
+      </Text>
+      <ImageGallery images={datos.imagenes} />
+    </Accordion>
+  );
+
   return (
-    <ScrollView>
-      <BaseScreen>
-        <Accordion title="Estadios del Cacao">
-          <>
-            <Text style={[styles.text,{fontSize: width*0.05, }]}>Imágen de referencia para los estadios.</Text>
-            <ImageGallery images={images} />
-          </>
-        </Accordion>
-        <Accordion title="Grados de la monilla">
-          <>
-            <Text style={[styles.text,{fontSize: width*0.05, }]} >Imágen de referencia para los grados de la monilla.</Text>
-            <ImageGallery images={imagenes2} />
-          </>
-        </Accordion>
-      </BaseScreen>
-    </ScrollView>
+    <BaseScreen isScroll={true}>
+      {datosAcordeon.map(a => (
+        <View key={a.id}>{renderAcordions(a)}</View>
+      ))}
+    </BaseScreen>
   );
 };
-const styles = StyleSheet.create({
+const InfoStyles = StyleSheet.create({
   text: {
-    textAlign: 'left',
-    fontWeight: 'normal',
-    marginVertical:10,
-    marginTop:1,
+    textAlign: 'center',
+    marginVertical: 10,
+    marginTop: 1,
     color: colores.negroClaro,
-  }
+  },
 });

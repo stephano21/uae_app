@@ -1,15 +1,14 @@
 import React from 'react';
+import {iconos} from '../theme/appTheme';
+import {colores} from '../theme/appTheme';
+import {InfoScreen} from '../screens/InfoScreen';
+import {NextScreen} from '../screens/NextScreen';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {ReadingScreen} from '../screens/ReadingScreen';
+import {Platform, useWindowDimensions} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import {colores} from '../theme/appTheme';
-import {Platform, useWindowDimensions} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {HomeScreen} from '../screens/HomeScreen';
-import {iconos} from '../theme/appTheme';
-import {Proceso} from '../screens/Proceso';
-import {NextScreen} from '../screens/NextScreen';
-import {ReadingScreen} from '../screens/ReadingScreen';
-import {InfoScreen} from '../screens/InfoScreen';
+import {PerfilScreen} from '../screens/PerfilScreen';
 
 const TabOptions = [
   {
@@ -19,22 +18,22 @@ const TabOptions = [
     component: NextScreen,
   },
   {
-    name: 'Next2Screen',
+    name: 'Lecturs',
     title: 'Lecturas',
     icon: iconos.ordenDeTrabajo,
     component: ReadingScreen,
   },
   {
-    name: 'Informacion',
+    name: 'InformacionScreen',
     title: 'Informacion',
     icon: iconos.info,
     component: InfoScreen,
   },
   {
-    name: 'Next3Screen',
+    name: 'PerfilScreen',
     title: 'Perfil',
     icon: iconos.perfilOutline,
-    component: Proceso,
+    component: PerfilScreen,
   },
 ];
 
@@ -49,8 +48,6 @@ export const Tabs = () => {
 const TabAndroid = createMaterialBottomTabNavigator();
 
 const TabsAndroid = () => {
-  const {width, height} = useWindowDimensions();
-
   return (
     <TabAndroid.Navigator
       sceneAnimationEnabled={true}

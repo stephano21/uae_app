@@ -1,20 +1,29 @@
 import React from 'react';
-import { View, Image, StyleSheet, Dimensions } from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  Dimensions,
+  useWindowDimensions,
+} from 'react-native';
 
 interface ImagenesProp {
-  images:Imagen[];
+  images: Imagen[];
 }
 interface Imagen {
-    url: string
+  url: string;
 }
 
-const { width } = Dimensions.get('window');
-
-const ImageGallery: React.FC<ImagenesProp> = ({ images }) => {
+export const ImageGallery = ({images}: ImagenesProp) => {
+  const {width} = useWindowDimensions();
   return (
     <View style={styles.container}>
       {images.map((image, index) => (
-        <Image key={index} source={{ uri: image.url }} style={styles.image} />
+        <Image
+          key={index}
+          source={{uri: image.url}}
+          style={{...styles.image, width: width * 0.8, height: width * 0.3}}
+        />
       ))}
     </View>
   );
@@ -27,12 +36,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   image: {
-    width: width * 0.80, // El 20% del ancho de la pantalla
-    height: width * 0.3, // El 20% del ancho de la pantalla (misma altura que el ancho para que sea cuadrado)
-    marginRight: 8,
-    marginBottom: 8,
+    resizeMode: 'contain',
+    padding: 8,
     borderRadius: 8,
   },
 });
-
-export default ImageGallery;
