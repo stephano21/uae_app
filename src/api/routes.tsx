@@ -8,6 +8,7 @@ export const ApiEndpoints = {
   register: '/auth/register/',
   Token: '/auth/refresh/',
   Poligonos: '/geolotes/',
+  perfil: '/auth/porfile/',
   Lectura: '/lecturas/',
   Plantas: '/plantas/',
 };

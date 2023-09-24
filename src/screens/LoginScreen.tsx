@@ -24,7 +24,7 @@ let pass = '';
 if (__DEV__) {
   //user = 'acuenca';
   //pass = 'Coyote2022';
-  user = 'Admin';
+  user = 'jpalma';
   pass = 'Test2020*+';
 }
 
