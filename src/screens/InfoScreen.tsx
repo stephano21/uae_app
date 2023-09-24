@@ -37,17 +37,7 @@ const datosAcordeon = [
       },
     ],
     textoDescription: 'Imágen de referencia para los estadios.',
-  },
-  {
-    id: 3,
-    titulo: 'Marihuana',
-    imagenes: [
-      {
-        url: 'https://i1.wp.com/media.globalnews.ca/videostatic/187/607/cannabisthumb.jpg?w=1040&quality=70&strip=all',
-      },
-    ],
-    textoDescription: 'Imágen de referencia para los estadios.',
-  },
+  }
 ];
 
 export const InfoScreen = () => {

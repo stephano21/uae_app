@@ -24,17 +24,17 @@ interface Props {
 export const ButtonWithText = ({
   anyfunction,
   title,
-  color = colores.primario,
-  colorTexto = colores.blanco,
+  color = colores.LocationBg,
+  colorTexto = colores.primario,
   icon = '',
   width = 250,
-  textSize,
+  textSize = 20,
   tamañoIcon = 25,
-  marginH,
+  marginH ,
   marginV = 14,
-  alto,
+  alto=60,
   margVText = 10,
-  radio = 10,
+  radio = 40,
   disabled = false,
   colorIcono = colores.blanco,
 }: Props) => {
@@ -48,29 +48,33 @@ export const ButtonWithText = ({
         marginHorizontal: marginH,
         backgroundColor: color,
         marginVertical: marginV,
-        ...styles.centerItems,
-        alignSelf: 'center',
+        alignSelf: 'flex-start',
         flexDirection: 'row',
-        ...styles.sombra,
         borderRadius: radio,
         width,
       }}>
+        {icon.length > 0 && (
+          <Icon
+            style={{
+            borderRadius:40,
+            padding:'7.2%',
+            marginRight:'10%',
+            backgroundColor:'#000',}}
+            name={icon}
+            size={tamañoIcon}
+            color={colorIcono}></Icon>
+        )}
       <Text
         style={{
           ...styles.textButton,
           fontSize: textSize,
           color: colorTexto,
           marginVertical: margVText,
+          fontWeight:'bold',
+          alignSelf:"center"
         }}>
         {title}
       </Text>
-      {icon.length > 0 && (
-        <Icon
-          style={{alignContent: 'flex-start'}}
-          name={icon}
-          size={tamañoIcon}
-          color={colorIcono}></Icon>
-      )}
     </TouchableOpacity>
   );
 };

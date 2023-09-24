@@ -119,6 +119,7 @@ export const NextScreen = () => {
                   CommonActions.navigate('PlantasScreen', {a}),
                 );
               }}
+              icon='location'
               title={a.Lote}
             />
           ))

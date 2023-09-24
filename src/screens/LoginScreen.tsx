@@ -73,7 +73,8 @@ export const LoginScreen = () => {
         onChange={value => onChange(value, 'password')}></InputForm>
       <ButtonWithText
         anyfunction={() => Login()}
-        title={'INICIAR SESIÓN'}></ButtonWithText>
+        title={'INICIAR'}
+        icon='rocket'></ButtonWithText>
       {/* <View
         style={{
           alignSelf: 'flex-end',
