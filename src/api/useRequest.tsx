@@ -49,8 +49,9 @@ export const useRequest = () => {
   const getRequest = async <T extends unknown>(
     endpoint: string,
     params?: object,
+    isLoading?: boolean,
   ): Promise<T> => {
-    setIsLoading(true);
+    setIsLoading(isLoading === true ? true : false);
     return await ApiRequest.get(endpoint, {params})
       .then(({data}: AxiosResponse<T>) => data)
       .catch((error: AxiosError<ApiErrorResponse>) => {

@@ -60,7 +60,7 @@ export const Metodos = () => {
   };
 
   const getPorfile = async () => {
-    await getRequest<Porfile>(ApiEndpoints.perfil)
+    await getRequest<Porfile>(ApiEndpoints.perfil, undefined, false)
       .then(setProfile)
       .catch(() => setProfile(undefined));
   };
