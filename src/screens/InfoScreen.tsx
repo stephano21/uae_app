@@ -35,9 +35,18 @@ const datosAcordeon = [
       {
         url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU',
       },
+      {
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU',
+      },
+      {
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU',
+      },
+      {
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU',
+      },
     ],
     textoDescription: 'Imágen de referencia para los estadios.',
-  }
+  },
 ];
 
 export const InfoScreen = () => {
@@ -49,7 +58,11 @@ export const InfoScreen = () => {
       <Text style={{...InfoStyles.text, fontSize: width * 0.05}}>
         {datos.textoDescription}
       </Text>
-      <ImageGallery images={datos.imagenes} />
+      <ImageGallery
+        widthCarousel={width * 0.8}
+        heightCarousel={width * 0.4}
+        images={datos.imagenes}
+      />
     </Accordion>
   );
 

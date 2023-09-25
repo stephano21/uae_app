@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';
 import {GlobalLecturas, IRegion, Plantas} from '../interfaces/ApiInterface';
-import {colores, styles} from '../theme/appTheme';
+import {colores, iconos, styles} from '../theme/appTheme';
 import {InputForm} from '../components/InputForm';
 import {Card} from 'react-native-paper';
 import {useWindowDimensions} from 'react-native';
@@ -100,7 +100,7 @@ export const LecturaScreen = () => {
 
   const plantaRegisterValue = (idPlanta: number) => {
     console.log(idPlanta);
-    GetData<number[]>('Lecturarealizada')
+    GetData<number[]>('OTRealizado')
       .then(a => {
         const newData = a || []; // Si a es undefined, asigna un arreglo vacío
         return SaveData([...newData, idPlanta], 'OTRealizado');
@@ -166,12 +166,11 @@ export const LecturaScreen = () => {
                 title: 'Exito',
                 message: 'Se guardó en el servidor correctamente.',
               });
+            navigation.goBack();
+            return true;
           })
           .catch(() => {
-            ShowAlert('default', {
-              title: 'Error',
-              message: 'No se pudo guardar en el servidor.',
-            });
+            return false;
           });
       } else {
         const lecturasTotales =
@@ -199,7 +198,7 @@ export const LecturaScreen = () => {
           setPaginado(0);
           setAllLecturas([]);
           await plantaRegisterValue(plnt.id);
-
+          navigation.goBack();
           return true;
         } else {
           ShowAlert('default', {
@@ -360,11 +359,9 @@ export const LecturaScreen = () => {
                 />
               </View>
               <ButtonWithText
+                icon={iconos.guardar}
                 anyfunction={async () => {
-                  const siSePudo = await si();
-                  if (siSePudo) {
-                    navigation.goBack();
-                  }
+                  await si();
                 }}
                 title="Guardar Lectura"
               />

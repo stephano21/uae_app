@@ -30,9 +30,9 @@ export const ButtonWithText = ({
   width = 250,
   textSize = 20,
   tamañoIcon = 25,
-  marginH ,
+  marginH,
   marginV = 14,
-  alto=60,
+  alto = 60,
   margVText = 10,
   radio = 40,
   disabled = false,
@@ -48,30 +48,31 @@ export const ButtonWithText = ({
         marginHorizontal: marginH,
         backgroundColor: color,
         marginVertical: marginV,
-        alignSelf: 'flex-start',
         flexDirection: 'row',
         borderRadius: radio,
         width,
+        //...styles.sombra,
       }}>
-        {icon.length > 0 && (
-          <Icon
-            style={{
-            borderRadius:40,
-            padding:'7.2%',
-            marginRight:'10%',
-            backgroundColor:'#000',}}
-            name={icon}
-            size={tamañoIcon}
-            color={colorIcono}></Icon>
-        )}
+      {icon.length > 0 && (
+        <Icon
+          style={{
+            borderRadius: 40,
+            padding: '7.2%',
+            marginRight: '10%',
+            backgroundColor: '#000',
+          }}
+          name={icon}
+          size={tamañoIcon}
+          color={colorIcono}></Icon>
+      )}
       <Text
         style={{
           ...styles.textButton,
           fontSize: textSize,
           color: colorTexto,
           marginVertical: margVText,
-          fontWeight:'bold',
-          alignSelf:"center"
+          fontWeight: 'bold',
+          alignSelf: 'center',
         }}>
         {title}
       </Text>
