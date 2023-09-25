@@ -51,7 +51,7 @@ export interface ILocation extends GeoCoordinates {
 export interface IRegion {
   Id: number;
   Lote: string;
-  CodigoLote: string;
+  Cod: string;
 }
 export interface IVertices {
   latitude: number;

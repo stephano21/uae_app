@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';
 import {GlobalLecturas, IRegion, Plantas} from '../interfaces/ApiInterface';
@@ -232,6 +232,15 @@ export const LecturaScreen = () => {
           title={plnt.Nombre}
           titleStyle={{...stylesComprasGastos.title, fontSize: width * 0.055}}
         />
+        <Card.Title
+          style={{
+            //...stylesComprasGastos.titulo,
+            width: width * 0.8,
+            ...styles.centerItems,
+          }}
+          title={plnt.Codigo_Planta}
+          titleStyle={{...stylesComprasGastos.title, fontSize: width * 0.055}}
+        />
         <Card.Content
           style={{
             width: width * 0.85,
@@ -245,7 +254,7 @@ export const LecturaScreen = () => {
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'E1'}
+                  placeholder={'Estadio 1'}
                   value={lectura['E1'].toString()}
                   onChange={value => setLectura({...lectura, ['E1']: value})}
                 />
@@ -253,7 +262,7 @@ export const LecturaScreen = () => {
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'E2'}
+                  placeholder={'Estadio 2'}
                   value={lectura['E2']}
                   onChange={value => setLectura({...lectura, ['E2']: value})}
                 />
@@ -261,7 +270,7 @@ export const LecturaScreen = () => {
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'E3'}
+                  placeholder={'Estadio 3'}
                   value={lectura['E3']}
                   onChange={value => setLectura({...lectura, ['E3']: value})}
                 />
@@ -269,7 +278,7 @@ export const LecturaScreen = () => {
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'E4'}
+                  placeholder={'Estadio 4'}
                   value={lectura['E4']}
                   onChange={value => setLectura({...lectura, ['E4']: value})}
                 />
@@ -277,15 +286,20 @@ export const LecturaScreen = () => {
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'E5'}
+                  placeholder={'Estadio 5'}
                   value={lectura['E5']}
                   onChange={value => setLectura({...lectura, ['E5']: value})}
                 />
+                <Text style={{
+                  color: colores.primario,
+                  fontWeight:'bold',
+                  marginTop:20,
+                }}>Monilla</Text>
                 <InputForm
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'GR1'}
+                  placeholder={'Grado 1'}
                   value={lectura['GR1']}
                   onChange={value => setLectura({...lectura, ['GR1']: value})}
                 />
@@ -304,7 +318,7 @@ export const LecturaScreen = () => {
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'GR2'}
+                  placeholder={'Grado 2'}
                   value={lectura['GR2']}
                   onChange={value => setLectura({...lectura, ['GR2']: value})}
                 />
@@ -312,7 +326,7 @@ export const LecturaScreen = () => {
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'GR3'}
+                  placeholder={'Grado 3'}
                   value={lectura['GR3']}
                   onChange={value => setLectura({...lectura, ['GR3']: value})}
                 />
@@ -320,7 +334,7 @@ export const LecturaScreen = () => {
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'GR4'}
+                  placeholder={'Grado 4'}
                   value={lectura['GR4']}
                   onChange={value => setLectura({...lectura, ['GR4']: value})}
                 />
@@ -328,7 +342,7 @@ export const LecturaScreen = () => {
                   colorBase={colores.plomoclaro}
                   keyboard="numeric"
                   ancho={0.8}
-                  placeholder={'GR5'}
+                  placeholder={'Grado 5'}
                   value={lectura['GR5']}
                   onChange={value => setLectura({...lectura, ['GR5']: value})}
                 />
@@ -363,12 +377,13 @@ export const LecturaScreen = () => {
                 anyfunction={async () => {
                   await si();
                 }}
-                title="Guardar Lectura"
+                title="Guardar"
               />
               {__DEV__ && (
                 <ButtonWithText
                   anyfunction={eliminarCatalogosDeMemoria}
                   title="Eliminar Local"
+                  icon='trash'
                 />
               )}
             </>

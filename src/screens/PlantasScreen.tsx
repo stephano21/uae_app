@@ -25,7 +25,7 @@ export const PlantasScreen = () => {
   const [lecturaRealizada, setLecturaRealizada] = useState<number[]>([]);
   const elNavegadorMasChulo = useNavigation();
   const [plantotas, setPlantotas] = useState<Plantas[]>([]);
-
+  console.log(a)
   useEffect(() => {
     if (isFocused) {
       GetData<number[]>('OTRealizado')
@@ -59,6 +59,11 @@ export const PlantasScreen = () => {
 
     return (
       <BaseScreen>
+       <Text style={{
+                  color: colores.primario,
+                  fontWeight:'bold',
+                  marginTop:20,
+                }}>{a.Cod}</Text>
         {filterPlantas.length > 0 ? (
           <View>
             {filterPlantas.map(plnt => {

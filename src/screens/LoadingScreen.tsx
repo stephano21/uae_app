@@ -5,7 +5,7 @@ import LottieView from 'lottie-react-native';
 export const LoadingScreen = () => {
   return (
     <LottieView
-      source={require('../assets/Loader/Loader.json')}
+      source={require('../assets/Loader/SpinerLoader.json')}
       speed={1.75}
       autoPlay
       style={{flex: 1, backgroundColor: colores.blanco}}
