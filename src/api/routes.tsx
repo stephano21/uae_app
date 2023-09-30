@@ -1,6 +1,6 @@
 export const ApiEndpoints = {
-  //BaseURL: 'https://victoria-api.up.railway.app',
-  BaseURL: 'https://d6be-157-100-158-182.ngrok-free.app',
+  BaseURL: 'https://victoria-api.up.railway.app',
+  //BaseURL: 'https://aafe-157-100-158-182.ngrok-free.app',
   //BaseURL: 'https://682e-157-100-158-182.ngrok-free.app',
   BaseApi: '/api',
   //Token: '/Token',
