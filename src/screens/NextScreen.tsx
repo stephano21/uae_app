@@ -7,9 +7,8 @@ import {ButtonWithText} from '../components/ButtonWithText';
 import Geolocation from 'react-native-geolocation-service';
 import {AuthContext} from '../context/AuthContext';
 import {BaseScreen} from '../Template/BaseScreen';
-import {colores, iconos, styles} from '../theme/appTheme';
+import {colores, styles} from '../theme/appTheme';
 import {Metodos} from '../hooks/Metodos';
-import {sleep} from '../helpers/sleep';
 import {Text, View} from 'react-native';
 
 export const NextScreen = () => {
@@ -119,7 +118,7 @@ export const NextScreen = () => {
                   CommonActions.navigate('PlantasScreen', {a}),
                 );
               }}
-              icon='location'
+              icon="location"
               title={a.Lote}
             />
           ))

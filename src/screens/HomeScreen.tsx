@@ -7,7 +7,6 @@ import {DocumentViewContext} from '../context/DocumentViewContext';
 import {Selector} from '../components/Selector';
 import {SearchInput} from '../components/SearchInput';
 import {useRequest} from '../api/useRequest';
-import {ApiEndpoints} from '../api/routes';
 import {ButtonWithText} from '../components/ButtonWithText';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 
