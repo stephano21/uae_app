@@ -90,7 +90,7 @@ export const NextScreen = () => {
   }, [hasConection]);
   // 3. Acá abajo se chequeará de acuerdo con las regiones más recientes.
   useEffect(() => {
-    if (lotesMásRecientes.length === 0) {
+    if (lotesMásRecientes && lotesMásRecientes.length === 0) {
       return;
     }
     getLocation(); // Se inicia actualizando la ubicación una vez tan pronto como se pueda.

@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {colores, styles} from '../theme/appTheme';
 
@@ -54,28 +54,30 @@ export const ButtonWithText = ({
         //...styles.sombra,
       }}>
       {icon.length > 0 && (
-        <Icon
+        <View
           style={{
+            padding: 4,
+            width: '25%',
+            ...styles.centerItems,
             borderRadius: 40,
-            padding: '7.2%',
-            marginRight: '10%',
             backgroundColor: '#000',
-          }}
-          name={icon}
-          size={tamañoIcon}
-          color={colorIcono}></Icon>
+          }}>
+          <Icon name={icon} size={tamañoIcon} color={colorIcono}></Icon>
+        </View>
       )}
-      <Text
-        style={{
-          ...styles.textButton,
-          fontSize: textSize,
-          color: colorTexto,
-          marginVertical: margVText,
-          fontWeight: 'bold',
-          alignSelf: 'center',
-        }}>
-        {title}
-      </Text>
+      <View style={{padding: 4, width: '75%', ...styles.centerItems}}>
+        <Text
+          style={{
+            //...styles.textButton,
+            fontSize: textSize,
+            color: colorTexto,
+            marginVertical: margVText,
+            fontWeight: 'bold',
+            alignSelf: 'center',
+          }}>
+          {title}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };

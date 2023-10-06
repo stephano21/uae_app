@@ -74,8 +74,8 @@ export const LoginScreen = () => {
       <ButtonWithText
         anyfunction={() => Login()}
         title={'INICIAR'}
-        icon='rocket'></ButtonWithText>
-      {/* <View
+        icon="rocket"></ButtonWithText>
+      <View
         style={{
           alignSelf: 'flex-end',
           alignItems: 'flex-end',
@@ -85,14 +85,14 @@ export const LoginScreen = () => {
           anyfunction={() =>
             navigation.dispatch(CommonActions.navigate('RegisterScreen'))
           }></TextButton>
-        <TextButton
+        {/* <TextButton
           title={'Recuperar cuenta'}
           anyfunction={() =>
             navigation.dispatch(
               CommonActions.navigate('RecoveryPasswordScreen'),
             )
-          }></TextButton>
-      </View> */}
+          }></TextButton> */}
+      </View>
       <View style={styles.versionContainer}>
         <Text style={styles.versionText}>
           Versión: {DeviceInfo.getVersion()}

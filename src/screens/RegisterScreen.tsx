@@ -1,38 +1,46 @@
 import React, {useContext, useState} from 'react';
 import {BaseScreen} from '../Template/BaseScreen';
-import {Keyboard, Text} from 'react-native';
-import {colores} from '../theme/appTheme';
+import {Keyboard, Text, useWindowDimensions} from 'react-native';
+import {colores, iconos} from '../theme/appTheme';
 import {InputForm} from '../components/InputForm';
 import {useForm} from '../hooks/useForm';
 import {ButtonWithText} from '../components/ButtonWithText';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../context/AuthContext';
 import {AlertContext} from '../context/AlertContext';
 
 export const RegisterScreen = () => {
   const navigation = useNavigation();
+  const {width} = useWindowDimensions();
   const {ShowAlert} = useContext(AlertContext);
   const {
-    // Nombres,
-    // Apellidos,
-    // Identificacion,
-    // Telefono,
+    Nombres,
+    Apellidos,
+    Identificacion,
+    Usuario,
     Email,
     Password,
     CheckPassword,
     onChange,
   } = useForm({
-    // Nombres: '',
-    // Apellidos: '',
-    // Identificacion: '',
-    // Telefono: '',
+    Nombres: '',
+    Apellidos: '',
+    Identificacion: '',
     Email: '',
+    Usuario: '',
     Password: '',
     CheckPassword: '',
   });
 
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const {signUp} = useContext(AuthContext);
+
+  const solo3Decimales = (data: string, field: 'Identificacion') => {
+    const regex = /^-?[0-9]+$/;
+    if (regex.test(data) || data === '') {
+      onChange(data, field);
+    }
+  };
 
   const register = () => {
     Keyboard.dismiss();
@@ -54,15 +62,24 @@ export const RegisterScreen = () => {
       return;
     }
 
-    signUp({correo: Email, password: Password});
+    signUp({
+      email: Email,
+      password: Password,
+      cedula: Identificacion,
+      first_name: Nombres,
+      last_name: Apellidos,
+      username: Usuario,
+    }).then(() => {
+      navigation.dispatch(CommonActions.goBack());
+    });
   };
 
   return (
     <BaseScreen isScroll={true} style={{justifyContent: 'center'}}>
-      <Text style={{color: colores.plomo, fontSize: 22, marginBottom: '10%'}}>
+      <Text style={{color: '#3333', fontSize: 22, marginBottom: '10%'}}>
         ¡Regístrese!
       </Text>
-      {/* <InputForm
+      <InputForm
         placeholder={'Nombres'}
         value={Nombres}
         keyboard={'email-address'}
@@ -71,25 +88,20 @@ export const RegisterScreen = () => {
       <InputForm
         color={colores.plomo}
         placeholder={'Apellidos'}
-        securetextentry={true}
         value={Apellidos}
         onChange={value => onChange(value, 'Apellidos')}></InputForm>
-      <ButtonWithText
-        color={colores.secundario}
-        anyfunction={() => {}}
-        title={'TOMAR FOTO DE PERFIL'}></ButtonWithText>
       <InputForm
         color={colores.plomo}
         placeholder={'Identificación'}
-        securetextentry={true}
         value={Identificacion}
-        onChange={value => onChange(value, 'Identificacion')}></InputForm>
+        keyboard="numeric"
+        maxLength={13}
+        onChange={value => solo3Decimales(value, 'Identificacion')}></InputForm>
       <InputForm
         color={colores.plomo}
-        placeholder={'Número de teléfono'}
-        securetextentry={true}
-        value={Telefono}
-        onChange={value => onChange(value, 'Telefono')}></InputForm> */}
+        placeholder={'Nombre de usuario'}
+        value={Usuario}
+        onChange={value => onChange(value, 'Usuario')}></InputForm>
       <InputForm
         color={colores.plomo}
         placeholder={'Email'}
@@ -109,10 +121,16 @@ export const RegisterScreen = () => {
         value={CheckPassword}
         onChange={value => onChange(value, 'CheckPassword')}></InputForm>
       <ButtonWithText
+        width={width * 0.6}
+        textSize={18}
         anyfunction={register}
+        icon={iconos.perfil}
         title={'REGISTRAR CUENTA'}></ButtonWithText>
       <ButtonWithText
+        width={width * 0.6}
+        textSize={18}
         anyfunction={() => navigation.goBack()}
+        icon={iconos.volver}
         title={'REGRESAR'}></ButtonWithText>
     </BaseScreen>
   );

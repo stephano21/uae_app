@@ -14,7 +14,7 @@
     "@microsoft/signalr": "^7.0.11",
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-community/netinfo": "^9.4.1",
-    "@react-native-masked-view/masked-view": "^0.2.9",
+    "@react-native-masked-view/masked-view": "^0.3.0",
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/drawer": "^6.6.4",
     "@react-navigation/material-bottom-tabs": "^6.2.17",
@@ -48,7 +48,7 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-toast-message": "^2.1.6",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-webview": "^13.6.0"
+    "react-native-webview": "^13.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
@@ -58,7 +58,7 @@
     "@react-native/metro-config": "^0.73.1",
     "@tsconfig/react-native": "^3.0.2",
     "@types/metro-config": "^0.76.3",
-    "@types/react": "^18.2.24",
+    "@types/react": "^18.2.25",
     "@types/react-test-renderer": "^18.0.3",
     "babel-jest": "^29.7.0",
     "eslint": "^8.50.0",

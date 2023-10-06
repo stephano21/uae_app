@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TokenResponse} from '../interfaces/BaseApiInterface';
 import {useBaseStorage} from './useBaseStorage';
-import DeviceInfo from 'react-native-device-info';
 
 const keyStorage = {
   access_token: 'access_token',

@@ -22,13 +22,7 @@ type PermissionsContextProps = {
 
 let AndroidPermissions: Permission[] = [
   PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-  //PERMISSIONS.ANDROID.CAMERA,
-  //PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
 ];
-/* const androidSDKVersion = Platform.OS === 'android' ? Platform.Version : 0;
-if (androidSDKVersion >= 33) {
-  AndroidPermissions.push(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
-} */
 
 let IosPermissions: Permission[] = [PERMISSIONS.IOS.LOCATION_WHEN_IN_USE];
 
@@ -73,7 +67,7 @@ export const PermissionsProvider = ({children}: any) => {
     const permissionStatuses = await Promise.all(
       permissions!.map(async permission => await check(permission)),
     );
-    //console.log(permissionStatuses);
+
     if (permissionStatuses.every(status => status === 'granted')) {
       setpermissions('granted');
     } else {

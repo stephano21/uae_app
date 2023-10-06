@@ -131,9 +131,24 @@ export const AuthProvider = ({children}: any) => {
       })
       .catch(console.log);
   };
-  const signUp = async ({correo, password}: LoginData) => {
+
+  const signUp = async ({
+    email,
+    password,
+    cedula,
+    first_name,
+    last_name,
+    username,
+  }: CreateUser) => {
     // Function to login
-    if (correo.length === 0 || password.length === 0) {
+    if (
+      email.length === 0 ||
+      password.length === 0 ||
+      cedula.length === 0 ||
+      first_name.length === 0 ||
+      last_name.length === 0 ||
+      username.length === 0
+    ) {
       // If email or password not exist
       ShowAlert('default', {
         title: 'Error',
@@ -143,12 +158,18 @@ export const AuthProvider = ({children}: any) => {
     }
 
     await postRequest(ApiEndpoints.register, {
-      username: correo,
+      username,
       password,
+      last_name,
+      cedula,
+      first_name,
+      email,
     })
       .then((mss: any) => {
-        ShowAlert('default', {message: mss ? mss : '', title: 'Exito'});
-        //startConnection(jwtInfo.token, jwtInfo.userName);
+        ShowAlert('default', {
+          message: mss ? mss : 'Usuario creado exitosamente, inicia sesión!',
+          title: 'Exito',
+        });
       })
       .catch(console.log);
   };

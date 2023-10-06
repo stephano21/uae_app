@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Image, Text} from 'react-native';
 import {ButtonWithText} from '../components/ButtonWithText';
 import {PermissionsContext} from '../context/PermissionsContext';
-import {styles, colores} from '../theme/appTheme';
+import {styles, colores, iconos} from '../theme/appTheme';
 import {BaseScreen} from '../Template/BaseScreen';
 
 export const WelcomeScreen = () => {
@@ -36,6 +36,7 @@ export const WelcomeScreen = () => {
       </Text>
       <ButtonWithText
         anyfunction={askPermission}
+        icon={iconos.segurity}
         title={'Dar permisos'}></ButtonWithText>
     </BaseScreen>
   );
