@@ -95,7 +95,7 @@ export const RegisterScreen = () => {
         placeholder={'Identificación'}
         value={Identificacion}
         keyboard="numeric"
-        maxLength={13}
+        maxLength={10}
         onChange={value => solo3Decimales(value, 'Identificacion')}></InputForm>
       <InputForm
         color={colores.plomo}
