@@ -12,7 +12,7 @@ import {DrawerHeader} from './DrawerHeader';
 import {AlertContext} from '../context/AlertContext';
 import {NextScreen} from '../screens/NextScreen';
 import {Tabs} from './Tabs';
-import {SocketScreen} from '../screens/SocketScreen';
+import {ThemeContext} from '../context/ThemeContext';
 
 const Drawer = createDrawerNavigator();
 
@@ -32,7 +32,6 @@ export const MenuLateral = () => {
       }}>
       <Drawer.Screen name="Tabs" component={Tabs} />
       <Drawer.Screen name="Geo Location" component={NextScreen} />
-      <Drawer.Screen name="SocketScreen" component={SocketScreen} />
     </Drawer.Navigator>
   );
 };
@@ -66,6 +65,9 @@ const MenuItems = [
 ];
 
 const MenuInterno = ({navigation, state}: DrawerContentComponentProps) => {
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
   const {logOut} = useContext(AuthContext);
   const {ShowAlert} = useContext(AlertContext);
   let username = 'React Native';
@@ -81,7 +83,7 @@ const MenuInterno = ({navigation, state}: DrawerContentComponentProps) => {
   return (
     <DrawerContentScrollView
       style={{
-        backgroundColor: colores.blanco,
+        backgroundColor: colors.background,
         ...styles.sombra,
         borderRadius: 0,
       }}>

@@ -6,6 +6,7 @@ import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {AuthContext} from '../context/AuthContext';
 import {AlertContext} from '../context/AlertContext';
+import {ThemeContext} from '../context/ThemeContext';
 
 interface Props {
   hasBack?: boolean;
@@ -13,6 +14,9 @@ interface Props {
 }
 
 export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
   const navigation = useNavigation<DrawerNavigationProp<ParamListBase>>();
   const {logOut} = useContext(AuthContext);
   const {ShowAlert} = useContext(AlertContext);
@@ -30,7 +34,7 @@ export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
       style={{
         height: 50,
         width: '100%',
-        backgroundColor: colores.blanco,
+        backgroundColor: colors.background,
         ...styles.centerItems,
         shadowColor: '#000',
         shadowOffset: {
@@ -63,15 +67,13 @@ export const DrawerHeader = ({hasBack = false, title = ''}: Props) => {
             alignSelf: 'center',
           }}></Image>
       ) : (
-        <Text style={{...styles.textTitle, color: colores.primario}}>
-          {title}
-        </Text>
+        <Text style={{...styles.textTitle, color: colors.text}}>{title}</Text>
       )}
       <TouchableOpacity
         onPress={() => logout()}
         activeOpacity={0.6}
         style={{height: 50, width: 50, ...styles.centerItems}}>
-        <Icon name={iconos.logout} size={30} color={colores.primario} />
+        <Icon name={iconos.logout} size={30} color={colors.text} />
       </TouchableOpacity>
     </View>
   );

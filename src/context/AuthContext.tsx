@@ -1,5 +1,4 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import queryString from 'query-string';
 import {CreateUser, LoginData} from '../interfaces/UserInterface';
 import {AlertContext} from './AlertContext';
 import {sleep} from '../helpers/sleep';
@@ -7,7 +6,6 @@ import {useStorage} from '../data/useStorage';
 import {useRequest} from '../api/useRequest';
 import {TokenResponse} from '../interfaces/BaseApiInterface';
 import {ApiEndpoints} from '../api/routes';
-import {SocketContext} from './SocketContext';
 
 type AuthContextProps = {
   status: StatusTypes;
@@ -28,7 +26,6 @@ export const AuthProvider = ({children}: any) => {
   const {postRequest} = useRequest();
   const [status, setstatus] = useState<StatusTypes>('checking');
   const [JWTInfo, setJWTInfo] = useState<string>('');
-  const {startConnection, closeConnection} = useContext(SocketContext);
 
   useEffect(() => {
     checkToken();

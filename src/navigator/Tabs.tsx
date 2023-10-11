@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {Platform} from 'react-native';
 import {iconos} from '../theme/appTheme';
 import {colores} from '../theme/appTheme';
 import {InfoScreen} from '../screens/InfoScreen';
 import {NextScreen} from '../screens/NextScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {ReadingScreen} from '../screens/ReadingScreen';
-import {Platform, useWindowDimensions} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {PerfilScreen} from '../screens/PerfilScreen';
+import {ThemeContext} from '../context/ThemeContext';
 
 const TabOptions = [
   {
@@ -48,10 +49,13 @@ export const Tabs = () => {
 const TabAndroid = createMaterialBottomTabNavigator();
 
 const TabsAndroid = () => {
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
   return (
     <TabAndroid.Navigator
       sceneAnimationEnabled={true}
-      barStyle={{backgroundColor: colores.blanco}}
+      barStyle={{backgroundColor: colors.background}}
       activeColor={colores.primario}
       inactiveColor={colores.plomo}>
       {TabOptions.map(({name, title, icon, component}, index) => (

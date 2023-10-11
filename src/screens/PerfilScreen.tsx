@@ -1,5 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, useWindowDimensions, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  useWindowDimensions,
+  StyleSheet,
+  Button,
+} from 'react-native';
 import {colores, styles as appStyles} from '../theme/appTheme';
 import {BaseScreen} from '../Template/BaseScreen';
 import {Metodos} from '../hooks/Metodos';
@@ -7,13 +13,18 @@ import {useIsFocused} from '@react-navigation/native';
 import {Background} from './Background';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {CheckInternetContext} from '../context/CheckInternetContext';
+import {ThemeContext} from '../context/ThemeContext';
 
 export const PerfilScreen = () => {
-  const {getPorfile, profile} = Metodos();
-  const {hasConection} = useContext(CheckInternetContext);
-  const {width} = useWindowDimensions();
   const isFocused = useIsFocused();
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
+  const {width} = useWindowDimensions();
+  const {getPorfile, profile} = Metodos();
+
   const [showProfile, setShowProfile] = useState(false);
+  const {hasConection} = useContext(CheckInternetContext);
 
   useEffect(() => {
     if (isFocused && hasConection) {
@@ -35,6 +46,7 @@ export const PerfilScreen = () => {
   return (
     <BaseScreen>
       <Background></Background>
+
       <View style={styles.container}>
         {!hasConection ? (
           <View style={styles.noConnectionCard}>
@@ -45,18 +57,15 @@ export const PerfilScreen = () => {
         ) : showProfile && profile ? (
           <>
             <Text style={styles.title}>Hola {profile.first_name} </Text>
-            <View style={styles.profileInfo}>
+            <View style={{backgroundColor: colors.card, ...styles.profileInfo}}>
               <Text style={styles.label}>Nombre:</Text>
               <Text style={styles.value}>
                 {profile.first_name} {profile.last_name}
               </Text>
-
               <Text style={styles.label}>Cédula:</Text>
               <Text style={styles.value}>{profile.cedula}</Text>
-
               <Text style={styles.label}>Username:</Text>
               <Text style={styles.value}>{profile.username}</Text>
-
               <Text style={styles.label}>Email:</Text>
               <Text style={styles.value}>{profile.email}</Text>
             </View>
@@ -87,7 +96,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   profileInfo: {
-    backgroundColor: colores.blanco,
     padding: 16,
     marginTop: 20,
     width: '90%',
@@ -105,7 +113,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   noConnectionCard: {
-    backgroundColor: colores.blanco,
     padding: 16,
     marginTop: 20,
     width: '90%',

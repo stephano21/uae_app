@@ -10,7 +10,7 @@ import {colores} from '../theme/appTheme';
 import {StackHeader} from './StackHeader';
 import {RegisterScreen} from '../screens/RegisterScreen';
 import {RecoveryPasswordScreen} from '../screens/RecoveryPasswordScreen';
-import {HomeScreen} from '../screens/HomeScreen';
+
 import {NextScreen} from '../screens/NextScreen';
 import {DrawerHeader} from './DrawerHeader';
 import {Tabs} from './Tabs';
@@ -92,16 +92,7 @@ export const Navigator = () => {
                       header: prop => <DrawerHeader title={''}></DrawerHeader>,
                     }}
                   />
-                  <Stack.Screen
-                    name="HomeScreen"
-                    component={HomeScreen}
-                    options={{headerShown: false}}
-                    // options={{
-                    //   header: props => (
-                    //     <StackHeader title={'Mis Entregas'}></StackHeader>
-                    //   ),
-                    // }}
-                  />
+
                   <Stack.Screen
                     name="NextScreen"
                     component={NextScreen}

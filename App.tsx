@@ -9,8 +9,7 @@ import {AlertProvider} from './src/context/AlertContext';
 import {MapProvider} from './src/context/MapContext';
 import Toast from 'react-native-toast-message';
 import {CheckInternetProvider} from './src/context/CheckInternetContext';
-import {DocumentViewProvider} from './src/context/DocumentViewContext';
-import {SocketProvider} from './src/context/SocketContext';
+import {ThemeProvider} from './src/context/ThemeContext';
 
 //#region AppState
 
@@ -19,15 +18,11 @@ const AppState = ({children}: {children: JSX.Element | JSX.Element[]}) => {
     <CheckInternetProvider>
       <LoaderProvider>
         <AlertProvider>
-          <SocketProvider>
-            <PermissionsProvider>
-              <MapProvider>
-                <DocumentViewProvider>
-                  <AuthProvider>{children}</AuthProvider>
-                </DocumentViewProvider>
-              </MapProvider>
-            </PermissionsProvider>
-          </SocketProvider>
+          <PermissionsProvider>
+            <MapProvider>
+              <AuthProvider>{children}</AuthProvider>
+            </MapProvider>
+          </PermissionsProvider>
         </AlertProvider>
       </LoaderProvider>
     </CheckInternetProvider>
@@ -51,16 +46,14 @@ const App = () => {
   };
 
   return (
-    <NavigationContainer theme={MyTheme}>
-      {/* This is the navigation container, which allows for navigation within the app */}
-      <AppState>
-        {/* This is the app state, which contains global state that can be accessed from any component */}
-        <Navigator></Navigator>
-        {/* This is the navigator, which allows for navigation within the app */}
-        <Toast />
-        {/* This is the toast component, which allows for the display of notifications */}
-      </AppState>
-    </NavigationContainer>
+    <ThemeProvider>
+      <NavigationContainer theme={MyTheme}>
+        <AppState>
+          <Navigator></Navigator>
+          <Toast />
+        </AppState>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 };
 
