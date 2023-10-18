@@ -15,11 +15,42 @@ import {ThemeContext} from '../context/ThemeContext';
 export const NextScreen = () => {
   const navigation = useNavigation();
   const {JWTInfo} = useContext(AuthContext);
-  const {setDarkTheme, setLightTheme} = useContext(ThemeContext);
+  const {setLightTheme} = useContext(ThemeContext);
   const {geolotes, pointInRegion, getPlantas} = Metodos();
   const {hasConection} = useContext(CheckInternetContext);
   const [lotesMásRecientes, setLotesMásRecientes] = useState<Geolotes[]>([]);
   const [location, setLocation] = useState<ILocation | null>(null);
+
+  useEffect(() => {
+    let _lotesMásRecientes: Geolotes[];
+    const loadData = async () => {
+      // 1. Los lotes más recientes se asumen de la caché.
+      try {
+        const asyncStorageItem = await AsyncStorage.getItem('GeoLotes');
+        if (asyncStorageItem) {
+          _lotesMásRecientes = JSON.parse(asyncStorageItem);
+        } else {
+          console.log('No se encontraron datos guardados en AsyncStorage');
+        }
+      } catch (error) {
+        console.error('Error al cargar los datos desde AsyncStorage:', error);
+      }
+      // 2. Si hay acceso a la API, se descargarán los datos más recientes.
+      if (hasConection && JWTInfo.length > 0) {
+        try {
+          _lotesMásRecientes = await geolotes();
+          await getPlantas();
+        } catch (error) {
+          // Manejar cualquier error que ocurra en geolotes o getPlantas
+          console.error('Error en geolotes o getPlantas:', error);
+        }
+      }
+      setLotesMásRecientes(_lotesMásRecientes);
+    };
+
+    loadData();
+  }, [hasConection]);
+  // 3. Acá abajo se chequeará de acuerdo con las regiones más recientes.
 
   const getLocation = () => {
     // console.log({
@@ -62,36 +93,6 @@ export const NextScreen = () => {
   };
 
   useEffect(() => {
-    let _lotesMásRecientes: Geolotes[];
-    const loadData = async () => {
-      // 1. Los lotes más recientes se asumen de la caché.
-      try {
-        const asyncStorageItem = await AsyncStorage.getItem('GeoLotes');
-        if (asyncStorageItem) {
-          _lotesMásRecientes = JSON.parse(asyncStorageItem);
-        } else {
-          console.log('No se encontraron datos guardados en AsyncStorage');
-        }
-      } catch (error) {
-        console.error('Error al cargar los datos desde AsyncStorage:', error);
-      }
-      // 2. Si hay acceso a la API, se descargarán los datos más recientes.
-      if (hasConection && JWTInfo.length > 0) {
-        try {
-          _lotesMásRecientes = await geolotes();
-          await getPlantas();
-        } catch (error) {
-          // Manejar cualquier error que ocurra en geolotes o getPlantas
-          console.error('Error en geolotes o getPlantas:', error);
-        }
-      }
-      setLotesMásRecientes(_lotesMásRecientes);
-    };
-
-    loadData();
-  }, [hasConection]);
-  // 3. Acá abajo se chequeará de acuerdo con las regiones más recientes.
-  useEffect(() => {
     if (lotesMásRecientes && lotesMásRecientes.length === 0) {
       return;
     }
@@ -132,7 +133,7 @@ export const NextScreen = () => {
           </>
         )}
       </View>
-      <ButtonWithText
+      {/* <ButtonWithText
         anyfunction={() => setDarkTheme()}
         icon="location"
         title={'Tema Dark'}
@@ -141,7 +142,7 @@ export const NextScreen = () => {
         anyfunction={() => setLightTheme()}
         icon="location"
         title={'Tema Light'}
-      />
+      /> */}
     </BaseScreen>
   );
 };
