@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {colores, styles} from '../theme/appTheme';
-import {ThemeContext} from '../context/ThemeContext';
 
 interface Props {
   anyfunction: (() => void) | (() => Promise<void>);
@@ -26,7 +25,7 @@ export const ButtonWithText = ({
   anyfunction,
   title,
   color = colores.LocationBg,
-  colorTexto,
+  colorTexto = colores.primario,
   icon = '',
   width = 250,
   textSize = 20,
@@ -37,11 +36,8 @@ export const ButtonWithText = ({
   margVText = 10,
   radio = 40,
   disabled = false,
-  colorIcono,
+  colorIcono = colores.blanco,
 }: Props) => {
-  const {
-    theme: {colors},
-  } = useContext(ThemeContext);
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -64,12 +60,9 @@ export const ButtonWithText = ({
             width: '25%',
             ...styles.centerItems,
             borderRadius: 40,
-            backgroundColor: colors.text,
+            backgroundColor: colores.negro,
           }}>
-          <Icon
-            name={icon}
-            size={tamañoIcon}
-            color={colorIcono ?? colors.background}></Icon>
+          <Icon name={icon} size={tamañoIcon} color={colorIcono}></Icon>
         </View>
       )}
       <View style={{padding: 4, width: '75%', ...styles.centerItems}}>
@@ -77,7 +70,7 @@ export const ButtonWithText = ({
           style={{
             //...styles.textButton,
             fontSize: textSize,
-            color: colorTexto ?? colors.text,
+            color: colorTexto,
             marginVertical: margVText,
             fontWeight: 'bold',
             alignSelf: 'center',

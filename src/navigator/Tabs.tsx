@@ -9,7 +9,6 @@ import {ReadingScreen} from '../screens/ReadingScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {PerfilScreen} from '../screens/PerfilScreen';
-import {ThemeContext} from '../context/ThemeContext';
 
 const TabOptions = [
   {
@@ -49,13 +48,10 @@ export const Tabs = () => {
 const TabAndroid = createMaterialBottomTabNavigator();
 
 const TabsAndroid = () => {
-  const {
-    theme: {colors},
-  } = useContext(ThemeContext);
   return (
     <TabAndroid.Navigator
       sceneAnimationEnabled={true}
-      barStyle={{backgroundColor: colors.background}}
+      barStyle={{backgroundColor: colores.blanco}}
       activeColor={colores.primario}
       inactiveColor={colores.plomo}>
       {TabOptions.map(({name, title, icon, component}, index) => (

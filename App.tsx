@@ -9,7 +9,6 @@ import {AlertProvider} from './src/context/AlertContext';
 import {MapProvider} from './src/context/MapContext';
 import Toast from 'react-native-toast-message';
 import {CheckInternetProvider} from './src/context/CheckInternetContext';
-import {ThemeProvider} from './src/context/ThemeContext';
 
 //#region AppState
 
@@ -46,14 +45,12 @@ const App = () => {
   };
 
   return (
-    <ThemeProvider>
-      <NavigationContainer theme={MyTheme}>
-        <AppState>
-          <Navigator></Navigator>
-          <Toast />
-        </AppState>
-      </NavigationContainer>
-    </ThemeProvider>
+    <NavigationContainer theme={MyTheme}>
+      <AppState>
+        <Navigator></Navigator>
+        <Toast />
+      </AppState>
+    </NavigationContainer>
   );
 };
 

@@ -10,12 +10,10 @@ import {BaseScreen} from '../Template/BaseScreen';
 import {colores, styles} from '../theme/appTheme';
 import {Metodos} from '../hooks/Metodos';
 import {Text, View} from 'react-native';
-import {ThemeContext} from '../context/ThemeContext';
 
 export const NextScreen = () => {
   const navigation = useNavigation();
   const {JWTInfo} = useContext(AuthContext);
-  const {setLightTheme} = useContext(ThemeContext);
   const {geolotes, pointInRegion, getPlantas} = Metodos();
   const {hasConection} = useContext(CheckInternetContext);
   const [lotesMásRecientes, setLotesMásRecientes] = useState<Geolotes[]>([]);

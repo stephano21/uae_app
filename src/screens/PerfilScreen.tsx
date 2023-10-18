@@ -13,13 +13,10 @@ import {useIsFocused} from '@react-navigation/native';
 import {Background} from './Background';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {CheckInternetContext} from '../context/CheckInternetContext';
-import {ThemeContext} from '../context/ThemeContext';
 
 export const PerfilScreen = () => {
   const isFocused = useIsFocused();
-  const {
-    theme: {colors},
-  } = useContext(ThemeContext);
+
   const {width} = useWindowDimensions();
   const {getPorfile, profile} = Metodos();
 
@@ -57,7 +54,8 @@ export const PerfilScreen = () => {
         ) : showProfile && profile ? (
           <>
             <Text style={styles.title}>Hola {profile.first_name} </Text>
-            <View style={{backgroundColor: colors.card, ...styles.profileInfo}}>
+            <View
+              style={{backgroundColor: colores.blanco, ...styles.profileInfo}}>
               <Text style={styles.label}>Nombre:</Text>
               <Text style={styles.value}>
                 {profile.first_name} {profile.last_name}

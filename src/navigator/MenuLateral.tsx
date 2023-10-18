@@ -12,7 +12,6 @@ import {DrawerHeader} from './DrawerHeader';
 import {AlertContext} from '../context/AlertContext';
 import {NextScreen} from '../screens/NextScreen';
 import {Tabs} from './Tabs';
-import {ThemeContext} from '../context/ThemeContext';
 
 const Drawer = createDrawerNavigator();
 
@@ -65,9 +64,6 @@ const MenuItems = [
 ];
 
 const MenuInterno = ({navigation, state}: DrawerContentComponentProps) => {
-  const {
-    theme: {colors},
-  } = useContext(ThemeContext);
   const {logOut} = useContext(AuthContext);
   const {ShowAlert} = useContext(AlertContext);
   let username = 'React Native';
@@ -83,7 +79,7 @@ const MenuInterno = ({navigation, state}: DrawerContentComponentProps) => {
   return (
     <DrawerContentScrollView
       style={{
-        backgroundColor: colors.background,
+        backgroundColor: colores.blanco,
         ...styles.sombra,
         borderRadius: 0,
       }}>
