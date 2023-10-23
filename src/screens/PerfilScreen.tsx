@@ -1,17 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  useWindowDimensions,
-  StyleSheet,
-  Button,
-} from 'react-native';
+import {View, Text, useWindowDimensions, StyleSheet} from 'react-native';
 import {colores, styles as appStyles} from '../theme/appTheme';
 import {BaseScreen} from '../Template/BaseScreen';
 import {Metodos} from '../hooks/Metodos';
 import {useIsFocused} from '@react-navigation/native';
 import {Background} from './Background';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+
 import {CheckInternetContext} from '../context/CheckInternetContext';
 
 export const PerfilScreen = () => {
@@ -28,30 +22,16 @@ export const PerfilScreen = () => {
       setTimeout(() => {
         getPorfile();
         setShowProfile(true);
-      }, 2000); // Mostrar el perfil después de 3 segundos
+      }, 1000); // Mostrar el perfil después de 3 segundos
     }
   }, [isFocused]);
-
-  // Calcula el número de elementos skeletors en función de la altura de la pantalla
-  const skeletonItems = Array.from({length: 4}, (_, index) => (
-    <SkeletonPlaceholder.Item marginBottom={8} key={index}>
-      <SkeletonPlaceholder.Item marginTop={6} width={width * 0.4} height={20} />
-      <SkeletonPlaceholder.Item marginTop={6} width={width * 0.7} height={25} />
-    </SkeletonPlaceholder.Item>
-  ));
 
   return (
     <BaseScreen>
       <Background></Background>
 
       <View style={styles.container}>
-        {!hasConection ? (
-          <View style={styles.noConnectionCard}>
-            <Text style={styles.noConnectionTitle}>
-              No tienes conexión para ver tu perfil
-            </Text>
-          </View>
-        ) : showProfile && profile ? (
+        {hasConection && profile && showProfile ? (
           <>
             <Text style={styles.title}>Hola {profile.first_name} </Text>
             <View
@@ -69,12 +49,10 @@ export const PerfilScreen = () => {
             </View>
           </>
         ) : (
-          <View style={styles.profileInfo}>
-            <SkeletonPlaceholder borderRadius={4}>
-              <SkeletonPlaceholder.Item alignSelf="center">
-                {skeletonItems}
-              </SkeletonPlaceholder.Item>
-            </SkeletonPlaceholder>
+          <View style={styles.noConnectionCard}>
+            <Text style={styles.noConnectionTitle}>
+              No tienes conexión para ver tu perfil
+            </Text>
           </View>
         )}
       </View>

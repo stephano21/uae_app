@@ -13,8 +13,6 @@ import {ButtonWithText} from '../components/ButtonWithText';
 import {LoaderContext} from '../context/LoaderContext';
 import {useBaseStorage} from '../data/useBaseStorage';
 import {colores} from '../theme/appTheme';
-import Svg, { Path } from 'react-native-svg';
-import TreeFill from './../assets/tree-fill'; // Importa tu archivo SVG personalizado
 
 export const PlantasScreen = () => {
   const {params} = useRoute();

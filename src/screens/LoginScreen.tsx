@@ -1,13 +1,5 @@
 import React, {useContext} from 'react';
-import {
-  View,
-  Keyboard,
-  Text,
-  Image,
-  useWindowDimensions,
-  StyleSheet,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {View, Keyboard, Text, Image, StyleSheet} from 'react-native';
 import {colores} from '../theme/appTheme';
 import {AuthContext} from '../context/AuthContext';
 import {useForm} from '../hooks/useForm';

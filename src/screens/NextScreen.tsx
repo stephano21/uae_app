@@ -51,10 +51,6 @@ export const NextScreen = () => {
   // 3. Acá abajo se chequeará de acuerdo con las regiones más recientes.
 
   const getLocation = () => {
-    // console.log({
-    //   tuales: lotesMásRecientes.length,
-    // });lotesAc
-    // Obtener la ubicación actual
     Geolocation.getCurrentPosition(
       async position => {
         const locationData: any = position.coords;
