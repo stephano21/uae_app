@@ -1,4 +1,4 @@
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 import {useEffect, useRef, useState} from 'react';
 import {Location} from '../interfaces/UserInterface';
 

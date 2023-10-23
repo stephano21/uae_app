@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Geolotes, ILocation} from '../interfaces/ApiInterface';
 import React, {useContext, useEffect, useState} from 'react';
 import {ButtonWithText} from '../components/ButtonWithText';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 import {AuthContext} from '../context/AuthContext';
 import {BaseScreen} from '../Template/BaseScreen';
 import {colores, styles} from '../theme/appTheme';
@@ -112,7 +112,7 @@ export const NextScreen = () => {
               key={index}
               anyfunction={() => {
                 navigation.dispatch(
-                  CommonActions.navigate('PlantasScreen', {a}),
+                  CommonActions.navigate('PlantasScreen', {a, title: a.Lote}),
                 );
               }}
               icon="location"

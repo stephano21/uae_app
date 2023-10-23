@@ -122,8 +122,11 @@ export const Navigator = () => {
                     name="PlantasScreen"
                     component={PlantasScreen}
                     options={{
-                      header: props => (
-                        <StackHeader title={'Plantas'}></StackHeader>
+                      header: (props: any) => (
+                        <StackHeader
+                          title={`${
+                            props.route.params?.title ?? ''
+                          } Information`}></StackHeader>
                       ),
                     }}
                   />
