@@ -115,21 +115,25 @@ export const ReadingScreen = () => {
           FechaVisita: lectura.Fecha_Visita,
         };
         // Hacer la solicitud al servidor para guardar la lectura
-        await postRequest(ApiEndpoints.Lectura, lecturaParaEnviar);
-        const lecturasExistentes = await AsyncStorage.getItem('LecturasLocal');
-        if (lecturasExistentes) {
-          const lecturasExistentesArray: GlobalLecturas[] =
-            JSON.parse(lecturasExistentes);
-          // Encuentra y elimina la lectura que coincida con la lectura enviada
-          const lecturasActualizadas = lecturasExistentesArray.filter(
-            lect => lect.SyncId !== lectura.SyncId,
-          );
-          await AsyncStorage.setItem(
-            'LecturasLocal',
-            JSON.stringify(lecturasActualizadas),
-          );
-          setLecturasGuardadas(lecturasActualizadas);
-        }
+        await postRequest(ApiEndpoints.Lectura, lecturaParaEnviar).then(
+          async () => {
+            const lecturasExistentes =
+              await AsyncStorage.getItem('LecturasLocal');
+            if (lecturasExistentes) {
+              const lecturasExistentesArray: GlobalLecturas[] =
+                JSON.parse(lecturasExistentes);
+              // Encuentra y elimina la lectura que coincida con la lectura enviada
+              const lecturasActualizadas = lecturasExistentesArray.filter(
+                lect => lect.SyncId !== lectura.SyncId,
+              );
+              await AsyncStorage.setItem(
+                'LecturasLocal',
+                JSON.stringify(lecturasActualizadas),
+              );
+              setLecturasGuardadas(lecturasActualizadas);
+            }
+          },
+        );
       }
     } catch (error) {
       console.error('Error al enviar las lecturas al servidor:', error);

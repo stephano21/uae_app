@@ -90,7 +90,7 @@ export const NextScreen = () => {
     if (lotesMásRecientes && lotesMásRecientes.length === 0) {
       return;
     }
-    getLocation(); // Se inicia actualizando la ubicación una vez tan pronto como se pueda.
+    getLocation(); 
     let refrescarUbicación: NodeJS.Timeout | null;
     refrescarUbicación = setInterval(async () => {
       getLocation();
