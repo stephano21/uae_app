@@ -1,6 +1,3 @@
-//Api
-
-import {GeoCoordinates} from 'react-native-geolocation-service';
 export interface IProyecto {
   id: number;
   Codigo_Proyecto: string;
@@ -37,7 +34,7 @@ export interface ILectura {
   Id_Planta: number;
 }
 
-export interface ILocation extends GeoCoordinates {
+export interface ILocation {
   latitude: number;
   longitude: number;
   accuracy: number;
@@ -99,6 +96,7 @@ export interface Geocoordenada {
 
 export interface Plantas {
   id: number;
+  Disabled: boolean;
   Codigo_Planta: string;
   Nombre: string;
   Activo: boolean;

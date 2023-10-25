@@ -7,9 +7,11 @@ import {ButtonWithText} from '../components/ButtonWithText';
 import Geolocation from '@react-native-community/geolocation';
 import {AuthContext} from '../context/AuthContext';
 import {BaseScreen} from '../Template/BaseScreen';
-import {colores, styles} from '../theme/appTheme';
+import {colores} from '../theme/appTheme';
 import {Metodos} from '../hooks/Metodos';
 import {Text, View} from 'react-native';
+import {SearchInput} from '../components/SearchInput';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export const NextScreen = () => {
   const navigation = useNavigation();
@@ -17,6 +19,8 @@ export const NextScreen = () => {
   const {geolotes, pointInRegion, getPlantas} = Metodos();
   const {hasConection} = useContext(CheckInternetContext);
   const [lotesMásRecientes, setLotesMásRecientes] = useState<Geolotes[]>([]);
+  const [filtrado, setFiltrado] = useState<Geolotes[]>([]);
+
   const [location, setLocation] = useState<ILocation | null>(null);
 
   useEffect(() => {
@@ -65,14 +69,12 @@ export const NextScreen = () => {
             })),
           ),
         );
-
         // Mapear los polígonos filtrados a un arreglo de objetos
         const regionData = filteredPoligonos.map(item => ({
           Lote: item.Lote,
           Id: item.Id_Lote,
           Cod: item.CodigoLote,
         }));
-
         // Asignar la propiedad 'region' en locationData con los datos mapeados
         locationData.region = regionData;
 
@@ -90,7 +92,7 @@ export const NextScreen = () => {
     if (lotesMásRecientes && lotesMásRecientes.length === 0) {
       return;
     }
-    getLocation(); 
+    getLocation();
     let refrescarUbicación: NodeJS.Timeout | null;
     refrescarUbicación = setInterval(async () => {
       getLocation();
@@ -105,38 +107,66 @@ export const NextScreen = () => {
 
   return (
     <BaseScreen>
-      <View style={{flex: 1, ...styles.centerItems}}>
+      <SearchInput
+        placeholder={'Buscar por código de lote'}
+        keyBoard="visible-password"
+        catalog={lotesMásRecientes}
+        textCompare={(item: Geolotes) =>
+          item.CodigoLote !== null ? [item.CodigoLote] : []
+        }
+        result={setFiltrado}
+      />
+      <View>
+        {filtrado.length < 6 ? (
+          <ScrollView>
+            {filtrado.map((a, index) => (
+              <ButtonWithText
+                key={index}
+                anyfunction={() => {
+                  navigation.dispatch(
+                    CommonActions.navigate('PlantasScreen', {
+                      idLote: a.Id_Lote,
+                      data: a,
+                      title: a.CodigoLote,
+                    }),
+                  );
+                }}
+                icon="location"
+                title={a.CodigoLote}
+              />
+            ))}
+          </ScrollView>
+        ) : (
+          <></>
+        )}
+      </View>
+
+      <View>
         {location && location.region ? (
           location?.region.map((a, index) => (
             <ButtonWithText
               key={index}
               anyfunction={() => {
                 navigation.dispatch(
-                  CommonActions.navigate('PlantasScreen', {a, title: a.Lote}),
+                  CommonActions.navigate('PlantasScreen', {
+                    idLote: a.Id,
+                    datos: a,
+                    title: a.Lote,
+                  }),
                 );
               }}
               icon="location"
-              title={a.Lote}
+              title={a.Cod}
             />
           ))
         ) : (
           <>
             <Text style={{color: colores.negro}}>
-              No hay lotes cercanos disponibles
+              No hay lotes cercanos disponibles, puedes buscarlo por su código.
             </Text>
           </>
         )}
       </View>
-      {/* <ButtonWithText
-        anyfunction={() => setDarkTheme()}
-        icon="location"
-        title={'Tema Dark'}
-      />
-      <ButtonWithText
-        anyfunction={() => setLightTheme()}
-        icon="location"
-        title={'Tema Light'}
-      /> */}
     </BaseScreen>
   );
 };

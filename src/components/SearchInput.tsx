@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Platform, StyleSheet, View, StyleProp, ViewStyle} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  View,
+  StyleProp,
+  ViewStyle,
+  KeyboardTypeOptions,
+} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useDebouncedValue} from '../hooks/useDebouncedValue';
@@ -11,6 +18,7 @@ interface Props<T extends unknown> {
   textCompare: (item: T) => string[];
   result: (filteredItems: T[]) => void;
   style?: StyleProp<ViewStyle>;
+  keyBoard?: KeyboardTypeOptions;
 }
 
 export const SearchInput = <T extends unknown>({
@@ -19,11 +27,12 @@ export const SearchInput = <T extends unknown>({
   textCompare,
   result,
   style,
+  keyBoard = 'default',
 }: Props<T>) => {
   const [textValue, setTextValue] = useState('');
   const deboncedValue = useDebouncedValue(textValue);
   const filterItems = () => {
-    if (deboncedValue.length < 3) {
+    if (deboncedValue.length < 2) {
       return result(catalog);
     }
     result(
@@ -60,6 +69,7 @@ export const SearchInput = <T extends unknown>({
           autoCorrect={false}
           value={textValue}
           onChangeText={setTextValue}
+          keyboardType={keyBoard}
         />
         <Icon name="search-outline" color="grey" size={25} />
       </View>
