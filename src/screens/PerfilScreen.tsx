@@ -31,9 +31,9 @@ export const PerfilScreen = () => {
       <Background></Background>
 
       <View style={styles.container}>
-        {hasConection && profile && showProfile ? (
+        {profile && showProfile ? (
           <>
-            <Text style={styles.title}>Hola {profile.first_name} </Text>
+            <Text style={styles.title}>Hola {profile.first_name}</Text>
             <View
               style={{backgroundColor: colores.blanco, ...styles.profileInfo}}>
               <Text style={styles.label}>Nombre:</Text>
@@ -48,12 +48,20 @@ export const PerfilScreen = () => {
               <Text style={styles.value}>{profile.email}</Text>
             </View>
           </>
-        ) : (
-          <View style={styles.noConnectionCard}>
+        ) : showProfile ? (
+          <>
             <Text style={styles.noConnectionTitle}>
-              No tienes conexión para ver tu perfil
+              ESTAMOS CARGANDO TU PERFIL
             </Text>
-          </View>
+          </>
+        ) : !hasConection ? (
+          <>
+            <Text style={styles.noConnectionTitle}>
+              NO TIENES CONEXIÓN PARA VER TU PERFIL
+            </Text>
+          </>
+        ) : (
+          <></>
         )}
       </View>
     </BaseScreen>

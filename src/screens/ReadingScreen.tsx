@@ -97,6 +97,7 @@ export const ReadingScreen = () => {
     try {
       for (const lectura of lecturas) {
         // Mapea las propiedades de lectura correctamente
+        console.log('lECTURA', JSON.stringify(lectura, null, 3));
         const lecturaParaEnviar = {
           Id_Planta: lectura.Id_Planta,
           E1: lectura.E1 || 0,
@@ -115,8 +116,8 @@ export const ReadingScreen = () => {
           FechaVisita: lectura.Fecha_Visita,
         };
         // Hacer la solicitud al servidor para guardar la lectura
-        await postRequest(ApiEndpoints.Lectura, lecturaParaEnviar).then(
-          async () => {
+        await postRequest(ApiEndpoints.Lectura, lecturaParaEnviar)
+          .then(async () => {
             const lecturasExistentes =
               await AsyncStorage.getItem('LecturasLocal');
             if (lecturasExistentes) {
@@ -132,8 +133,10 @@ export const ReadingScreen = () => {
               );
               setLecturasGuardadas(lecturasActualizadas);
             }
-          },
-        );
+          })
+          .catch(e => {
+            console.log('error', JSON.stringify(e));
+          });
       }
     } catch (error) {
       console.error('Error al enviar las lecturas al servidor:', error);

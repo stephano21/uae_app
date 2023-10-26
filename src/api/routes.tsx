@@ -1,9 +1,9 @@
 export const ApiEndpoints = {
-  //BaseURL: 'https://victoria-api.up.railway.app',
-  BaseURL:
-    process.env.NODE_ENV === 'production'
-      ? 'https://victoria-api.up.railway.app/'
-      : 'https://c97c-157-100-158-182.ngrok-free.app',
+  BaseURL: 'https://victoria-api.up.railway.app',
+  // BaseURL:
+  //   process.env.NODE_ENV === 'production'
+  //     ? 'https://victoria-api.up.railway.app/'
+  //     : 'https://c97c-157-100-158-182.ngrok-free.app',
   //BaseURL: 'https://682e-157-100-158-182.ngrok-free.app',
   BaseApi: '/api',
   //Token: '/Token',
