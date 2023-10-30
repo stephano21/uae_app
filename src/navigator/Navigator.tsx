@@ -15,6 +15,7 @@ import {Tabs} from './Tabs';
 import {LecturaScreen} from '../screens/LecturaScreen';
 import {ReadingScreen} from '../screens/ReadingScreen';
 import {PlantasScreen} from '../screens/PlantasScreen';
+import { FotoPlantaScreen } from '../screens/FotoPlantaScreen';
 
 const Stack = createStackNavigator();
 export const Navigator = () => {
@@ -106,6 +107,15 @@ export const Navigator = () => {
                     options={{
                       header: props => (
                         <StackHeader title={'Ingresar Lectura'}></StackHeader>
+                      ),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="FotoPlantaScreen"
+                    component={FotoPlantaScreen}
+                    options={{
+                      header: props => (
+                        <StackHeader title={'Tomar Foto'}></StackHeader>
                       ),
                     }}
                   />
