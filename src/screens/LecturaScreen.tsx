@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';
-import {GlobalLecturas, IRegion, Plantas} from '../interfaces/ApiInterface';
+import {GlobalLecturas, Plantas} from '../interfaces/ApiInterface';
 import {colores, iconos, styles} from '../theme/appTheme';
 import {InputForm} from '../components/InputForm';
 import {Card} from 'react-native-paper';
@@ -15,6 +15,8 @@ import {useRequest} from '../api/useRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ApiEndpoints} from '../api/routes';
 import {useBaseStorage} from '../data/useBaseStorage';
+import { StackHeader } from '../navigator/StackHeader';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export const LecturaScreen = () => {
   const route = useRoute();
@@ -214,6 +216,28 @@ export const LecturaScreen = () => {
       return false;
     }
   };
+
+  // Inicialmente lo estaba haciendo Navigator, pero mejor aquí ya que allá no hay contexto de la 
+  //  planta actual.
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <StackHeader title={'Ingresar Lectura'}
+          actions={[
+            <TouchableOpacity
+              activeOpacity={0.6}
+              // Passing plnt from here, as it's it this screen's context.
+              //@ts-ignore as mavigate doesn't expect any args, yet it works.
+              onPress={() => navigation.navigate('FotoPlantaScreen', { plnt })}
+              style={{height: 50, width: 50, ...styles.centerItems}}
+            >
+              <Icon name="camera" size={30} color={colores.blanco} />
+            </TouchableOpacity>
+          ]}
+        />
+      ),
+    })
+  }, [navigation])
 
   return (
     <BaseScreen isScroll={true}>
