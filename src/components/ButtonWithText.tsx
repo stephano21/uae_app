@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {colores, styles} from '../theme/appTheme';
 
 interface Props {
+  // TODO Ponerle onPress o handlePress
   anyfunction: (() => void) | (() => Promise<void>);
   title: string;
   color?: string;
