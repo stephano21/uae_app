@@ -90,7 +90,7 @@ export const FotoPlantaScreen = () => {
                   anyfunction={() => cameraRef.current?.takePhoto()
                     .then((photo) => {
                       const dateTimeString = format(Date.now(), "yyyyMMdd-HHmmss")
-                      const destFolder = `${ExternalStorageDirectoryPath}/DCIM/${AppMetadata.name}`
+                      const destFolder = `${ExternalStorageDirectoryPath}/DCIM/PlantTrace`
                       mkdir(destFolder).catch(err => { throw err })
                       moveFile(photo.path, 
                         `${destFolder}/${dateTimeString}_${plnt.Codigo_Planta}_L${lado}${extname(photo.path)}`

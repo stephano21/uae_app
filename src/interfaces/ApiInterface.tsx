@@ -69,6 +69,7 @@ export interface GlobalLecturas {
   GR4: string;
   GR5: string;
   Cherelles: string;
+  Total: string;
   Observacion: string;
   SyncId: string;
   Fecha_Visita: string;
