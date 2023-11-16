@@ -6,7 +6,6 @@ import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {Navigator} from './src/navigator/Navigator';
 import {LoaderProvider} from './src/context/LoaderContext';
 import {AlertProvider} from './src/context/AlertContext';
-import {MapProvider} from './src/context/MapContext';
 import Toast from 'react-native-toast-message';
 import {CheckInternetProvider} from './src/context/CheckInternetContext';
 
@@ -18,9 +17,7 @@ const AppState = ({children}: {children: JSX.Element | JSX.Element[]}) => {
       <LoaderProvider>
         <AlertProvider>
           <PermissionsProvider>
-            <MapProvider>
               <AuthProvider>{children}</AuthProvider>
-            </MapProvider>
           </PermissionsProvider>
         </AlertProvider>
       </LoaderProvider>

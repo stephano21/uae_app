@@ -47,7 +47,7 @@ export const useLocation = () => {
         },
         err => reject({err}),
         {
-          enableHighAccuracy: true,
+          enableHighAccuracy: false,
           timeout: 2000,
         },
       );

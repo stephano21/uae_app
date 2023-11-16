@@ -1,16 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {BaseScreen} from '../Template/BaseScreen';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-} from 'react-native';
-import {GlobalLecturas, ILectura} from '../interfaces/ApiInterface';
+import {Text, View, StyleSheet, useWindowDimensions} from 'react-native';
+import {GlobalLecturas} from '../interfaces/ApiInterface';
 import {List} from '../components/List';
 import {colores, styles} from '../theme/appTheme';
-import {formatoDeFecha} from '../helpers/formatoDeFecha';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LoaderContext} from '../context/LoaderContext';
 import {sleep} from '../helpers/sleep';

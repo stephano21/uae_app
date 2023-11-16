@@ -1,5 +1,4 @@
 import {useContext, useState} from 'react';
-import _lotes from './../api/test.json';
 import {Geolotes, Plantas, Porfile} from './../interfaces/ApiInterface';
 import {useRequest} from '../api/useRequest';
 import {ApiEndpoints} from '../api/routes';

@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {BaseScreen} from '../Template/BaseScreen';
-import {colores, iconos} from '../theme/appTheme';
+import {colores} from '../theme/appTheme';
 import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
 import {ImageGallery} from '../components/ImageGallery';
 import {Accordion} from '../components/Acordion';

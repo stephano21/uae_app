@@ -117,7 +117,7 @@ export const NextScreen = () => {
         result={setFiltrado}
       />
       <View>
-        {filtrado.length < 6 ? (
+        {filtrado?.length < 6 ? (
           <ScrollView>
             {filtrado.map((a, index) => (
               <ButtonWithText

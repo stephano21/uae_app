@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Text, useWindowDimensions, View} from 'react-native';
+import {useWindowDimensions, View} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
 import {colores} from '../theme/appTheme';
 

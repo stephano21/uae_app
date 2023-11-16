@@ -23,7 +23,7 @@ export const List = <T extends unknown>({
   isHorizontal = false,
   loadMore,
 }: FlatListProps<T>) => {
-  const {isFetching} = useContext(LoaderContext);
+  const {isLoading} = useContext(LoaderContext);
   return (
     <FlatList
       data={data}
@@ -32,7 +32,7 @@ export const List = <T extends unknown>({
       horizontal={isHorizontal}
       refreshControl={
         <RefreshControl
-          refreshing={isFetching}
+          refreshing={isLoading}
           onRefresh={refreshFunction}></RefreshControl>
       }
       onEndReached={loadMore}

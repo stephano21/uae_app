@@ -1,19 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, useWindowDimensions, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {colores, styles as appStyles} from '../theme/appTheme';
 import {BaseScreen} from '../Template/BaseScreen';
 import {Metodos} from '../hooks/Metodos';
 import {useIsFocused} from '@react-navigation/native';
 import {Background} from './Background';
-
 import {CheckInternetContext} from '../context/CheckInternetContext';
 
 export const PerfilScreen = () => {
   const isFocused = useIsFocused();
-
-  const {width} = useWindowDimensions();
   const {getPorfile, profile} = Metodos();
-
   const [showProfile, setShowProfile] = useState(false);
   const {hasConection} = useContext(CheckInternetContext);
 
