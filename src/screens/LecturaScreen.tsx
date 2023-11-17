@@ -334,7 +334,7 @@ export const LecturaScreen = () => {
                   keyboard="numeric"
                   ancho={0.8}
                   placeholder={'Total'}
-                  value={lectura['E4']}
+                  value={lectura['Total']}
                   onChange={value => setLectura({ ...lectura, ['Total']: value })}
                 />
               </View>
