@@ -3,7 +3,7 @@ import {BaseScreen} from '../Template/BaseScreen';
 import {Text, View, StyleSheet, useWindowDimensions} from 'react-native';
 import {GlobalLecturas} from '../interfaces/ApiInterface';
 import {List} from '../components/List';
-import {colores, styles} from '../theme/appTheme';
+import {colores, iconos, styles} from '../theme/appTheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LoaderContext} from '../context/LoaderContext';
 import {sleep} from '../helpers/sleep';
@@ -81,7 +81,7 @@ export const ReadingScreen = () => {
             }}>
             <Text style={lecturasStyles.routeCod}>{lectura.planta}</Text>
           </View>
-          <Text style={lecturasStyles.route}>{lectura.Observacion}</Text>
+          <Text style={lectura.Observacion!=""?lecturasStyles.route:lecturasStyles.routeEmpty}>{lectura.Observacion!=""?lectura.Observacion:"No hay observación"}</Text>
         </View>
       </View>
     );
@@ -148,6 +148,9 @@ export const ReadingScreen = () => {
       <View>
         {lecturasGuardadas.length > 0 && hasConection && (
           <ButtonWithText
+          color={colores.primario}
+          colorTexto={colores.grisOscuro}
+          icon="sync"
             anyfunction={() =>
               // ShowAlert('default', {
               //   message: 'Estamos trabajando en ello',
@@ -155,7 +158,7 @@ export const ReadingScreen = () => {
               // })
               enviarLecturasAlServidor(lecturasGuardadas)
             }
-            title={`Guardar Lecturas en el servidor.`}
+            title={`Sincronizar`}
           />
         )}
         {/* {lecturasGuardadas.length < 0 && (
@@ -173,19 +176,33 @@ const lecturasStyles = StyleSheet.create({
   rutaContainer: {
     height: '90%',
     flex: 1,
-    ...styles.sombra,
+    //...styles.sombra,
     marginBottom: 10,
-    backgroundColor: '#ececec',
+    backgroundColor: colores.LocationBg ,
+    borderRadius:10,
   },
   route: {
     fontSize: 16,
     marginBottom: 4,
     marginHorizontal: 5,
+    marginLeft:20,
+    padding:5,
     color: colores.negro,
+  },
+  routeEmpty: {
+    fontSize: 11,
+    marginBottom: 4,
+    marginHorizontal: 5,
+    marginLeft:20,
+    padding:5,
+    color: colores.negroClaro,
+    fontStyle:"italic",
   },
   routeCod: {
     fontSize: 16,
+    fontWeight:"bold",
     marginBottom: 4,
     color: colores.primario,
+    marginTop:5,
   },
 });

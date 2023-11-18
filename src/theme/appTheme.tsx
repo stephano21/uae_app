@@ -8,6 +8,7 @@ export const colores = {
   darkTransparent: 'rgba(0,0,0,0.5)',
   darkLoader: 'rgba(0,0,0,0.75)',
   LocationBg: 'rgba(114,176,29,0.36)',
+  LecList: '#698079',
   negro: 'black',
   plomo: 'rgba(142,143,141,0.36)',
   plomoclaro: '#ededed',
@@ -16,6 +17,7 @@ export const colores = {
   verde: '#16c40c',
   negroClaro: '#0d0a0b',
   gris: '#f3eff5',
+  grisOscuro:"#CBCBCB",
   verdeLima: '#72b01d',
   verdePasto: '#79b473',
   //

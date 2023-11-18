@@ -120,7 +120,7 @@ export const LecturaScreen = () => {
 
       const nuevaLectura = {
         Id_Planta: plnt.id,
-        planta: plnt.Nombre,
+        planta: plnt.Codigo_Planta,
         E1: lectura['E1'],
         E2: lectura['E2'],
         E3: lectura['E3'],

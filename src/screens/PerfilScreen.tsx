@@ -38,9 +38,9 @@ export const PerfilScreen = () => {
               </Text>
               <Text style={styles.label}>Cédula:</Text>
               <Text style={styles.value}>{profile.cedula}</Text>
-              <Text style={styles.label}>Username:</Text>
+              <Text style={styles.label}>Nombre de Usuario:</Text>
               <Text style={styles.value}>{profile.username}</Text>
-              <Text style={styles.label}>Email:</Text>
+              <Text style={styles.label}>Correo:</Text>
               <Text style={styles.value}>{profile.email}</Text>
             </View>
           </>
