@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {Image, Text} from 'react-native';
-import {ButtonWithText} from '../components/ButtonWithText';
-import {PermissionsContext} from '../context/PermissionsContext';
-import {styles, colores, iconos} from '../theme/appTheme';
-import {BaseScreen} from '../Template/BaseScreen';
+import {ButtonWithText} from '../../components/ButtonWithText';
+import {PermissionsContext} from '../../context/PermissionsContext';
+import {styles, colores, iconos} from '../../theme/appTheme';
+import {BaseScreen} from '../../Template/BaseScreen';
 
 export const WelcomeScreen = () => {
   const {askPermission} = useContext(PermissionsContext);
@@ -16,7 +16,7 @@ export const WelcomeScreen = () => {
         justifyContent: 'space-evenly',
       }}>
       <Image
-        source={require('../assets/logoUAE.png')}
+        source={require('../../assets/logoUAE.png')}
         style={{
           height: 200,
           width: 300,

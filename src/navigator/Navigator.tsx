@@ -1,14 +1,13 @@
 import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {LoginScreen} from '../screens/LoginScreen';
 import {AuthContext} from '../context/AuthContext';
 import {LoadingScreen} from '../screens/LoadingScreen';
-import {WelcomeScreen} from '../screens/WelcomeScreen';
+import {WelcomeScreen} from '../screens/Auth/WelcomeScreen';
 import {PermissionsContext} from '../context/PermissionsContext';
 import {colores} from '../theme/appTheme';
 import {StackHeader} from './StackHeader';
-import {RegisterScreen} from '../screens/RegisterScreen';
-import {RecoveryPasswordScreen} from '../screens/RecoveryPasswordScreen';
+import {RegisterScreen} from '../screens/Auth/RegisterScreen';
+import {RecoveryPasswordScreen} from '../screens/Auth/RecoveryPasswordScreen';
 import {NextScreen} from '../screens/NextScreen';
 import {DrawerHeader} from './DrawerHeader';
 import {Tabs} from './Tabs';
@@ -16,6 +15,7 @@ import {LecturaScreen} from '../screens/LecturaScreen';
 import {ReadingScreen} from '../screens/ReadingScreen';
 import {PlantasScreen} from '../screens/PlantasScreen';
 import { FotoPlantaScreen } from '../screens/FotoPlantaScreen';
+import { LoginScreen } from '../screens/Auth/LoginScreen';
 
 const Stack = createStackNavigator();
 export const Navigator = () => {

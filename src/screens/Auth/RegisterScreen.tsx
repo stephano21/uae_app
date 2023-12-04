@@ -1,13 +1,13 @@
 import React, {useContext, useState} from 'react';
-import {BaseScreen} from '../Template/BaseScreen';
+import {BaseScreen} from '../../Template/BaseScreen';
 import {Keyboard, Text, useWindowDimensions} from 'react-native';
-import {colores, iconos} from '../theme/appTheme';
-import {InputForm} from '../components/InputForm';
-import {useForm} from '../hooks/useForm';
-import {ButtonWithText} from '../components/ButtonWithText';
+import {colores, iconos} from '../../theme/appTheme';
+import {InputForm} from '../../components/InputForm';
+import {useForm} from '../../hooks/useForm';
+import {ButtonWithText} from '../../components/ButtonWithText';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {AuthContext} from '../context/AuthContext';
-import {AlertContext} from '../context/AlertContext';
+import {AuthContext} from '../../context/AuthContext';
+import {AlertContext} from '../../context/AlertContext';
 
 export const RegisterScreen = () => {
   const navigation = useNavigation();

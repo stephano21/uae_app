@@ -1,7 +1,7 @@
 import React from 'react';
 import {useWindowDimensions, View} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
-import {colores} from '../theme/appTheme';
+import {colores} from '../../theme/appTheme';
 
 interface Props {
   hasHeader?: boolean;

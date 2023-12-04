@@ -4,7 +4,7 @@ import {colores, styles as appStyles} from '../theme/appTheme';
 import {BaseScreen} from '../Template/BaseScreen';
 import {Metodos} from '../hooks/Metodos';
 import {useIsFocused} from '@react-navigation/native';
-import {Background} from './Background';
+import {Background} from './Auth/Background';
 import {CheckInternetContext} from '../context/CheckInternetContext';
 
 export const PerfilScreen = () => {

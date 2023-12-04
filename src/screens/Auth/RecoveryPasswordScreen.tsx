@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {BaseScreen} from '../Template/BaseScreen';
+import {BaseScreen} from '../../Template/BaseScreen';
 import {Text, View} from 'react-native';
-import {colores} from '../theme/appTheme';
-import {Input} from '../components/Input';
-import {ButtonWithText} from '../components/ButtonWithText';
+import {colores} from '../../theme/appTheme';
+import {Input} from '../../components/Input';
+import {ButtonWithText} from '../../components/ButtonWithText';
 
 export const RecoveryPasswordScreen = () => {
   const [email, setemail] = useState('');
