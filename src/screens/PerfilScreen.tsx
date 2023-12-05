@@ -6,6 +6,7 @@ import {Metodos} from '../hooks/Metodos';
 import {useIsFocused} from '@react-navigation/native';
 import {Background} from './Auth/Background';
 import {CheckInternetContext} from '../context/CheckInternetContext';
+import {Avatar} from 'react-native-paper';
 
 export const PerfilScreen = () => {
   const isFocused = useIsFocused();
@@ -22,6 +23,42 @@ export const PerfilScreen = () => {
     }
   }, [isFocused]);
 
+  const randomColor = (letras: string) => {
+    // Patrón simple: usa ASCII de las letras para generar componentes RGB
+    const codigoLetra1 = letras.charCodeAt(0);
+    const codigoLetra2 = letras.charCodeAt(1);
+
+    // Generar componentes RGB pasteles a partir de los códigos ASCII
+    const componenteRojo = ((codigoLetra1 * 17) % 156) + 100; // Entre 100 y 255
+    const componenteVerde = ((codigoLetra2 * 23) % 156) + 100; // Entre 100 y 255
+    const componenteAzul = ((codigoLetra1 + codigoLetra2) % 156) + 100; // Entre 100 y 255
+
+    // Formato hexadecimal
+    const colorHex = `#${componenteRojo.toString(16)}${componenteVerde.toString(
+      16,
+    )}${componenteAzul.toString(16)}`;
+
+    return colorHex;
+  };
+
+  const AvatarExample = (name: string) => {
+    return (
+      <View style={{margin: 30}}>
+        <Avatar.Text
+          style={{backgroundColor: randomColor(name)}}
+          color="white"
+          size={100}
+          label={name}
+        />
+      </View>
+    );
+  };
+
+  const iniciales = `${profile?.first_name.slice(
+    0,
+    1,
+  )}${profile?.last_name.slice(0, 1)}`;
+
   return (
     <BaseScreen>
       <Background></Background>
@@ -29,6 +66,7 @@ export const PerfilScreen = () => {
       <View style={styles.container}>
         {profile && showProfile ? (
           <>
+            {AvatarExample(iniciales.toUpperCase())}
             <Text style={styles.title}>Hola {profile.first_name}</Text>
             <View
               style={{backgroundColor: colores.blanco, ...styles.profileInfo}}>
@@ -66,14 +104,13 @@ export const PerfilScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //  flex: 1,
     alignItems: 'center',
     width: '100%',
   },
   title: {
     fontSize: 24,
     color: colores.primario,
-    marginTop: 20,
   },
   profileInfo: {
     padding: 16,

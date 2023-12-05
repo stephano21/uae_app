@@ -2,7 +2,6 @@ import {useContext} from 'react';
 import {AlertContext} from '../context/AlertContext';
 import {LoaderContext} from '../context/LoaderContext';
 import axios, {AxiosError, AxiosResponse} from 'axios';
-
 import {ApiErrorResponse} from '../interfaces/BaseApiInterface';
 import {AuthContext} from '../context/AuthContext';
 import {ApiEndpoints} from './routes';
@@ -13,7 +12,7 @@ export const useRequest = () => {
 
   //#region AxiosConfig
 
-  const {JWTInfo} = useContext(AuthContext);
+  const {token} = useContext(AuthContext);
   // Create an axios instance for the token endpoint
   const ApiTokenRequest = axios.create({
     baseURL: ApiEndpoints.BaseURL + ApiEndpoints.Token,
@@ -28,8 +27,8 @@ export const useRequest = () => {
     baseURL: ApiEndpoints.BaseURL + ApiEndpoints.BaseApi,
     headers: {
       'Content-Type': 'application/json',
-      ...(JWTInfo && JWTInfo.length > 0 !== undefined
-        ? {Authorization: `Bearer ${JWTInfo}`}
+      ...(token && token.length > 0 !== undefined
+        ? {Authorization: `Bearer ${token}`}
         : {}),
     },
   });
@@ -37,7 +36,7 @@ export const useRequest = () => {
     baseURL: ApiEndpoints.BaseURL + ApiEndpoints.BaseApi,
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${JWTInfo}`,
+      Authorization: `Bearer ${token}`,
       otherHeader: 'foo',
     },
   });

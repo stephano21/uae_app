@@ -1,23 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {TokenResponse} from '../interfaces/BaseApiInterface';
 import {useBaseStorage} from './useBaseStorage';
 
 const keyStorage = {
-  access_token: 'access_token',
-  refresh_token: 'token',
+  access_token: 'token',
   FormulariosGuardados: 'FormulariosGuardados',
 };
 
 export const useStorage = () => {
-  const {SaveData, GetData, CheckData, DeleteData, RemoveData} =
-    useBaseStorage();
+  const {SaveData, GetData, CheckData} = useBaseStorage();
 
-  const SaveJWTInfo = async (data: TokenResponse) => {
+  const SaveJWTInfo = async (data: string) => {
+    console.log(data);
     return await SaveData(data, keyStorage.access_token);
   };
 
-  const GetJWTInfo = async (): Promise<TokenResponse> => {
-    return await GetData<TokenResponse>(keyStorage.access_token);
+  const GetJWTInfo = async (): Promise<string> => {
+    return await GetData<string>(keyStorage.access_token);
   };
 
   const CheckJWTInfo = async (): Promise<boolean> => {
@@ -26,8 +24,6 @@ export const useStorage = () => {
 
   const RemoveAllData = async () => {
     await AsyncStorage.removeItem(keyStorage.access_token);
-    await AsyncStorage.removeItem(keyStorage.refresh_token);
-    await AsyncStorage.removeItem(keyStorage.refresh_token);
     await AsyncStorage.removeItem('OTRealizado');
   };
 

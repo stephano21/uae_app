@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, { useRef, useState} from 'react';
 import {StyleSheet, View, Text, AppState} from 'react-native';
 import {useIsFocused, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';
@@ -12,12 +12,10 @@ import {format} from 'date-fns';
 import {moveFile, ExternalStorageDirectoryPath, mkdir} from 'react-native-fs';
 import {extname} from 'path';
 import Toast from 'react-native-toast-message';
-import {AlertContext} from '../context/AlertContext';
 
 export const FotoPlantaScreen = () => {
   const {params} = useRoute();
   const {width} = useWindowDimensions();
-  const {ShowAlert} = useContext(AlertContext);
   const {plnt} = params as {
     plnt: Plantas;
   };

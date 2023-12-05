@@ -13,7 +13,7 @@ type AuthContextProps = {
   signUp: (obj: CreateUser) => Promise<void>;
   signIn: (obj: LoginData) => Promise<void>;
   logOut: () => void;
-  JWTInfo: string;
+  token: string;
 };
 
 type StatusTypes = 'checking' | 'authenticated' | 'notauthenticated';
@@ -25,7 +25,7 @@ export const AuthProvider = ({children}: any) => {
   const {SaveJWTInfo, GetJWTInfo, CheckJWTInfo, RemoveAllData} = useStorage();
   const {postRequest} = useRequest();
   const [status, setstatus] = useState<StatusTypes>('checking');
-  const [JWTInfo, setJWTInfo] = useState<string>('');
+  const [token, setToken] = useState<string>('');
 
   useEffect(() => {
     checkToken();
@@ -41,11 +41,12 @@ export const AuthProvider = ({children}: any) => {
    */
 
   const checkToken = async (): Promise<void> => {
-    await sleep(2);
+    await sleep(1);
     await CheckJWTInfo().then(check =>
       check
         ? GetJWTInfo().then(jwtInfo => {
-            setJWTInfo(jwtInfo.access_token);
+            setToken(jwtInfo);
+            console.log(jwtInfo)
             setstatus('authenticated');
             //startConnection(jwtInfo.token, jwtInfo.userName);
           })
@@ -123,7 +124,7 @@ export const AuthProvider = ({children}: any) => {
     })
       .then(jwtInfo => {
         setstatus('authenticated');
-        SaveJWTInfo(jwtInfo);
+        SaveJWTInfo(jwtInfo.access_token);
         //startConnection(jwtInfo.token, jwtInfo.userName);
       })
       .catch(console.log);
@@ -181,7 +182,7 @@ export const AuthProvider = ({children}: any) => {
     <AuthContext.Provider
       value={{
         status,
-        JWTInfo,
+        token,
         signUp,
         signIn,
         logOut,

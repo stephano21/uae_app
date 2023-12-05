@@ -5,14 +5,12 @@ import {ApiEndpoints} from '../api/routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from '../context/AuthContext';
 import {CheckInternetContext} from '../context/CheckInternetContext';
-import {AlertContext} from '../context/AlertContext';
 export const Metodos = () => {
   const {getRequest} = useRequest();
   const [poligonos, setPoligonos] = useState<Geolotes[]>([]);
   const [plantas, setPlantas] = useState<Plantas[]>([]);
   const [profile, setProfile] = useState<Porfile>();
-  const {JWTInfo} = useContext(AuthContext);
-  const {ShowAlert} = useContext(AlertContext);
+  const {token} = useContext(AuthContext);
   const {hasConection} = useContext(CheckInternetContext);
 
   const pointInRegion = (lat: number, lon: number, vertices: any[]) => {
@@ -56,7 +54,7 @@ export const Metodos = () => {
     );
   };
   const getPlantas = async () => {
-    hasConection && JWTInfo
+    hasConection && token
       ? await getRequest<Plantas[]>(ApiEndpoints.Plantas).then(
           async plantas => {
             setPlantas(plantas);
@@ -70,7 +68,8 @@ export const Metodos = () => {
   };
 
   const getPorfile = async () => {
-    hasConection && JWTInfo
+    console.log(token)
+    hasConection && token
       ? await getRequest<Porfile>(ApiEndpoints.perfil, undefined, false)
           .then(setProfile)
           .catch(() => setProfile(undefined))

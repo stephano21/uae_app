@@ -15,12 +15,11 @@ import {ScrollView} from 'react-native-gesture-handler';
 
 export const NextScreen = () => {
   const navigation = useNavigation();
-  const {JWTInfo} = useContext(AuthContext);
+  const {token} = useContext(AuthContext);
   const {geolotes, pointInRegion, getPlantas} = Metodos();
   const {hasConection} = useContext(CheckInternetContext);
   const [lotesMásRecientes, setLotesMásRecientes] = useState<Geolotes[]>([]);
   const [filtrado, setFiltrado] = useState<Geolotes[]>([]);
-
   const [location, setLocation] = useState<ILocation | null>(null);
 
   useEffect(() => {
@@ -38,7 +37,7 @@ export const NextScreen = () => {
         console.error('Error al cargar los datos desde AsyncStorage:', error);
       }
       // 2. Si hay acceso a la API, se descargarán los datos más recientes.
-      if (hasConection && JWTInfo.length > 0) {
+      if (hasConection && token.length > 0) {
         try {
           _lotesMásRecientes = await geolotes();
           await getPlantas();
