@@ -12,6 +12,7 @@ import {Metodos} from '../hooks/Metodos';
 import {Text, View} from 'react-native';
 import {SearchInput} from '../components/SearchInput';
 import {ScrollView} from 'react-native-gesture-handler';
+import {List} from '../components/List';
 
 export const NextScreen = () => {
   const navigation = useNavigation();
@@ -48,7 +49,6 @@ export const NextScreen = () => {
       }
       setLotesMásRecientes(_lotesMásRecientes);
     };
-
     loadData();
   }, [hasConection]);
   // 3. Acá abajo se chequeará de acuerdo con las regiones más recientes.
@@ -141,8 +141,11 @@ export const NextScreen = () => {
       </View>
 
       <View>
-        {location && location.region ? (
-          location?.region.map((a, index) => (
+        <List
+          ListEmptyText="No hay lotes cercanos disponibles, puedes buscarlo por su código."
+          data={location?.region || []}
+          refreshFunction={geolotes}
+          renderItem={(a, index) => (
             <ButtonWithText
               key={index}
               anyfunction={() => {
@@ -157,6 +160,11 @@ export const NextScreen = () => {
               icon="location"
               title={a.Cod}
             />
+          )}
+        />
+        {/* {location && location.region ? (
+          location?.region.map((a, index) => (
+
           ))
         ) : (
           <>
@@ -164,7 +172,7 @@ export const NextScreen = () => {
               No hay lotes cercanos disponibles, puedes buscarlo por su código.
             </Text>
           </>
-        )}
+        )} */}
       </View>
     </BaseScreen>
   );

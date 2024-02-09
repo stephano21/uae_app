@@ -6,7 +6,7 @@ import {LoaderContext} from '../context/LoaderContext';
 
 interface FlatListProps<T extends unknown> {
   data: T[];
-  renderItem: (item: T) => JSX.Element;
+  renderItem: (item: T, index: number) => JSX.Element;
   ListEmptyText: string;
   refreshFunction: () => void;
   numColumns?: number;
@@ -27,7 +27,7 @@ export const List = <T extends unknown>({
   return (
     <FlatList
       data={data}
-      renderItem={({item}) => renderItem(item)}
+      renderItem={({item, index}) => renderItem(item, index)}
       numColumns={numColumns}
       horizontal={isHorizontal}
       refreshControl={
