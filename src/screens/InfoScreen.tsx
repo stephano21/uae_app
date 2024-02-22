@@ -23,8 +23,20 @@ const datosAcordeon = [
     titulo: 'Estadios del Cacao',
     imagenes: [
       {
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQluEXS2a6mFolcX5tla0_BmBJ4sXYX_7KFgj_69ran0z2JTpSciH3ZsZjrgAw30QdMCQ&usqp=CAU',
+        url: '../../assets/estadios/CACAO1.png',
       },
+      {
+        url: '../../assets/estadios/CACAO2.png',
+      },
+      {
+        url: '../../assets/estadios/CACAO3.png',
+      },
+      {
+        url: '../../assets/estadios/CACAO4.png',
+      },
+      {
+        url: '../../assets/estadios/CACAO5.png',
+      }
     ],
     textoDescription: 'Imágen de referencia para los estadios.',
   },
@@ -33,16 +45,7 @@ const datosAcordeon = [
     titulo: 'Grados de la monilla',
     imagenes: [
       {
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU',
-      },
-      {
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU',
-      },
-      {
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU',
-      },
-      {
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUP7EVnQOhQB6AYay8wu359FNgSIo8B0ZyslzTYu57KlNUq-vnxR0LFr_biMpTqh0lqhY&usqp=CAU',
+        url: '../../assets/monilla/GRADOSMONILIA.png',
       },
     ],
     textoDescription: 'Imágen de referencia para los estadios.',
