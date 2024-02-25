@@ -1,4 +1,4 @@
-import React, { useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {StyleSheet, View, Text, AppState} from 'react-native';
 import {useIsFocused, useRoute} from '@react-navigation/native';
 import {BaseScreen} from '../Template/BaseScreen';

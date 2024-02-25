@@ -1,4 +1,4 @@
-rootProject.name = 'uae_app'
+rootProject.name = 'plant_trace'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')

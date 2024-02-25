@@ -1,12 +1,11 @@
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {BaseScreen} from '../Template/BaseScreen';
 import {colores} from '../theme/appTheme';
-import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
+import {StyleSheet, Text, useWindowDimensions} from 'react-native';
 import {ImageGallery} from '../components/ImageGallery';
 import {Accordion} from '../components/Acordion';
 
-interface datos {
+interface InformationStadiums {
   id: number;
   titulo: string;
   textoDescription: string;
@@ -17,7 +16,7 @@ interface imagenes {
   url: string;
 }
 
-const datosAcordeon = [
+const datosAcordeon: InformationStadiums[] = [
   {
     id: 1,
     titulo: 'Estadios del Cacao',
@@ -36,7 +35,7 @@ const datosAcordeon = [
       },
       {
         url: '../../assets/estadios/CACAO5.png',
-      }
+      },
     ],
     textoDescription: 'Imágen de referencia para los estadios.',
   },
@@ -54,9 +53,8 @@ const datosAcordeon = [
 
 export const InfoScreen = () => {
   const {width} = useWindowDimensions();
-  const navigation = useNavigation();
 
-  const renderAcordions = (datos: datos) => (
+  const RenderAcordion = ({datos}: {datos: InformationStadiums}) => (
     <Accordion key={datos.id} title={datos.titulo}>
       <Text style={{...InfoStyles.text, fontSize: width * 0.05}}>
         {datos.textoDescription}
@@ -71,12 +69,13 @@ export const InfoScreen = () => {
 
   return (
     <BaseScreen isScroll={true}>
-      {datosAcordeon.map(a => (
-        <View key={a.id}>{renderAcordions(a)}</View>
+      {datosAcordeon.map((datos, index) => (
+        <RenderAcordion key={index} datos={datos} />
       ))}
     </BaseScreen>
   );
 };
+
 const InfoStyles = StyleSheet.create({
   text: {
     textAlign: 'center',

@@ -1,5 +1,5 @@
-import React from 'react';
-import {colores} from './src/theme/appTheme';
+import React from 'react'
+import {colores} from './src/theme/appTheme'
 import {PermissionsProvider} from './src/context/PermissionsContext';
 import {AuthProvider} from './src/context/AuthContext';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';

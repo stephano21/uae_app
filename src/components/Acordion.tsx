@@ -8,10 +8,10 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
-import {colores, iconos, styles} from '../theme/appTheme';
+import {colores, styles} from '../theme/appTheme';
 interface AccordionProps {
   title: string;
-  children: React.ReactNode;
+  children: JSX.Element | JSX.Element[];
 }
 
 export const Accordion = ({title, children}: AccordionProps) => {
@@ -21,13 +21,15 @@ export const Accordion = ({title, children}: AccordionProps) => {
 
   const toggleAccordion = () => {
     setIsExpanded(!isExpanded);
-
-    Animated.timing(animation, {
-      toValue: isExpanded ? 0 : 1,
-      duration: 300,
-      easing: Easing.linear,
-      useNativeDriver: false, // You can set this to true if needed
-    }).start();
+  
+    Animated.parallel([
+      Animated.timing(animation, {
+        toValue: isExpanded ? 1 : 0,
+        duration: 300,
+        useNativeDriver: false,
+        easing: Easing.linear,
+      }),
+    ]).start(); // <-- Aquí es donde debes iniciar la animación
   };
 
   return (
