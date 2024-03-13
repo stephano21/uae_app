@@ -1,42 +1,29 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {BaseScreen} from '../Template/BaseScreen';
-import {colores} from '../theme/appTheme';
-import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
-import {ImageGallery} from '../components/ImageGallery';
-import {Accordion} from '../components/Acordion';
+import { BaseScreen } from '../Template/BaseScreen';
+import { colores } from '../theme/appTheme';
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ImageGallery } from '../components/ImageGallery';
+import { Accordion } from '../components/Acordion';
 
 interface datos {
   id: number;
   titulo: string;
   textoDescription: string;
-  imagenes: imagenes[];
+  imagenes: string[];
 }
 
-interface imagenes {
-  url: string;
-}
 
 const datosAcordeon = [
   {
     id: 1,
     titulo: 'Estadios del Cacao',
     imagenes: [
-      {
-        url: '../../assets/estadios/CACAO1.png',
-      },
-      {
-        url: '../../assets/estadios/CACAO2.png',
-      },
-      {
-        url: '../../assets/estadios/CACAO3.png',
-      },
-      {
-        url: '../../assets/estadios/CACAO4.png',
-      },
-      {
-        url: '../../assets/estadios/CACAO5.png',
-      }
+      'https://victoria.up.railway.app/accordion/cacao1.png',
+      'https://victoria.up.railway.app/accordion/cacao2.png',
+      'https://victoria.up.railway.app/accordion/cacao3.png',
+      'https://victoria.up.railway.app/accordion/cacao4.png',
+      'https://victoria.up.railway.app/accordion/cacao5.png',
     ],
     textoDescription: 'Imágen de referencia para los estadios.',
   },
@@ -44,21 +31,19 @@ const datosAcordeon = [
     id: 2,
     titulo: 'Grados de la monilla',
     imagenes: [
-      {
-        url: '../../assets/monilla/GRADOSMONILIA.png',
-      },
+      'https://victoria.up.railway.app/accordion/gradosmonilla.png',
     ],
     textoDescription: 'Imágen de referencia para los estadios.',
   },
 ];
 
 export const InfoScreen = () => {
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const navigation = useNavigation();
 
   const renderAcordions = (datos: datos) => (
     <Accordion key={datos.id} title={datos.titulo}>
-      <Text style={{...InfoStyles.text, fontSize: width * 0.05}}>
+      <Text style={{ ...InfoStyles.text, fontSize: width * 0.05 }}>
         {datos.textoDescription}
       </Text>
       <ImageGallery

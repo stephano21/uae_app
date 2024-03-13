@@ -1,12 +1,12 @@
 import React from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {colores, styles} from '../theme/appTheme';
+import { colores, styles } from '../theme/appTheme';
 
 interface Props {
   // TODO Ponerle onPress o handlePress
-  anyfunction: (() => void) | (() => Promise<void>);
-  title: string;
+  anyfunction: (() => void) | (() => Promise<void>) | undefined;
+  title?: string;
   color?: string;
   colorTexto?: string;
   icon?: string;
@@ -20,11 +20,13 @@ interface Props {
   colorIcono?: string;
   radio?: number;
   margVText?: number;
+  bagraundIcon?: string;
+  redondo?: boolean;
 }
 
 export const ButtonWithText = ({
   anyfunction,
-  title,
+  title = '',
   color = colores.LocationBg,
   colorTexto = colores.primario,
   icon = '',
@@ -38,6 +40,8 @@ export const ButtonWithText = ({
   radio = 40,
   disabled = false,
   colorIcono = colores.blanco,
+  bagraundIcon = colores.negro,
+  redondo = true,
 }: Props) => {
   return (
     <TouchableOpacity
@@ -60,13 +64,13 @@ export const ButtonWithText = ({
             padding: 4,
             width: '25%',
             ...styles.centerItems,
-            borderRadius: 40,
-            backgroundColor: colores.negro,
+            borderRadius: redondo ? 40 : 0,
+            backgroundColor: bagraundIcon,
           }}>
           <Icon name={icon} size={tamañoIcon} color={colorIcono}></Icon>
         </View>
       )}
-      <View style={{padding: 4, width: '75%', ...styles.centerItems}}>
+      <View style={{ padding: 4, width: '75%', ...styles.centerItems }}>
         <Text
           style={{
             //...styles.textButton,

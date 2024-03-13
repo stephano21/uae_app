@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 export const colores = {
+  appInfo:'#85FE64',
   blanco: '#f3eff5',
   primario: '#00553c',
   primarioclaro: '#a6dbd6',
