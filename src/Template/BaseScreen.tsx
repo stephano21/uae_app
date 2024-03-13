@@ -43,18 +43,26 @@ export const BaseScreen = ({ children, style = {}, isScroll = false }: Props) =>
           {children}
         </View>
       )}
-      <View style={{ ...MultimediaStyles.band }}>
-        <Text style={{ textAlign: 'center', color: 'black', fontSize: 16 }}>
+      <View style={{ ...InfoStyles.band }}>
+        <Text style={{ ...InfoStyles.texto }}>
           V{DeviceInfo.getVersion()}
         </Text>
       </View>
     </Animated.View>
   );
 };
-const MultimediaStyles = StyleSheet.create({
+const InfoStyles = StyleSheet.create({
   band: {
-    backgroundColor: colores.appInfo,
+    backgroundColor: colores.primario,
     position: 'relative',
+    color: colores.blanco,
   },
+  texto: {
+    color: colores.blanco,
+    textAlign:'right',
+    marginEnd: 10,
+    fontFamily: 'Lato-Black',
+    fontWeight: 'bold',
+  }
 
 });
