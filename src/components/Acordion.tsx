@@ -73,7 +73,7 @@ const AcordionStyles = StyleSheet.create({
     fontSize: 20,
   },
   content: {
-    width: '90%',
+    width: '70%',
     maxHeight: 320,
     ...styles.centerItems,
     padding: 4,

@@ -103,7 +103,6 @@ export const NextScreen = () => {
       }
     };
   }, [lotesMásRecientes]); // Añadir poligonos como dependencia
-
   return (
     <BaseScreen>
       <SearchInput
@@ -116,8 +115,8 @@ export const NextScreen = () => {
         result={setFiltrado}
       />
       <View>
-        {filtrado?.length < 6 ? (
-          <ScrollView>
+        {filtrado  ? (
+          <ScrollView style={{width:"100%",marginBottom:50}}>
             {filtrado.map((a, index) => (
               <ButtonWithText
                 key={index}

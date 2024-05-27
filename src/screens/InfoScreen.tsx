@@ -43,9 +43,7 @@ export const InfoScreen = () => {
 
   const renderAcordions = (datos: datos) => (
     <Accordion key={datos.id} title={datos.titulo}>
-      <Text style={{ ...InfoStyles.text, fontSize: width * 0.05 }}>
-        {datos.textoDescription}
-      </Text>
+      
       <ImageGallery
         widthCarousel={width * 0.8}
         heightCarousel={width * 0.4}
