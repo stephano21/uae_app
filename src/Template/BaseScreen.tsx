@@ -5,6 +5,7 @@ import { colores, styles } from '../theme/appTheme';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useIsFocused } from '@react-navigation/native';
 import DeviceInfo from 'react-native-device-info';
+import { AuthContext } from '../context/AuthContext';
 interface Props {
   children: JSX.Element | JSX.Element[];
   style?: StyleProp<ViewStyle>;
@@ -12,7 +13,7 @@ interface Props {
 }
 export const BaseScreen = ({ children, style = {}, isScroll = false }: Props) => {
   const isFocused = useIsFocused();
-
+  const {token,status} = useContext(AuthContext);
   const { fadeIn, opacity } = useAnimation();
   useEffect(() => {
     fadeIn(500);
@@ -45,7 +46,8 @@ export const BaseScreen = ({ children, style = {}, isScroll = false }: Props) =>
       )}
       <View style={{ ...InfoStyles.band }}>
         <Text style={{ ...InfoStyles.texto }}>
-          V{DeviceInfo.getVersion()}
+        
+        {status === 'authenticated'? `${token?.usurio} | ${token.hacienda} | V${DeviceInfo.getVersion()}`:`V${DeviceInfo.getVersion()}`}
         </Text>
       </View>
     </Animated.View>

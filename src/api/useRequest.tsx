@@ -27,8 +27,8 @@ export const useRequest = () => {
     baseURL: ApiEndpoints.BaseURL + ApiEndpoints.BaseApi,
     headers: {
       'Content-Type': 'application/json',
-      ...(token && token.length > 0 !== undefined
-        ? {Authorization: `Bearer ${token}`}
+      ...(token && token?.access_token.length > 0 !== undefined
+        ? {Authorization: `Bearer ${token.access_token}`}
         : {}),
     },
   });
@@ -36,7 +36,7 @@ export const useRequest = () => {
     baseURL: ApiEndpoints.BaseURL + ApiEndpoints.BaseApi,
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token?.access_token}`,
       otherHeader: 'foo',
     },
   });

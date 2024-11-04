@@ -13,7 +13,7 @@ type AuthContextProps = {
   signUp: (obj: CreateUser) => Promise<void>;
   signIn: (obj: LoginData) => Promise<void>;
   logOut: () => void;
-  token: string;
+  token: TokenResponse;
 };
 
 type StatusTypes = 'checking' | 'authenticated' | 'notauthenticated';
@@ -25,7 +25,13 @@ export const AuthProvider = ({children}: any) => {
   const {SaveJWTInfo, GetJWTInfo, CheckJWTInfo, RemoveAllData} = useStorage();
   const {postRequest} = useRequest();
   const [status, setstatus] = useState<StatusTypes>('checking');
-  const [token, setToken] = useState<string>('');
+  const [token, setToken] = useState<TokenResponse>({
+    access_token:"",
+    refresh_token:"",
+    usurio:"",
+    hacienda:"",
+    rol:"",
+  });
 
   useEffect(() => {
     checkToken();
@@ -124,7 +130,8 @@ export const AuthProvider = ({children}: any) => {
     })
       .then(jwtInfo => {
         setstatus('authenticated');
-        SaveJWTInfo(jwtInfo.access_token);
+        //setToken(jwtInfo); 
+        SaveJWTInfo(jwtInfo);
         //startConnection(jwtInfo.token, jwtInfo.userName);
       })
       .catch(console.log);
