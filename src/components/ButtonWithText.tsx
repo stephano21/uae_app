@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View, DimensionValue} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {colores, styles} from '../theme/appTheme';
 
@@ -10,7 +10,7 @@ interface Props {
   color?: string;
   colorTexto?: string;
   icon?: string;
-  width?: number;
+  width?: number|string;
   textSize?: number;
   tamañoIcon?: number;
   marginH?: number;
@@ -51,7 +51,7 @@ export const ButtonWithText = ({
         marginVertical: marginV,
         flexDirection: 'row',
         borderRadius: radio,
-        width,
+        width: width as DimensionValue,
         //...styles.sombra,
       }}>
       {icon.length > 0 && (

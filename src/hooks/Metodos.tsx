@@ -5,7 +5,9 @@ import {ApiEndpoints} from '../api/routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from '../context/AuthContext';
 import {CheckInternetContext} from '../context/CheckInternetContext';
+import { LoaderContext } from '../context/LoaderContext';
 export const Metodos = () => {
+  const {isLoading} = useContext(LoaderContext);
   const {getRequest} = useRequest();
   const [poligonos, setPoligonos] = useState<Geolotes[]>([]);
   const [plantas, setPlantas] = useState<Plantas[]>([]);
@@ -43,7 +45,7 @@ export const Metodos = () => {
   };
 
   const geolotes = async (): Promise<Geolotes[]> => {
-    return await getRequest<Geolotes[]>(ApiEndpoints.Poligonos).then(
+    return await getRequest<Geolotes[]>(ApiEndpoints.Poligonos,{},true).then(
       async lotes => {
         setPoligonos(lotes);
         await AsyncStorage.setItem('GeoLotes', JSON.stringify(lotes)).catch(e =>

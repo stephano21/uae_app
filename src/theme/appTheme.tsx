@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const colores = {
   blanco: '#f3eff5',
@@ -17,7 +17,7 @@ export const colores = {
   verde: '#16c40c',
   negroClaro: '#0d0a0b',
   gris: '#f3eff5',
-  grisOscuro:"#CBCBCB",
+  grisOscuro: "#CBCBCB",
   verdeLima: '#72b01d',
   verdePasto: '#79b473',
   //
@@ -163,7 +163,7 @@ export const styles = StyleSheet.create({
   /**
    * @Selector
    */
-  selector: {width: '95%', margin: 5},
+  selector: { width: '95%', margin: 5 },
   sombra: {
     shadowColor: '#000',
     shadowOffset: {
@@ -210,4 +210,13 @@ export const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 14,
   },
+  geoConatiner: {
+    width: "100%", alignItems: "center"
+
+  },
+  geoScrol: {
+    marginBottom: 30,
+    width: "100%",
+    alignContent: "center"
+  }
 });

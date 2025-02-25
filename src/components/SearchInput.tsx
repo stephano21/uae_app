@@ -37,11 +37,22 @@ export const SearchInput = <T extends unknown>({
     }
     result(
       catalog.filter(item => {
-        const text = textCompare(item);
-        return text.some(t =>
-          t.trim().toLowerCase().includes(deboncedValue.trim().toLowerCase()),
-        );
-      }),
+        const text = textCompare(item);  // Lo que va a filtrar
+        const searchValue = deboncedValue.trim().toLowerCase();  // Valor a buscar, en minúsculas y sin espacios
+      
+        console.log(text, "text");
+        console.log(searchValue);
+      
+        // Buscar en cualquier parte del texto, sin importar si es de izquierda a derecha o viceversa
+        return text.some(t => {
+          const normalText = t.toString().trim().toLowerCase();
+          
+          // Aquí simplemente buscas si el valor está en cualquier parte de la cadena
+          return normalText.includes(searchValue);
+        });
+      })
+      
+      
     );
   };
 

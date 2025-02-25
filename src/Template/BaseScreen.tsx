@@ -1,9 +1,10 @@
 import React, {useContext, useEffect} from 'react';
-import {Animated, StyleProp, View, ViewStyle} from 'react-native';
+import {Animated, StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import {useAnimation} from '../hooks/useAnimation';
 import {colores, styles} from '../theme/appTheme';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useIsFocused} from '@react-navigation/native';
+import { AuthContext } from '../context/AuthContext';
 interface Props {
   children: JSX.Element | JSX.Element[];
   style?: StyleProp<ViewStyle>;
@@ -11,7 +12,7 @@ interface Props {
 }
 export const BaseScreen = ({children, style = {}, isScroll = false}: Props) => {
   const isFocused = useIsFocused();
-
+  const {token,status} = useContext(AuthContext);
   const {fadeIn, opacity} = useAnimation();
   useEffect(() => {
     fadeIn(500);
@@ -42,6 +43,27 @@ export const BaseScreen = ({children, style = {}, isScroll = false}: Props) => {
           {children}
         </View>
       )}
+       <View style={{ ...InfoStyles.band }}>
+        <Text style={{ ...InfoStyles.texto }}>
+        
+        {status === 'authenticated'? `${token?.usurio} | ${token.hacienda} | V${DeviceInfo.getVersion()}`:`V${DeviceInfo.getVersion()}`}
+        </Text>
+      </View>
     </Animated.View>
   );
 };
+const InfoStyles = StyleSheet.create({
+  band: {
+    backgroundColor: colores.primario,
+    position: 'relative',
+    color: colores.blanco,
+  },
+  texto: {
+    color: colores.blanco,
+    textAlign:'right',
+    marginEnd: 10,
+    fontFamily: 'Lato-Black',
+    fontWeight: 'bold',
+  }
+
+});
