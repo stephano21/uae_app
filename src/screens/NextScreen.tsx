@@ -100,17 +100,19 @@ export const NextScreen = () => {
     if (lotesMásRecientes && lotesMásRecientes.length === 0) {
       return;
     }
-    getLocation();
-    let refrescarUbicación: NodeJS.Timeout | null;
-    refrescarUbicación = setInterval(async () => {
+    if(TypeSearch){
       getLocation();
-    }, 5000);
-
-    return () => {
-      if (refrescarUbicación) {
-        clearInterval(refrescarUbicación);
-      }
-    };
+      let refrescarUbicación: NodeJS.Timeout | null;
+      refrescarUbicación = setInterval(async () => {
+        getLocation();
+      }, 5000);
+  
+      return () => {
+        if (refrescarUbicación) {
+          clearInterval(refrescarUbicación);
+        }
+      };
+    }
   }, [lotesMásRecientes]); // Añadir poligonos como dependencia
   const HandleTypeSearch = (isEnabled: boolean) => {
     setTypeSearch(isEnabled)
@@ -135,7 +137,7 @@ export const NextScreen = () => {
             result={setFiltrado}
           />
           <View style={styles.geoConatiner}>
-            {filtrado?.length < 6 ? (
+            {filtrado?.length >0 ? (
               <ScrollView style={styles.geoScrol}>
                 {filtrado.map((a, index) => (
                   <ButtonWithText
@@ -157,7 +159,7 @@ export const NextScreen = () => {
               </ScrollView>
             ) : (
               <ScrollView style={styles.geoScrol}>
-                {lotesMásRecientes.map((a, index) => (
+                {lotesMásRecientes?.map((a, index) => (
                   <ButtonWithText
                     key={index}
                     width={"100%"}
@@ -181,7 +183,7 @@ export const NextScreen = () => {
       ) : (<View>
         <List
           ListEmptyText="No hay lotes cercanos disponibles, cambie a modo manual para buscarlo por su código."
-          data={lotesMásRecientes || []}
+          data={location?.region || []}
           refreshFunction={geolotes}
           renderItem={(a, index) => (
             <ButtonWithText
@@ -189,17 +191,20 @@ export const NextScreen = () => {
               anyfunction={() => {
                 navigation.dispatch(
                   CommonActions.navigate('PlantasScreen', {
-                    idLote: a.Id_Lote,
+                    idLote: a.Id,
                     datos: a,
-                    title: a.CodigoLote,
+                    title: a.Cod,
                   }),
                 );
               }}
               icon="location"
-              title={a.CodigoLote}
+              title={a.Cod}
             />
           )}
         />
+        <Text style={{color: colores.negro, fontSize:20, marginTop:150}}>
+              Searching.....
+            </Text>
         {/* {location && location.region ? (
           location?.region.map((a, index) => (
 

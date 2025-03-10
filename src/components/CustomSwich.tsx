@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Animated } from 'react-native';
+import { colores } from '../theme/appTheme';
 
 // Definimos las props del componente
 interface Props {
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
         padding: 2,
     },
     switchOn: {
-        backgroundColor: '#4caf50', // Color de fondo cuando está activado
+        backgroundColor: colores.primario, // Color de fondo cuando está activado
     },
     switchCircle: {
         width: 26,

@@ -5,6 +5,7 @@ import {colores, styles} from '../theme/appTheme';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useIsFocused} from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
+import DeviceInfo from 'react-native-device-info';
 interface Props {
   children: JSX.Element | JSX.Element[];
   style?: StyleProp<ViewStyle>;
